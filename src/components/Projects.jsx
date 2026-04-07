@@ -98,9 +98,9 @@ const MyWork = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.8 }}
+              className="project-card"
               style={{
                 background: 'rgba(255,255,255,0.015)',
-                borderRadius: '35px',
                 border: '1px solid rgba(255,255,255,0.05)',
                 overflow: 'hidden',
                 backdropFilter: 'blur(20px)',

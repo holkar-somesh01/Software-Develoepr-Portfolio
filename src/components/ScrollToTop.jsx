@@ -15,7 +15,7 @@ const ScrollToTop = () => {
       if (element) {
           setTimeout(() => {
             element.scrollIntoView({ behavior: 'smooth' })
-          }, 0)
+          }, 100)
       }
     }
   }, [pathname, hash])

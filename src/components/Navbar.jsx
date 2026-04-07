@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, Instagram, ArrowRight, Home, User, Briefcase, Code, Cpu, MessageSquare } from 'lucide-react'
+import { 
+  Github, Linkedin, Mail, Instagram, ArrowRight, Home, 
+  User, Briefcase, Code, Cpu, MessageSquare, Menu 
+} from 'lucide-react'
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -62,19 +65,17 @@ const Navbar = () => {
               </li>
             ))}
           </ul>
-          <Link to="/contact" className="nav-btn">
+          <Link to="/contact" className="nav-btn hide-on-mobile">
             Contact Me <MessageSquare size={16} />
           </Link>
         </div>
 
-        <button 
-          className={`mobile-toggle ${mobileMenuOpen ? 'active' : ''}`} 
+        <button
+          className="mobile-toggle-btn"
           onClick={toggleMenu}
           aria-label="Toggle Menu"
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <Menu size={28} color="white" />
         </button>
       </motion.nav>
 
@@ -113,9 +114,9 @@ const Navbar = () => {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.1 + index * 0.05 }}
                     >
-                      <Link 
-                        to={item.href} 
-                        className="mobile-nav-link" 
+                      <Link
+                        to={item.href}
+                        className="mobile-nav-link"
                         onClick={closeMenu}
                       >
                         <span className="nav-link-icon">{<item.icon size={20} />}</span>
@@ -129,9 +130,9 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 + navItems.length * 0.05 }}
                   >
-                    <Link 
-                      to="/contact" 
-                      className="mobile-nav-link contact-highlight" 
+                    <Link
+                      to="/contact"
+                      className="mobile-nav-link contact-highlight"
                       onClick={closeMenu}
                     >
                       <span className="nav-link-icon"><MessageSquare size={20} /></span>
@@ -144,7 +145,7 @@ const Navbar = () => {
                 <div className="mobile-menu-footer">
                   <div className="menu-footer-social">
                     {socialLinks.map((link, idx) => (
-                      <motion.a 
+                      <motion.a
                         key={idx}
                         href={link.url}
                         target="_blank"

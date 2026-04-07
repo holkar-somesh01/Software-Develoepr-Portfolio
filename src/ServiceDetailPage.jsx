@@ -309,11 +309,12 @@ const ServiceDetailPage = () => {
                         initial={{ opacity: 0, scale: 0.9 }} 
                         whileInView={{ opacity: 1, scale: 1 }} 
                         viewport={{ once: true }}
-                        style={{ background: 'rgba(255,255,255,0.02)', padding: '4rem', borderRadius: '24px', border: `1px solid ${detail.color}22`, backdropFilter: 'blur(30px)', position: 'relative' }}
+                        className="deliverables-card"
+                        style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: `1px solid ${detail.color}22`, backdropFilter: 'blur(30px)', position: 'relative' }}
                     >
-                        <div style={{ position: 'absolute', top: '-1rem', left: '3rem', background: detail.color, color: '#fff', padding: '0.5rem 2rem', borderRadius: '12px', fontWeight: 800, fontSize: '0.8rem', boxShadow: `0 5px 20px ${detail.color}33` }}>WHAT YOU GET</div>
-                        <h3 style={{ fontSize: '2rem', marginBottom: '2.5rem' }}>Project Deliverables</h3>
-                        <ul style={{ listStyle: 'none', padding: 0 }}>
+                        <div className="deliverables-badge" style={{ position: 'absolute', top: '-1rem', background: detail.color, color: '#fff', padding: '0.5rem 2rem', borderRadius: '12px', fontWeight: 800, fontSize: '0.8rem', boxShadow: `0 5px 20px ${detail.color}33` }}>WHAT YOU GET</div>
+                        <h3 className="deliverables-title" style={{ fontSize: '2rem', marginBottom: '2.5rem' }}>Project Deliverables</h3>
+                        <ul className="deliverables-list" style={{ listStyle: 'none', padding: 0 }}>
                             {detail.deliverables.map((item, i) => (
                                 <li key={i} style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.8rem', alignItems: 'center' }}>
                                     <div style={{ background: `${detail.color}11`, padding: '0.6rem', borderRadius: '50%', color: detail.color }}><Check size={20} /></div>
@@ -458,7 +459,7 @@ const ServiceDetailPage = () => {
                  whileHover={{ scale: 1.01 }}
                  style={{ 
                    maxWidth: '1200px', margin: '0 auto', background: `linear-gradient(135deg, ${detail.color}11, transparent)`, 
-                   padding: '8rem 4rem', borderRadius: '40px', border: `1px solid ${detail.color}22`,
+                   padding: '8rem 4rem', borderRadius: '16px', border: `1px solid ${detail.color}22`,
                    boxShadow: `0 35px 100px ${detail.color}10`, position: 'relative', overflow: 'hidden'
                  }}
                >

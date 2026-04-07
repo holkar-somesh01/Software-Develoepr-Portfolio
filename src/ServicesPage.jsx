@@ -297,7 +297,7 @@ const ServicesCards = () => {
   ]
 
   return (
-    <section id="services-list" style={{ padding: '6rem 2rem', position: 'relative', background: 'linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.02))' }}>
+    <section id="services-list" className="services-section" style={{ position: 'relative', background: 'linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.02))' }}>
       <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
         <motion.span
           initial={{ opacity: 0 }}
@@ -343,7 +343,7 @@ const ServicesCards = () => {
             style={{
               padding: '4rem 2.5rem',
               background: 'rgba(255,255,255,0.015)',
-              borderRadius: '40px',
+              borderRadius: '16px',
               border: service.popular ? `2px solid ${service.color}` : '1px solid rgba(255,255,255,0.05)',
               position: 'relative',
               overflow: 'hidden',
