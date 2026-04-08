@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-  Github, Linkedin, Mail, Instagram, ArrowRight, Home, 
-  User, Briefcase, Code, Cpu, MessageSquare, Menu 
+import {
+  Github, Linkedin, Mail, Instagram, ArrowRight, Home,
+  User, Briefcase, Code, Cpu, MessageSquare, Menu
 } from 'lucide-react'
 
 const Navbar = () => {

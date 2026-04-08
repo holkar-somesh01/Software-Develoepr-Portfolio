@@ -23,8 +23,11 @@ const Footer = () => {
       <div className="footer-content">
         <div className="footer-section">
           <div className="footer-logo">
-            <span className="logo-text">SH</span>
-            <span className="logo-tagline">Someshwar Holkar</span>
+            <img src="/logos/ai-logo.png" className="logo-img-footer" alt="AI Logo" />
+            <div className="footer-logo-text">
+              <span className="logo-text">SH</span>
+              <span className="logo-tagline">Someshwar Holkar</span>
+            </div>
           </div>
           <p className="footer-bio">
             MERN Stack Developer | React-Native Developer | Freelancer

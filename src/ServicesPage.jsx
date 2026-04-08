@@ -187,7 +187,7 @@ const ServicesHero = () => {
           ].map((prop, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
               <div style={{
-                padding: '1.8rem',
+                padding: '25px',
                 background: 'rgba(255,255,255,0.02)',
                 borderRadius: '32px',
                 color: prop.color,
@@ -201,40 +201,6 @@ const ServicesHero = () => {
               <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#fff', letterSpacing: '3px' }}>{prop.label}</span>
             </div>
           ))}
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
-          style={{
-            marginTop: '8rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '1.5rem'
-          }}
-        >
-          <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '5px', fontWeight: 800 }}>EXPLORE SERVICES</span>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            style={{
-              width: '30px',
-              height: '50px',
-              borderRadius: '20px',
-              border: '2px solid rgba(0, 212, 255, 0.3)',
-              display: 'flex',
-              justifyContent: 'center',
-              paddingTop: '8px'
-            }}
-          >
-            <motion.div
-              animate={{ height: ['8px', '16px', '8px'], opacity: [1, 0.5, 1] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              style={{ width: '4px', background: 'var(--primary)', borderRadius: '2px' }}
-            />
-          </motion.div>
         </motion.div>
       </motion.div>
     </section>
@@ -297,8 +263,16 @@ const ServicesCards = () => {
   ]
 
   return (
-    <section id="services-list" className="services-section" style={{ position: 'relative', background: 'linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.02))' }}>
-      <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+    <section id="services-list" className="services-section" style={{
+      position: 'relative',
+      background: 'linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.02))',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: '4rem 1.5rem'
+    }}>
+      <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -317,9 +291,9 @@ const ServicesCards = () => {
 
       <div className="services-container" style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)', // Force 3 in a row
-        gap: '2.5rem',
-        maxWidth: '1400px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+        gap: '2rem',
+        maxWidth: '1240px',
         margin: '0 auto'
       }}>
         <style dangerouslySetInnerHTML={{
@@ -341,7 +315,7 @@ const ServicesCards = () => {
             whileHover={{ y: -20 }}
             transition={{ delay: index * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
             style={{
-              padding: '4rem 2.5rem',
+              padding: 'clamp(2rem, 5vw, 3rem) 2rem',
               background: 'rgba(255,255,255,0.015)',
               borderRadius: '16px',
               border: service.popular ? `2px solid ${service.color}` : '1px solid rgba(255,255,255,0.05)',
@@ -370,19 +344,19 @@ const ServicesCards = () => {
               </div>
             )}
 
-            <motion.div 
+            <motion.div
               whileHover={{ scale: 1.1, rotate: 2 }}
-              style={{ 
-                color: service.color, 
-                marginBottom: '2rem', 
-                background: `linear-gradient(135deg, ${service.color}25, ${service.color}05)`, 
-                width: '64px', 
-                height: '64px', 
-                borderRadius: '18px', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                padding: '1rem', 
+              style={{
+                color: service.color,
+                marginBottom: '1.5rem',
+                background: `linear-gradient(135deg, ${service.color}25, ${service.color}05)`,
+                width: '64px',
+                height: '64px',
+                borderRadius: '18px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '1rem',
                 border: `1px solid ${service.color}35`,
                 boxShadow: `0 10px 30px ${service.color}20`,
                 transition: 'all 0.3s ease'
@@ -395,13 +369,13 @@ const ServicesCards = () => {
               Base: {service.price}
             </div>
 
-            <h3 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', fontWeight: 950, letterSpacing: '-1px' }}>{service.name}</h3>
+            <h3 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.22rem)', marginBottom: '1.2rem', fontWeight: 950, letterSpacing: '-1px' }}>{service.name}</h3>
 
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1.05rem', lineHeight: 1.8, minHeight: '120px' }}>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1rem', lineHeight: 1.7, minHeight: '80px' }}>
               {service.description}
             </p>
 
-            <div style={{ display: 'flex', gap: '0.8rem', flexWrap: 'wrap', marginBottom: '3.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
               {service.tags.map(tag => (
                 <span key={tag} style={{ background: 'rgba(255,255,255,0.03)', color: '#fff', padding: '0.5rem 1.2rem', borderRadius: '15px', fontSize: '0.7rem', fontWeight: 700, border: '1px solid rgba(255,255,255,0.08)' }}>
                   {tag}
@@ -409,9 +383,9 @@ const ServicesCards = () => {
               ))}
             </div>
 
-            <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)', margin: '0 0 3rem' }}></div>
+            <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)', margin: '0 0 2rem' }}></div>
 
-            <ul style={{ listStyle: 'none', padding: 0, marginBottom: '4rem', flex: 1 }}>
+            <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2.5rem', flex: 1 }}>
               {service.features.map((feature, i) => (
                 <li key={i} style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem', fontSize: '1rem', color: 'rgba(255,255,255,0.8)', alignItems: 'center' }}>
                   <div style={{ background: `${service.color}20`, padding: '0.4rem', borderRadius: '50%', color: service.color, display: 'flex' }}><Check size={14} /></div>
@@ -465,14 +439,14 @@ const CollaborationProcess = () => {
   ]
 
   return (
-    <section style={{ padding: '8rem 2rem', background: 'rgba(0,0,0,0.2)', position: 'relative' }}>
+    <section style={{ padding: '4rem 2rem', background: 'rgba(0,0,0,0.2)', position: 'relative' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '6rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <span style={{ fontSize: '0.8rem', color: '#7c3aed', letterSpacing: '5px', fontWeight: 800 }}>WORKFLOW</span>
           <h2 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', marginTop: '1rem', fontWeight: 950 }}>Built for <span style={{ background: 'var(--gradient-secondary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Reliability</span></h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '5rem', position: 'relative' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', position: 'relative' }}>
           {steps.map((step, i) => (
             <motion.div
               key={i}
@@ -509,7 +483,7 @@ const CollaborationProcess = () => {
 
 const FinalCTA = () => {
   return (
-    <section style={{ padding: '10rem 2rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+    <section style={{ padding: '6rem 2rem 8rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
       <div style={{
         position: 'absolute',
         top: '50%',
@@ -529,7 +503,7 @@ const FinalCTA = () => {
         viewport={{ once: true }}
         style={{ position: 'relative', zIndex: 10 }}
       >
-        <h2 style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)', fontWeight: 950, marginBottom: '3rem', lineHeight: 1, letterSpacing: '-4px' }}>
+        <h2 style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)', fontWeight: 900, marginBottom: '3rem', lineHeight: 1, letterSpacing: '-4px' }}>
           Let's Architect <br />
           <span style={{
             background: 'var(--gradient-primary)',
@@ -542,25 +516,25 @@ const FinalCTA = () => {
 
         <p style={{
           color: 'var(--text-secondary)',
-          fontSize: '1.3rem',
+          fontSize: '1.2rem',
           maxWidth: '800px',
-          margin: '0 auto 6rem',
-          lineHeight: 1.9,
+          margin: '0 auto 4.5rem',
+          lineHeight: 1.8,
           fontWeight: 400
         }}>
           Now accepting high-impact projects and long-term technical partnerships.
-          Limited slots available for Q3 2024.
+          Limited slots available for Q2 2026.
         </p>
 
         <Link
           to="/contact"
           className="btn btn-primary"
           style={{
-            padding: '2.2rem 6rem',
-            fontSize: '1.4rem',
+            padding: '1rem 2rem',
+            fontSize: '1rem',
             borderRadius: '100px',
             boxShadow: '0 30px 70px rgba(0, 212, 255, 0.4)',
-            fontWeight: 850,
+            fontWeight: 800,
             textTransform: 'uppercase',
             letterSpacing: '2px'
           }}

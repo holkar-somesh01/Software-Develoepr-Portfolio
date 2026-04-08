@@ -283,24 +283,24 @@ const ServiceDetailPage = () => {
             </section>
 
             {/* Core Strategy Section */}
-            <section style={{ padding: '8rem 2rem', borderTop: '1px solid var(--card-border)', background: 'linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.05))' }}>
-                <div style={{ maxWidth: '1240px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '6rem', alignItems: 'center' }}>
+            <section style={{ padding: 'clamp(4rem, 10vw, 8rem) 1.5rem', borderTop: '1px solid var(--card-border)', background: 'linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.05))' }}>
+                <div style={{ maxWidth: '1240px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: 'clamp(3rem, 8vw, 6rem)', alignItems: 'center' }}>
                     <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2rem', fontSize: '0.9rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px' }}>
-                            <Zap size={20} fill={detail.color}/> Execution Power
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px' }}>
+                            <Zap size={18} fill={detail.color}/> Execution Power
                         </div>
-                        <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 3.5rem)', marginBottom: '2.5rem', lineHeight: 1.1 }}>Building for the <br /> <span style={{ color: detail.color }}>Next Generation</span></h2>
-                        <p style={{ fontSize: '1.2rem', lineHeight: 1.9, color: 'var(--text-secondary)', marginBottom: '3.5rem' }}>
+                        <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', marginBottom: '2.5rem', lineHeight: 1.1, letterSpacing: '-1px' }}>Building for the <br /> <span style={{ color: detail.color }}>Next Generation</span></h2>
+                        <p style={{ fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: '3.5rem' }}>
                             {detail.description}
                         </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '2rem' }}>
                             <div style={{ borderLeft: `3px solid ${detail.color}`, paddingLeft: '1.5rem' }}>
                                 <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><BarChart3 size={20} color={detail.color}/> Speed</h4>
-                                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>Score 98+ Tested</p>
+                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Score 98+ Tested</p>
                             </div>
                             <div style={{ borderLeft: `3px solid ${detail.color}`, paddingLeft: '1.5rem' }}>
                                 <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><Shield size={20} color={detail.color}/> Security</h4>
-                                <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)' }}>FIPS Compliant</p>
+                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>FIPS Compliant</p>
                             </div>
                         </div>
                     </motion.div>
@@ -310,15 +310,15 @@ const ServiceDetailPage = () => {
                         whileInView={{ opacity: 1, scale: 1 }} 
                         viewport={{ once: true }}
                         className="deliverables-card"
-                        style={{ background: 'rgba(255,255,255,0.02)', borderRadius: '24px', border: `1px solid ${detail.color}22`, backdropFilter: 'blur(30px)', position: 'relative' }}
+                        style={{ background: 'rgba(255,255,255,0.015)', borderRadius: '16px', border: `1px solid ${detail.color}15`, backdropFilter: 'blur(30px)', position: 'relative' }}
                     >
-                        <div className="deliverables-badge" style={{ position: 'absolute', top: '-1rem', background: detail.color, color: '#fff', padding: '0.5rem 2rem', borderRadius: '12px', fontWeight: 800, fontSize: '0.8rem', boxShadow: `0 5px 20px ${detail.color}33` }}>WHAT YOU GET</div>
-                        <h3 className="deliverables-title" style={{ fontSize: '2rem', marginBottom: '2.5rem' }}>Project Deliverables</h3>
+                        <div className="deliverables-badge" style={{ position: 'absolute', top: '-0.8rem', background: detail.color, color: '#fff', padding: '0.4rem 1.5rem', borderRadius: '50px', fontWeight: 800, fontSize: '0.7rem', letterSpacing: '1px' }}>DELIVERABLES</div>
+                        <h3 className="deliverables-title" style={{ fontSize: '1.8rem', marginBottom: '2.5rem', fontWeight: 800 }}>Success Package</h3>
                         <ul className="deliverables-list" style={{ listStyle: 'none', padding: 0 }}>
                             {detail.deliverables.map((item, i) => (
-                                <li key={i} style={{ display: 'flex', gap: '1.5rem', marginBottom: '1.8rem', alignItems: 'center' }}>
-                                    <div style={{ background: `${detail.color}11`, padding: '0.6rem', borderRadius: '50%', color: detail.color }}><Check size={20} /></div>
-                                    <span style={{ fontSize: '1.15rem', fontWeight: 500, color: '#eee' }}>{item}</span>
+                                <li key={i} style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem', alignItems: 'center' }}>
+                                    <div style={{ background: `${detail.color}15`, padding: '0.5rem', borderRadius: '50%', color: detail.color, flexShrink: 0 }}><Check size={16} /></div>
+                                    <span style={{ fontSize: '1.05rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>{item}</span>
                                 </li>
                             ))}
                         </ul>
@@ -327,15 +327,15 @@ const ServiceDetailPage = () => {
             </section>
 
             {/* Enhanced Pricing Packages in INR */}
-            <section style={{ padding: '10rem 2rem', background: 'rgba(255,255,255,0.01)', borderTop: '1px solid var(--card-border)' }}>
+            <section style={{ padding: 'clamp(5rem, 10vw, 10rem) 1.5rem', background: 'rgba(255,255,255,0.005)', borderTop: '1px solid var(--card-border)' }}>
                 <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: '7rem' }}>
-                        <div style={{ color: detail.color, marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}><CreditCard size={40}/></div>
-                        <h2 style={{ fontSize: 'clamp(3rem, 7vw, 4rem)', marginBottom: '1.5rem' }}>Investment <span style={{ color: detail.color }}>Packages</span></h2>
+                    <div style={{ textAlign: 'center', marginBottom: 'clamp(4rem, 8vw, 7rem)' }}>
+                        <div style={{ color: detail.color, marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}><CreditCard size={32}/></div>
+                        <h2 style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', marginBottom: '1.5rem', fontWeight: 900, letterSpacing: '-2px' }}>Investment <span style={{ color: detail.color }}>Packages</span></h2>
                         <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>Premium engineering focused on your ROI. All prices are starting values in INR.</p>
                     </div>
                     
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '2rem' }}>
                         {detail.pricing.map((plan, i) => (
                             <motion.div 
                                 key={plan.name}
@@ -345,29 +345,35 @@ const ServiceDetailPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ delay: i * 0.1 }}
                                 style={{ 
-                                    background: plan.popular ? 'rgba(255,255,255,0.04)' : 'rgba(255,255,255,0.01)', 
-                                    padding: '4rem 2.5rem', borderRadius: '24px', 
+                                    background: plan.popular ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.01)', 
+                                    padding: 'clamp(2rem, 5vw, 4rem) 2.5rem', borderRadius: '16px', 
                                     border: plan.popular ? `2px solid ${detail.color}` : '1px solid var(--card-border)',
-                                    position: 'relative', overflow: 'hidden'
+                                    position: 'relative', overflow: 'hidden',
+                                    display: 'flex', flexDirection: 'column'
                                 }}
                             >
-                                {plan.popular && <div style={{ position: 'absolute', top: '1.5rem', right: '-4rem', background: detail.color, color: '#fff', padding: '0.5rem 5rem', transform: 'rotate(45deg)', fontSize: '0.8rem', fontWeight: 900 }}>BEST VALUE</div>}
-                                <div style={{ color: detail.color, marginBottom: '2rem', background: `${detail.color}11`, width: '70px', height: '70px', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{plan.icon}</div>
-                                <h3 style={{ fontSize: '1.8rem', marginBottom: '1rem', fontWeight: 700 }}>{plan.name}</h3>
-                                <div style={{ marginBottom: '3rem' }}>
-                                    <span style={{ fontSize: '3.5rem', fontWeight: 900, color: '#fff' }}>₹{plan.price}</span>
-                                    <span style={{ color: 'var(--text-secondary)', marginLeft: '0.8rem', fontSize: '1rem' }}>Starting from</span>
+                                {plan.popular && <div style={{ position: 'absolute', top: '1.2rem', right: '-3rem', background: detail.color, color: '#fff', padding: '0.4rem 4rem', transform: 'rotate(45deg)', fontSize: '0.7rem', fontWeight: 900, letterSpacing: '1px' }}>BEST VALUE</div>}
+                                <div style={{ color: detail.color, marginBottom: '1.8rem', background: `${detail.color}15`, width: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{plan.icon}</div>
+                                <h3 style={{ fontSize: '1.8rem', marginBottom: '0.8rem', fontWeight: 800 }}>{plan.name}</h3>
+                                <div style={{ marginBottom: '2.5rem' }}>
+                                    <span style={{ fontSize: '3rem', fontWeight: 950, color: '#fff' }}>₹{plan.price}</span>
+                                    <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: '0.8rem', fontSize: '0.9rem', fontWeight: 600 }}>Starting</span>
                                 </div>
-                                <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', marginBottom: '2.5rem' }}></div>
-                                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '3.5rem' }}>
+                                <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', marginBottom: '2.5rem' }}></div>
+                                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '3.5rem', flex: 1 }}>
                                     {plan.features.map((feat, index) => (
-                                        <li key={index} style={{ marginBottom: '1rem', display: 'flex', gap: '0.8rem', color: '#ccc', fontSize: '1rem', alignItems: 'flex-start' }}>
-                                            <Check size={16} color={detail.color} style={{ marginTop: '4px', flexShrink: 0 }}/> {feat}
+                                        <li key={index} style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', alignItems: 'flex-start' }}>
+                                            <Check size={16} color={detail.color} style={{ marginTop: '2px', flexShrink: 0 }}/> {feat}
                                         </li>
                                     ))}
                                 </ul>
-                                <Link to="/#contact" className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`} style={{ width: '100%', padding: '1.2rem', fontSize: '1rem', textAlign: 'center', display: 'block', borderRadius: '12px' }}>
-                                    Launch Your Project
+                                <Link to="/#contact" className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`} style={{ 
+                                    width: '100%', padding: '1.2rem', fontSize: '1rem', textAlign: 'center', display: 'block', borderRadius: '12px',
+                                    background: plan.popular ? detail.color : 'rgba(255,255,255,0.05)',
+                                    color: '#fff', textDecoration: 'none', fontWeight: 800,
+                                    border: plan.popular ? 'none' : '1px solid rgba(255,255,255,0.1)'
+                                }}>
+                                    Launch Project
                                 </Link>
                             </motion.div>
                         ))}

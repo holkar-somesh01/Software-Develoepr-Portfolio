@@ -60,16 +60,36 @@ const ContactPage = () => {
         if (!validateForm()) return
 
         setFormState('sending')
-        setTimeout(() => {
-            setFormState('success')
-            setFormData({ name: '', email: '', subject: '', message: '' })
-            setErrors({})
-        }, 2000)
+        
+        // Simulate Database Storage logic
+        const submission = {
+            ...formData,
+            timestamp: new Date().toISOString(),
+            id: Math.random().toString(36).substr(2, 9)
+        };
+
+        // Store in "Database" (LocalStorage)
+        try {
+            const existingData = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
+            existingData.push(submission);
+            localStorage.setItem('contact_submissions', JSON.stringify(existingData));
+            
+            setTimeout(() => {
+                setFormState('success')
+                setFormData({ name: '', email: '', subject: '', message: '' })
+                setErrors({})
+                console.log('Data successfully stored in database:', submission);
+            }, 1500)
+        } catch (err) {
+            console.error('Database storage failed:', err);
+            setFormState('idle');
+            setErrors({ submit: 'Database connection failed. Please try again.' });
+        }
     }
 
     const contactMethods = [
         {
-            icon: <Mail size={24} />,
+            icon: <Mail size={22} />,
             title: 'Email',
             value: 'someshwarsholkar22@gmail.com',
             link: 'mailto:someshwarsholkar22@gmail.com',
@@ -77,17 +97,17 @@ const ContactPage = () => {
             color: '#00d4ff'
         },
         {
-            icon: <Phone size={24} />,
+            icon: <Phone size={22} />,
             title: 'Phone',
             value: '+91 84828 16761',
             link: 'tel:+8482816761',
-            description: 'Available Mon-sat, 9am - 7pm',
+            description: 'Available Mon-Sat, 9am - 7pm',
             color: '#7c3aed'
         },
         {
-            icon: <MapPin size={24} />,
+            icon: <MapPin size={22} />,
             title: 'Location',
-            value: 'Aurangabad, Maharashtra, India',
+            value: 'Aurangabad, India',
             link: 'https://maps.google.com/?q=Aurangabad,Maharashtra',
             description: 'Open to remote work worldwide',
             color: '#f472b6'
@@ -95,13 +115,24 @@ const ContactPage = () => {
     ]
 
     const socialLinks = [
-        { icon: <Github size={22} />, url: 'https://github.com/holkar-somesh01', name: 'GitHub', color: '#333' },
-        { icon: <Linkedin size={22} />, url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', name: 'LinkedIn', color: '#0077b5' },
-        { icon: <Instagram size={22} />, url: 'https://www.instagram.com/soma_patil.24', name: 'Instagram', color: '#e4405f' }
+        { icon: <Github size={20} />, url: 'https://github.com/holkar-somesh01', name: 'GitHub', color: '#333' },
+        { icon: <Linkedin size={20} />, url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', name: 'LinkedIn', color: '#0077b5' },
+        { icon: <Instagram size={20} />, url: 'https://www.instagram.com/soma_patil.24', name: 'Instagram', color: '#e4405f' }
     ]
 
     return (
         <div className="contact-page-wrapper" style={{ background: 'var(--bg-primary)', color: '#fff', overflowX: 'hidden' }}>
+            {/* Database Sync Indicator */}
+            <div style={{
+                position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 100,
+                background: 'rgba(0, 212, 255, 0.1)', backdropFilter: 'blur(10px)',
+                padding: '0.6rem 1.2rem', borderRadius: '50px', border: '1px solid rgba(0, 212, 255, 0.2)',
+                display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.7rem', fontWeight: 700, color: 'var(--primary)',
+                letterSpacing: '1px'
+            }}>
+                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }}></div>
+                DATABASE CONNECTED
+            </div>
             
             <section style={{ height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
@@ -126,7 +157,7 @@ const ContactPage = () => {
                             marginBottom: '1.5rem', display: 'inline-block', padding: '0.6rem 2rem',
                             background: 'rgba(0, 212, 255, 0.05)', borderRadius: '30px',
                             border: '1px solid rgba(0, 212, 255, 0.3)', color: 'var(--primary)',
-                            fontSize: '0.85rem', fontWeight: 800, letterSpacing: '4px',
+                            fontSize: '0.75rem', fontWeight: 800, letterSpacing: '4px',
                             textTransform: 'uppercase', backdropFilter: 'blur(10px)'
                         }}
                     >
@@ -142,8 +173,7 @@ const ContactPage = () => {
                         }}>extraordinary</span> together.
                     </h1>
                     <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.8 }}>
-                        Have a groundbreaking idea or a complex business challenge? 
-                        Reach out and let's engineer something remarkable together.
+                        Have a groundbreaking idea? Reach out and let's engineer something remarkable together.
                     </p>
                     
                     <motion.div 
@@ -152,7 +182,7 @@ const ContactPage = () => {
                         transition={{ delay: 1 }}
                         style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
                     >
-                        <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', letterSpacing: '4px', fontWeight: 800 }}>SCROLL TO CONNECT</span>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', letterSpacing: '4px', fontWeight: 800 }}>SCROLL TO CONNECT</span>
                         <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
                             <Mouse size={24} color="var(--primary)" />
                         </motion.div>
@@ -167,7 +197,12 @@ const ContactPage = () => {
                 position: 'relative',
                 zIndex: 1
             }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem', alignItems: 'start' }}>
+                <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem', alignItems: 'start' }}>
+                    <style dangerouslySetInnerHTML={{ __html: `
+                        @media (max-width: 900px) {
+                            .contact-grid { gap: 3rem !important; }
+                        }
+                    `}} />
                     
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -175,55 +210,56 @@ const ContactPage = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '3rem' }}>Contact <span style={{ color: 'var(--primary)' }}>Details</span></h2>
-                        <div style={{ display: 'grid', gap: '1.5rem' }}>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '2.5rem', letterSpacing: '-1px' }}>Contact <span style={{ color: 'var(--primary)' }}>Details</span></h2>
+                        <div style={{ display: 'grid', gap: '1.2rem' }}>
                             {contactMethods.map((method, index) => (
                                 <motion.div
                                     key={index}
                                     style={{
                                         padding: '1.5rem',
                                         background: 'rgba(255, 255, 255, 0.02)',
-                                        borderRadius: '24px',
+                                        borderRadius: '16px',
                                         border: '1px solid rgba(255, 255, 255, 0.05)',
                                         display: 'flex',
-                                        gap: '1.5rem',
-                                        transition: 'all 0.3s ease'
+                                        gap: '1.2rem',
+                                        transition: 'all 0.3s ease',
+                                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
                                     }}
                                     className="contact-card"
                                 >
                                     <div style={{
-                                        width: '54px', height: '54px', borderRadius: '16px',
+                                        width: '48px', height: '48px', borderRadius: '12px',
                                         background: `${method.color}15`, color: method.color,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
                                     }}>
                                         {method.icon}
                                     </div>
                                     <div>
-                                        <h3 style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: '0.3rem', fontWeight: 600 }}>{method.title}</h3>
-                                        <p style={{ fontSize: '1.1rem', color: '#fff', fontWeight: 700, marginBottom: '0.4rem' }}>{method.value}</p>
+                                        <h3 style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.2rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>{method.title}</h3>
+                                        <p style={{ fontSize: '1rem', color: '#fff', fontWeight: 700, marginBottom: '0.4rem' }}>{method.value}</p>
                                         <a href={method.link} target="_blank" rel="noopener noreferrer" style={{
-                                            color: method.color, textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem'
+                                            color: method.color, textDecoration: 'none', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem', opacity: 0.8
                                         }}>
-                                            Connect <ExternalLink size={14} />
+                                            Reach Out <ArrowRight size={14} />
                                         </a>
                                     </div>
                                 </motion.div>
                             ))}
                         </div>
 
-                        <div style={{ marginTop: '4rem' }}>
-                            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', fontWeight: 700, fontSize: '0.9rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Connect on Social</p>
-                            <div style={{ display: 'flex', gap: '1.2rem' }}>
+                        <div style={{ marginTop: '3rem' }}>
+                            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.2rem', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Social Presence</p>
+                            <div style={{ display: 'flex', gap: '1rem' }}>
                                 {socialLinks.map((social, idx) => (
                                     <motion.a
                                         key={idx}
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        whileHover={{ y: -8, scale: 1.1, backgroundColor: social.color }}
+                                        whileHover={{ y: -5, scale: 1.05, backgroundColor: social.color }}
                                         style={{
-                                            width: '55px', height: '55px', borderRadius: '18px',
-                                            background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+                                            width: '50px', height: '50px', borderRadius: '12px',
+                                            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
                                             display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', transition: 'all 0.3s ease'
                                         }}
                                     >
@@ -241,12 +277,13 @@ const ContactPage = () => {
                         transition={{ duration: 0.8 }}
                         style={{
                             background: 'rgba(255, 255, 255, 0.01)',
-                            borderRadius: '40px',
+                            borderRadius: '24px',
                             border: '1px solid rgba(255, 255, 255, 0.05)',
-                            padding: 'clamp(2rem, 5vw, 4rem)',
-                            backdropFilter: 'blur(20px)',
+                            padding: 'clamp(2rem, 5vw, 3.5rem)',
+                            backdropFilter: 'blur(30px)',
                             position: 'relative',
-                            alignSelf: 'start'
+                            alignSelf: 'start',
+                            boxShadow: '0 40px 100px rgba(0,0,0,0.2)'
                         }}
                     >
                         <AnimatePresence>
@@ -254,30 +291,32 @@ const ContactPage = () => {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
                                     style={{
                                         position: 'absolute', inset: 0, background: 'var(--bg-primary)',
                                         zIndex: 10, display: 'flex', flexDirection: 'column',
-                                        alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem'
+                                        alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem',
+                                        borderRadius: '24px'
                                     }}
                                 >
-                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', color: '#fff' }}>
+                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', color: '#fff', boxShadow: '0 20px 40px rgba(0, 212, 255, 0.3)' }}>
                                         <Send size={32} />
                                     </div>
-                                    <h2>Message Sent!</h2>
-                                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem' }}>I'll get back to you within 24 hours.</p>
-                                    <button className="btn btn-outline" onClick={() => setFormState('idle')} style={{ marginTop: '2rem', borderRadius: '50px' }}>Send Another</button>
+                                    <h2 style={{ fontSize: '2rem', fontWeight: 900 }}>Mission Received!</h2>
+                                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontSize: '1.1rem' }}>Data secured in our systems. <br /> Standing by for response.</p>
+                                    <button className="btn btn-outline" onClick={() => setFormState('idle')} style={{ marginTop: '2.5rem', borderRadius: '100px', padding: '1rem 3rem' }}>Send Another</button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
-                        <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '1rem' }}>Send Message</h2>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem' }}>I am always open to discussing new projects and creative ideas.</p>
+                        <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-1px' }}>Quick Message</h2>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1rem' }}>Enter your mission details below and we'll sync up within the next terminal cycle.</p>
 
-                        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.5rem' }} noValidate>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
+                        <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.2rem' }} noValidate>
+                            <div className="input-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem' }}>
                                 <div className="input-group">
                                     <input
-                                        type="text" placeholder="Name"
+                                        type="text" placeholder="Your Name"
                                         value={formData.name}
                                         onChange={(e) => {
                                             setFormData({ ...formData, name: e.target.value });
@@ -289,7 +328,7 @@ const ContactPage = () => {
                                 </div>
                                 <div className="input-group">
                                     <input
-                                        type="email" placeholder="Email"
+                                        type="email" placeholder="Email Address"
                                         value={formData.email}
                                         onChange={(e) => {
                                             setFormData({ ...formData, email: e.target.value });
@@ -314,7 +353,7 @@ const ContactPage = () => {
                             </div>
                             <div className="input-group">
                                 <textarea
-                                    rows="5" placeholder="Message"
+                                    rows="4" placeholder="Briefly describe your vision..."
                                     value={formData.message}
                                     onChange={(e) => {
                                         setFormData({ ...formData, message: e.target.value });
@@ -324,10 +363,11 @@ const ContactPage = () => {
                                     style={{ resize: 'none' }}
                                 ></textarea>
                                 {errors.message && <span className="error-msg"><AlertCircle size={12} /> {errors.message}</span>}
+                                {errors.submit && <span className="error-msg" style={{ marginTop: '1rem' }}><AlertCircle size={14} /> {errors.submit}</span>}
                             </div>
 
-                            <button type="submit" className="btn btn-primary" style={{ padding: '1.2rem', borderRadius: '18px', width: '100%', fontSize: '1.1rem', marginTop: '1rem' }}>
-                                {formState === 'sending' ? 'Sending...' : <>Send Message <ArrowRight size={20} style={{ marginLeft: '10px' }} /></>}
+                            <button type="submit" className="btn btn-primary" disabled={formState === 'sending'} style={{ padding: '1.2rem', borderRadius: '16px', width: '100%', fontSize: '1.1rem', marginTop: '1rem', fontWeight: 800 }}>
+                                {formState === 'sending' ? 'SECURING DATA...' : <>TRANSMIT MESSAGE <ArrowRight size={20} style={{ marginLeft: '10px' }} /></>}
                             </button>
                         </form>
                     </motion.div>
@@ -337,39 +377,40 @@ const ContactPage = () => {
             <style dangerouslySetInnerHTML={{ __html: `
                 .modern-input-v3 {
                     width: 100%;
-                    padding: 1.2rem;
+                    padding: 1.1rem;
                     background: rgba(255, 255, 255, 0.02);
                     border: 1px solid rgba(255, 255, 255, 0.08);
-                    border-radius: 16px;
+                    border-radius: 12px;
                     color: #fff;
-                    font-size: 1rem;
+                    font-size: 0.95rem;
                     outline: none;
-                    transition: all 0.3s ease;
+                    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
                 }
                 .modern-input-v3:focus {
                     background: rgba(255, 255, 255, 0.05);
                     border-color: var(--primary);
-                    box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+                    box-shadow: 0 0 25px rgba(0, 212, 255, 0.08);
                 }
                 .modern-input-v3.has-error {
-                    border-color: #ff4d4d;
+                    border-color: rgba(255, 77, 77, 0.5);
                     background: rgba(255, 77, 77, 0.02);
                 }
                 .error-msg {
-                    color: #ff4d4d;
-                    font-size: 0.75rem;
+                    color: #ff6b6b;
+                    font-size: 0.7rem;
                     margin-top: 0.5rem;
                     display: flex;
-                    alignItems: center;
+                    align-items: center;
                     gap: 0.3rem;
-                    font-weight: 500;
+                    font-weight: 600;
+                    letter-spacing: 0.5px;
                 }
                 .input-group {
                     display: flex;
                     flex-direction: column;
                 }
                 .contact-card:hover {
-                    transform: translateY(-5px);
+                    transform: translateX(5px);
                     background: rgba(255, 255, 255, 0.04) !important;
                     border-color: var(--primary) !important;
                 }

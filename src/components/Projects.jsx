@@ -131,8 +131,9 @@ const MyWork = () => {
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '2.5rem', flex: 1 }}>{project.description}</p>
                 
                 <div style={{ 
-                  display: 'flex', 
-                  gap: '1.2rem', 
+                  display: 'grid', 
+                  gridTemplateColumns: project.live ? '1fr 1fr' : '1fr', 
+                  gap: '1rem', 
                   marginTop: 'auto' 
                 }}>
                   {project.live && (
@@ -141,70 +142,64 @@ const MyWork = () => {
                       target="_blank" 
                       rel="noopener noreferrer" 
                       style={{ 
-                        flex: 2,
-                        padding: '1.2rem', 
-                        borderRadius: '18px', 
+                        padding: '1rem', 
+                        borderRadius: '16px', 
                         background: 'var(--primary)', 
                         color: '#000', 
-                        fontSize: '0.95rem', 
-                        fontWeight: 900, 
+                        fontSize: '0.9rem', 
+                        fontWeight: 800, 
                         display: 'flex', 
                         alignItems: 'center', 
                         justifyContent: 'center', 
-                        gap: '0.8rem',
+                        gap: '0.6rem',
                         textDecoration: 'none',
-                        boxShadow: '0 10px 25px rgba(0, 212, 255, 0.25)',
+                        boxShadow: '0 8px 20px rgba(0, 212, 255, 0.2)',
                         transition: 'all 0.3s ease'
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.transform = 'translateY(-3px)';
-                        e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 212, 255, 0.4)';
+                        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 212, 255, 0.4)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 212, 255, 0.25)';
+                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 212, 255, 0.2)';
                       }}
                     >
-                      <ExternalLink size={18} /> Live Demo
+                      <ExternalLink size={16} /> Demo
                     </a>
                   )}
                   {project.repo !== '#' && (
-                    <div
-                      style={{ flex: 1, position: 'relative' }}
+                    <a 
+                      href={project.isPrivate ? undefined : project.repo} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ 
+                        padding: '1rem', 
+                        borderRadius: '16px', 
+                        background: project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)', 
+                        color: project.isPrivate ? 'rgba(255,255,255,0.2)' : '#fff', 
+                        fontSize: '0.9rem', 
+                        fontWeight: 700, 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center', 
+                        gap: '0.6rem',
+                        textDecoration: 'none',
+                        border: `1px solid ${project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.1)'}`,
+                        transition: 'all 0.3s ease',
+                        cursor: project.isPrivate ? 'not-allowed' : 'pointer',
+                        pointerEvents: project.isPrivate ? 'none' : 'auto'
+                      }}
+                      onMouseOver={(e) => {
+                        if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                      }}
+                      onMouseOut={(e) => {
+                        if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                      }}
                       title={project.isPrivate ? "Source code is private" : "View Source"}
                     >
-                      <a 
-                        href={project.isPrivate ? undefined : project.repo} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        style={{ 
-                          width: '100%',
-                          padding: '1.2rem', 
-                          borderRadius: '18px', 
-                          background: project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)', 
-                          color: project.isPrivate ? 'rgba(255,255,255,0.2)' : '#fff', 
-                          fontSize: '0.95rem', 
-                          fontWeight: 800, 
-                          display: 'flex', 
-                          alignItems: 'center', 
-                          justifyContent: 'center', 
-                          gap: '0.8rem',
-                          textDecoration: 'none',
-                          border: `1px solid ${project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.1)'}`,
-                          transition: 'all 0.3s ease',
-                          cursor: project.isPrivate ? 'not-allowed' : 'pointer',
-                          pointerEvents: project.isPrivate ? 'none' : 'auto'
-                        }}
-                        onMouseOver={(e) => {
-                          if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                        }}
-                        onMouseOut={(e) => {
-                          if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
-                        }}
-                      >
-                        <Github size={18} />
-                      </a>
-                    </div>
+                      <Github size={16} /> Code
+                    </a>
                   )}
                 </div>
               </div>
