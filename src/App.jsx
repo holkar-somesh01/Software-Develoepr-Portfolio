@@ -10,12 +10,14 @@ import Footer from './components/Footer'
 import ServicesPage from './ServicesPage'
 import ServiceDetailPage from './ServiceDetailPage'
 import PrivacyPolicyPage from './PrivacyPolicyPage'
+import SEO from './components/SEO'
 import ScrollToTop from './components/ScrollToTop'
 import ContactPage from './ContactPage'
 
 function App() {
   return (
     <>
+      <SEO />
       <ScrollToTop />
       <Navbar />
       <Routes>

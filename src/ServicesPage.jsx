@@ -11,6 +11,7 @@ import {
   Target, BarChart, SmartphoneIcon, Server, Search, Mouse,
   MessageSquare, UserPlus, FileText, CheckCircle2
 } from 'lucide-react'
+import SEO from './components/SEO'
 
 // Reuse the 3D elements for consistency
 const FloatingShape = ({ position, color, speed = 1 }) => {
@@ -553,6 +554,12 @@ const ServicesPage = () => {
 
   return (
     <div className="services-page" style={{ background: '#050508', color: '#fff', overflowX: 'hidden' }}>
+      <SEO 
+        title="Premium Software Services" 
+        description="High-quality MERN stack, React Native, and Electron.js development services. Build scalable web and mobile applications with Someshwar Holkar."
+        keywords="Web Development Services, Mobile App Development, React Native Developer, MERN Stack Services, Software Architect"
+        url="/services"
+      />
       <ServicesHero />
       <div style={{ position: 'relative', zIndex: 5 }}>
         <ServicesCards />

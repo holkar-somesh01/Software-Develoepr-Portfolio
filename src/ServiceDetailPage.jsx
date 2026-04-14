@@ -9,6 +9,7 @@ import {
     ChevronDown, CreditCard, Star, Crown, PackageSearch, Wrench, Layout, 
     Search, Server, Settings, FileCode, ClipboardList
 } from 'lucide-react'
+import SEO from './components/SEO'
 
 // Advanced 3D Component with deeper visual impact
 const AnimatedShape = ({ color }) => (
@@ -200,6 +201,11 @@ const ServiceDetailPage = () => {
 
     return (
         <div className="service-detail-page" style={{ backgroundColor: 'var(--bg-primary)', color: 'white', minHeight: '100vh', overflowX: 'hidden' }}>
+            <SEO 
+                title={detail.title} 
+                description={detail.tagline}
+                url={`/services/${id}`}
+            />
             {/* Immersive Hero Section */}
             <section className="detail-hero" style={{ 
                 height: '100vh', 

@@ -14,7 +14,9 @@ import {
     Mouse,
     AlertCircle
 } from 'lucide-react'
-import { useState, Suspense } from 'react'
+import { useState, Suspense, useEffect } from 'react'
+import SEO from './components/SEO'
+import emailjs from '@emailjs/browser'
 
 const ContactBackground = () => {
     return (
@@ -61,30 +63,30 @@ const ContactPage = () => {
 
         setFormState('sending')
         
-        // Simulate Database Storage logic
-        const submission = {
-            ...formData,
-            timestamp: new Date().toISOString(),
-            id: Math.random().toString(36).substr(2, 9)
+        const templateParams = {
+            from_name: formData.name,
+            from_email: formData.email,
+            to_name: 'Someshwar Holkar',
+            subject: formData.subject,
+            message: formData.message,
         };
 
-        // Store in "Database" (LocalStorage)
-        try {
-            const existingData = JSON.parse(localStorage.getItem('contact_submissions') || '[]');
-            existingData.push(submission);
-            localStorage.setItem('contact_submissions', JSON.stringify(existingData));
-            
-            setTimeout(() => {
-                setFormState('success')
-                setFormData({ name: '', email: '', subject: '', message: '' })
-                setErrors({})
-                console.log('Data successfully stored in database:', submission);
-            }, 1500)
-        } catch (err) {
-            console.error('Database storage failed:', err);
+        emailjs.send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id', 
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id', 
+            templateParams,
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key'
+        )
+        .then((response) => {
+            console.log('SUCCESS!', response.status, response.text);
+            setFormState('success')
+            setFormData({ name: '', email: '', subject: '', message: '' })
+            setErrors({})
+        }, (err) => {
+            console.error('FAILED...', err);
             setFormState('idle');
-            setErrors({ submit: 'Database connection failed. Please try again.' });
-        }
+            setErrors({ submit: 'Transimission failed. Please check your network or try again.' });
+        });
     }
 
     const contactMethods = [
@@ -120,8 +122,17 @@ const ContactPage = () => {
         { icon: <Instagram size={20} />, url: 'https://www.instagram.com/soma_patil.24', name: 'Instagram', color: '#e4405f' }
     ]
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <div className="contact-page-wrapper" style={{ background: 'var(--bg-primary)', color: '#fff', overflowX: 'hidden' }}>
+            <SEO 
+                title="Contact | Hire Me" 
+                description="Get in touch with Someshwar Holkar for freelance projects, collaborations, or job opportunities. Based in Aurangabad, India."
+                url="/contact"
+            />
             {/* Database Sync Indicator */}
             <div style={{
                 position: 'fixed', bottom: '2rem', right: '2rem', zIndex: 100,
