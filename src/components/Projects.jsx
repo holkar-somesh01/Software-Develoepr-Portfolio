@@ -13,6 +13,15 @@ const projects = [
     isPrivate: true
   },
   {
+  title: 'SS Infra – Fleet & Workforce Management',
+  description: 'A mobile application for infrastructure companies to manage fleet operations and construction workforce, including vehicle tracking, worker attendance, site management, and daily activity monitoring.',
+  tech: ['React Native', 'Node.js', 'Express', 'MongoDB', 'JWT'],
+  stars: 1,
+  repo: null,
+  live: 'https://play.google.com/store/apps/details?id=com.inficom.ssinfra',
+  image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop'
+},
+  {
     title: 'Sandip Sonawane - LIC Agent',
     description: 'Professional portfolio website for LIC Insurance Agent with services, gallery, testimonials, and WhatsApp contact integration.',
     tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive'],
