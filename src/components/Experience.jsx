@@ -39,7 +39,7 @@ const Experience = () => {
         My <span>Experience</span>
       </motion.h2>
       <p className="section-subtitle">
-        Professional journey through my career
+        My professional career journey
       </p>
 
       <div className="timeline">

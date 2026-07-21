@@ -142,10 +142,10 @@ const ContactPage = () => {
                 letterSpacing: '1px'
             }}>
                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }}></div>
-                DATABASE CONNECTED
+                SYSTEM ONLINE
             </div>
             
-            <section style={{ height: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
+            <section style={{ minHeight: '80vh', paddingTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
                     <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
                         <Suspense fallback={null}>
@@ -174,17 +174,17 @@ const ContactPage = () => {
                     >
                         Get In Touch
                     </motion.div>
-                    <h1 style={{ fontSize: 'clamp(3rem, 10vw, 6rem)', fontWeight: 950, lineHeight: 1, letterSpacing: '-2px', marginBottom: '2rem' }}>
+                    <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '1.5rem' }}>
                         Let's build something <br />
                         <span style={{ 
                             background: 'linear-gradient(to right, #00d4ff, #7c3aed)', 
                             WebkitBackgroundClip: 'text', 
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text'
-                        }}>extraordinary</span> together.
+                        }}>great</span> together.
                     </h1>
-                    <p style={{ fontSize: '1.2rem', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto', lineHeight: 1.8 }}>
-                        Have a groundbreaking idea? Reach out and let's engineer something remarkable together.
+                    <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.6 }}>
+                        Have a project in mind? Reach out and let's discuss how I can help bring it to life.
                     </p>
                     
                     <motion.div 
@@ -193,7 +193,7 @@ const ContactPage = () => {
                         transition={{ delay: 1 }}
                         style={{ marginTop: '4rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
                     >
-                        <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', letterSpacing: '4px', fontWeight: 800 }}>SCROLL TO CONNECT</span>
+                        <span style={{ fontSize: '0.7rem', color: 'var(--text-secondary)', letterSpacing: '4px', fontWeight: 800 }}>SCROLL DOWN</span>
                         <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 2 }}>
                             <Mouse size={24} color="var(--primary)" />
                         </motion.div>
@@ -313,15 +313,15 @@ const ContactPage = () => {
                                     <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', color: '#fff', boxShadow: '0 20px 40px rgba(0, 212, 255, 0.3)' }}>
                                         <Send size={32} />
                                     </div>
-                                    <h2 style={{ fontSize: '2rem', fontWeight: 900 }}>Mission Received!</h2>
-                                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontSize: '1.1rem' }}>Data secured in our systems. <br /> Standing by for response.</p>
+                                    <h2 style={{ fontSize: '2rem', fontWeight: 900 }}>Message Sent!</h2>
+                                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontSize: '1.1rem' }}>Thank you for reaching out. <br /> I will get back to you soon.</p>
                                     <button className="btn btn-outline" onClick={() => setFormState('idle')} style={{ marginTop: '2.5rem', borderRadius: '100px', padding: '1rem 3rem' }}>Send Another</button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-1px' }}>Quick Message</h2>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1rem' }}>Enter your mission details below and we'll sync up within the next terminal cycle.</p>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1rem' }}>Please fill the form below and I will reply to you as soon as possible.</p>
 
                         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.2rem' }} noValidate>
                             <div className="input-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem' }}>
@@ -364,7 +364,7 @@ const ContactPage = () => {
                             </div>
                             <div className="input-group">
                                 <textarea
-                                    rows="4" placeholder="Briefly describe your vision..."
+                                    rows="4" placeholder="Write your message here..."
                                     value={formData.message}
                                     onChange={(e) => {
                                         setFormData({ ...formData, message: e.target.value });
@@ -378,7 +378,7 @@ const ContactPage = () => {
                             </div>
 
                             <button type="submit" className="btn btn-primary" disabled={formState === 'sending'} style={{ padding: '1.2rem', borderRadius: '16px', width: '100%', fontSize: '1.1rem', marginTop: '1rem', fontWeight: 800 }}>
-                                {formState === 'sending' ? 'SECURING DATA...' : <>TRANSMIT MESSAGE <ArrowRight size={20} style={{ marginLeft: '10px' }} /></>}
+                                {formState === 'sending' ? 'SENDING...' : <>SEND MESSAGE <ArrowRight size={20} style={{ marginLeft: '10px' }} /></>}
                             </button>
                         </form>
                     </motion.div>

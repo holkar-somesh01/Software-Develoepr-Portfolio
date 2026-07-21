@@ -390,9 +390,9 @@ const ServiceDetailPage = () => {
             {/* Preparation Roadmap & Requirements */}
             <section style={{ padding: '10rem 2rem', background: 'linear-gradient(to top, var(--bg-primary), rgba(124, 58, 237, 0.03))' }}>
                 <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '8rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: 'clamp(4rem, 8vw, 8rem)' }}>
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2.5rem' }}><ClipboardList size={30}/> <h2 style={{ fontSize: '2.5rem', margin: 0 }}>Built for <span style={{ color: detail.color }}>Impact</span></h2></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2.5rem' }}><ClipboardList size={30}/> <h2 style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', margin: 0 }}>My <span style={{ color: detail.color }}>Process</span></h2></div>
                             {detail.process.map((step, i) => (
                                 <motion.div 
                                     key={i} 

@@ -10,10 +10,10 @@ const About = () => {
   ]
 
   const expertise = [
-    { title: 'Web Architect', icon: Code2, desc: 'Crafting complex MERN stack solutions' },
-    { title: 'Mobile Dev', icon: Smartphone, desc: 'Building cross-platform React Native apps' },
-    { title: 'Algorithmist', icon: Brain, desc: 'Optimizing through advanced DSA' },
-    { title: 'Visionary', icon: Rocket, desc: 'Deploying scalable microservices' },
+    { title: 'Web Developer', icon: Code2, desc: 'Building MERN stack web applications' },
+    { title: 'Mobile Developer', icon: Smartphone, desc: 'Building React Native mobile apps' },
+    { title: 'Problem Solver', icon: Brain, desc: 'Writing efficient code using Data Structures and Algorithms' },
+    { title: 'Backend Developer', icon: Rocket, desc: 'Building and deploying scalable backend services' },
   ]
 
   return (
@@ -48,11 +48,10 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="section-tag">About Me</span>
-          <h2 className="about-title">Architecting Digital <br/><span>Masterpieces</span></h2>
+          <h2 className="about-title">Building Professional <br/><span>Software</span></h2>
           <p className="about-description">
-            I'm a full-stack engineer driven by the challenge of transforming complex problems 
-            into elegant digital experiences. My expertise lies at the intersection of 
-            robust backends and fluid, high-performance frontends.
+            I am a full-stack developer who enjoys solving complex problems and creating user-friendly web applications. 
+            I specialize in building strong backends and fast, responsive frontends.
           </p>
 
           <div className="expertise-grid">

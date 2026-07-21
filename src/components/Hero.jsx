@@ -8,7 +8,7 @@ import Scene3D from './Scene3D'
 
 const Hero = () => {
   const [text, setText] = useState('')
-  const fullText = 'MERN Stack Developer | React-Native | Freelancer'
+  const fullText = 'MERN Stack | React-Native Developer | Freelancer'
 
   useEffect(() => {
     let index = 0
@@ -44,12 +44,12 @@ const Hero = () => {
         </p>
         <p className="hero-description">
           Building scalable web & mobile applications with modern technologies.
-          Passionate about creating impactful digital experiences and available for freelance work.
+          Passionate about creating great user experiences and available for freelance work.
         </p>
         <div className="hero-buttons">
-          <Link to="/#projects" className="btn btn-primary">
+          <a href="#my-work" className="btn btn-primary">
             View Projects <ArrowRight size={20} />
-          </Link>
+          </a>
           <Link to="/contact" className="btn btn-outline">
             Contact Me <Mail size={20} />
           </Link>

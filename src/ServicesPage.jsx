@@ -125,7 +125,7 @@ const ServicesHero = () => {
             textTransform: 'uppercase', backdropFilter: 'blur(10px)'
           }}
         >
-          PREMIUM SOFTWARE SOLUTIONS
+          PROFESSIONAL SOFTWARE SERVICES
         </motion.div>
         <motion.h1
           className="services-title"
@@ -141,14 +141,14 @@ const ServicesHero = () => {
             marginBottom: '2.5rem'
           }}
         >
-          Engineering Your <br />
+          Building Great <br />
           <span style={{
             background: 'linear-gradient(to right, #00d4ff, #7c3aed, #f472b6)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundSize: '200% auto',
             animation: 'gradientMove 5s linear infinite'
-          }}>Digital Future</span>
+          }}>Web Applications</span>
         </motion.h1>
         <motion.p
           className="services-subtitle"
@@ -164,8 +164,7 @@ const ServicesHero = () => {
             fontWeight: 500
           }}
         >
-          Helping industry leaders and ambitious startups build mission-critical
-          web and mobile applications with uncompromising quality and speed.
+          Helping businesses and startups build fast, reliable, and user-friendly web and mobile applications.
         </motion.p>
 
         <motion.div
@@ -182,9 +181,9 @@ const ServicesHero = () => {
           }}
         >
           {[
-            { icon: <Zap size={32} />, label: 'ULTRA SPEED', color: 'var(--primary)', shadow: 'rgba(0, 212, 255, 0.2)' },
-            { icon: <ShieldCheck size={32} />, label: 'ROBUST SECURITY', color: '#7c3aed', shadow: 'rgba(124, 58, 237, 0.2)' },
-            { icon: <Rocket size={32} />, label: 'SCALABLE INFRA', color: '#f472b6', shadow: 'rgba(244, 114, 182, 0.2)' }
+            { icon: <Zap size={32} />, label: 'FAST PERFORMANCE', color: 'var(--primary)', shadow: 'rgba(0, 212, 255, 0.2)' },
+            { icon: <ShieldCheck size={32} />, label: 'SECURE', color: '#7c3aed', shadow: 'rgba(124, 58, 237, 0.2)' },
+            { icon: <Rocket size={32} />, label: 'SCALABLE', color: '#f472b6', shadow: 'rgba(244, 114, 182, 0.2)' }
           ].map((prop, i) => (
             <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
               <div style={{
@@ -212,20 +211,20 @@ const ServicesCards = () => {
   const services = [
     {
       id: 'static-website',
-      name: 'Static Showcase',
+      name: 'Static Website',
       icon: Globe,
       color: '#00d4ff',
       price: '₹5k+',
-      description: 'Ultra-fast, perfectly optimized sites that dominate SEO rankings and offer bulletproof security with sub-second response times.',
-      tags: ['SSR/SSG', 'Astro', 'Headless'],
+      description: 'Fast and secure static websites optimized for search engines and great user experience.',
+      tags: ['React', 'Next.js', 'Tailwind'],
       features: [
-        '99+ Google Lighthouse Score',
-        'Headless CMS Integration',
-        'Global Edge Caching',
-        'Mobile-First Layouts'
+        'Fast Loading Speed',
+        'Easy Content Management',
+        'Global Fast Hosting',
+        'Mobile Friendly Design'
       ],
       popular: false,
-      cta: 'View Packages'
+      cta: 'More Details'
     },
     {
       id: 'dynamic-website',
@@ -233,33 +232,33 @@ const ServicesCards = () => {
       icon: Database,
       color: '#7c3aed',
       price: '₹14,999',
-      description: 'Sophisticated web applications powered by robust backends, real-time data sync, and enterprise-grade administrative portals.',
+      description: 'Complete web applications with custom backends, user dashboards, and real-time database connections.',
       tags: ['MERN', 'Admin Panel', 'Payments', 'Auth'],
       features: [
-        'Secure User Authentication',
-        'Multi-role Dashboards',
-        'Cloud Data Persistence',
-        'API Architecture'
+        'Secure Login System',
+        'Admin Dashboards',
+        'Cloud Database',
+        'API Integration'
       ],
       popular: true,
-      cta: 'View Packages'
+      cta: 'More Details'
     },
     {
       id: 'mobile-app',
-      name: 'Mobile App',
+      name: 'Mobile Application',
       icon: Smartphone,
       color: '#f472b6',
       price: '₹14,999',
-      description: 'Engaging, native-quality experiences for iOS and Android built for performance with smooth animations and hardware integration.',
-      tags: ['React Native', 'Expo', 'Store Dev', 'Payments'],
+      description: 'High-quality mobile applications for both Android and iOS with smooth animations and great performance.',
+      tags: ['React Native', 'Expo', 'Play Store', 'Payments'],
       features: [
-        'Offline Functionality',
-        'Push Notification Flow',
-        'Biometric Integration',
-        'App Store Ready'
+        'Works Offline',
+        'Push Notifications',
+        'Fingerprint/Face Login',
+        'Play Store Ready'
       ],
       popular: false,
-      cta: 'View Packages'
+      cta: 'More Details'
     },
   ]
 
@@ -279,14 +278,14 @@ const ServicesCards = () => {
           whileInView={{ opacity: 1 }}
           style={{ fontSize: '0.8rem', color: 'var(--primary)', letterSpacing: '5px', fontWeight: 800, textTransform: 'uppercase' }}
         >
-          CORE SPECIALTIES
+          MY SERVICES
         </motion.span>
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginTop: '1.2rem', fontWeight: 950, letterSpacing: '-1px' }}
         >
-          Expert <span style={{ color: 'var(--primary)' }}>Solutions</span>
+          What I <span style={{ color: 'var(--primary)' }}>Offer</span>
         </motion.h2>
       </div>
 
@@ -316,7 +315,7 @@ const ServicesCards = () => {
             whileHover={{ y: -20 }}
             transition={{ delay: index * 0.1, type: 'spring', stiffness: 200, damping: 20 }}
             style={{
-              padding: 'clamp(2rem, 5vw, 3rem) 2rem',
+              padding: '1.5rem',
               background: 'rgba(255,255,255,0.015)',
               borderRadius: '16px',
               border: service.popular ? `2px solid ${service.color}` : '1px solid rgba(255,255,255,0.05)',
@@ -325,19 +324,20 @@ const ServicesCards = () => {
               backdropFilter: 'blur(40px)',
               display: 'flex',
               flexDirection: 'column',
-              boxShadow: service.popular ? `0 30px 60px ${service.color}15` : '0 20px 50px rgba(0,0,0,0.3)'
+              boxShadow: service.popular ? `0 30px 60px ${service.color}15` : '0 20px 50px rgba(0,0,0,0.3)',
+              height: '100%'
             }}
           >
             {service.popular && (
               <div style={{
                 position: 'absolute',
-                top: '2.5rem',
-                right: '2.5rem',
+                top: '1.5rem',
+                right: '1.5rem',
                 background: service.color,
                 color: '#fff',
-                padding: '0.4rem 1.2rem',
+                padding: '0.2rem 0.8rem',
                 borderRadius: '100px',
-                fontSize: '0.7rem',
+                fontSize: '0.65rem',
                 fontWeight: 900,
                 letterSpacing: '1px'
               }}>
@@ -345,51 +345,50 @@ const ServicesCards = () => {
               </div>
             )}
 
-            <motion.div
-              whileHover={{ scale: 1.1, rotate: 2 }}
-              style={{
-                color: service.color,
-                marginBottom: '1.5rem',
-                background: `linear-gradient(135deg, ${service.color}25, ${service.color}05)`,
-                width: '64px',
-                height: '64px',
-                borderRadius: '18px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '1rem',
-                border: `1px solid ${service.color}35`,
-                boxShadow: `0 10px 30px ${service.color}20`,
-                transition: 'all 0.3s ease'
-              }}
-            >
-              <service.icon size={32} strokeWidth={2.5} />
-            </motion.div>
-
-            <div style={{ marginBottom: '1rem', color: service.color, fontWeight: 700, fontSize: '0.9rem', letterSpacing: '1px' }}>
-              Base: {service.price}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem', marginTop: service.popular ? '1rem' : '0' }}>
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 2 }}
+                style={{
+                  color: service.color,
+                  background: `linear-gradient(135deg, ${service.color}25, ${service.color}05)`,
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '0.5rem',
+                  border: `1px solid ${service.color}35`,
+                  boxShadow: `0 10px 30px ${service.color}20`,
+                  transition: 'all 0.3s ease',
+                  flexShrink: 0
+                }}
+              >
+                <service.icon size={24} strokeWidth={2.5} />
+              </motion.div>
+              <h3 style={{ fontSize: 'clamp(1.2rem, 2vw, 1.5rem)', margin: 0, fontWeight: 950, letterSpacing: '-1px', lineHeight: 1.2 }}>{service.name}</h3>
             </div>
 
-            <h3 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.22rem)', marginBottom: '1.2rem', fontWeight: 950, letterSpacing: '-1px' }}>{service.name}</h3>
 
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1rem', lineHeight: 1.7, minHeight: '80px' }}>
+
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '1rem', fontSize: '0.9rem', lineHeight: 1.5 }}>
               {service.description}
             </p>
 
-            <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
               {service.tags.map(tag => (
-                <span key={tag} style={{ background: 'rgba(255,255,255,0.03)', color: '#fff', padding: '0.5rem 1.2rem', borderRadius: '15px', fontSize: '0.7rem', fontWeight: 700, border: '1px solid rgba(255,255,255,0.08)' }}>
+                <span key={tag} style={{ background: 'rgba(255,255,255,0.03)', color: '#fff', padding: '0.3rem 0.8rem', borderRadius: '15px', fontSize: '0.65rem', fontWeight: 700, border: '1px solid rgba(255,255,255,0.08)' }}>
                   {tag}
                 </span>
               ))}
             </div>
 
-            <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)', margin: '0 0 2rem' }}></div>
+            <div style={{ height: '1px', background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent)', margin: '0 0 1rem' }}></div>
 
-            <ul style={{ listStyle: 'none', padding: 0, marginBottom: '2.5rem', flex: 1 }}>
+            <ul style={{ listStyle: 'none', padding: 0, marginBottom: '1.5rem', flex: 1 }}>
               {service.features.map((feature, i) => (
-                <li key={i} style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem', fontSize: '1rem', color: 'rgba(255,255,255,0.8)', alignItems: 'center' }}>
-                  <div style={{ background: `${service.color}20`, padding: '0.4rem', borderRadius: '50%', color: service.color, display: 'flex' }}><Check size={14} /></div>
+                <li key={i} style={{ display: 'flex', gap: '0.8rem', marginBottom: '0.8rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', alignItems: 'center' }}>
+                  <div style={{ background: `${service.color}20`, padding: '0.2rem', borderRadius: '50%', color: service.color, display: 'flex' }}><Check size={12} /></div>
                   {feature}
                 </li>
               ))}
@@ -399,12 +398,12 @@ const ServicesCards = () => {
               to={`/services/${service.id}`}
               style={{
                 width: '100%',
-                borderRadius: '20px',
-                padding: '1.5rem',
+                borderRadius: '12px',
+                padding: '0.8rem',
                 textAlign: 'center',
                 textDecoration: 'none',
                 fontWeight: 800,
-                fontSize: '1.1rem',
+                fontSize: '0.9rem',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -433,10 +432,10 @@ const ServicesCards = () => {
 
 const CollaborationProcess = () => {
   const steps = [
-    { title: 'Discovery', desc: 'In-depth consultation to map your objectives and architecture.', color: 'var(--primary)' },
-    { title: 'Strategy', desc: 'Defining the tech stack, prototypes, and development milestones.', color: '#7c3aed' },
-    { title: 'Execution', desc: 'Iterative development sprints with transparent weekly progress updates.', color: '#f472b6' },
-    { title: 'Launch', desc: 'Rigorous testing, performance optimization, and global deployment.', color: '#10b981' },
+    { title: 'Discussion', desc: 'Understanding your business needs and project requirements.', color: 'var(--primary)' },
+    { title: 'Planning', desc: 'Choosing the right technology and creating a clear project plan.', color: '#7c3aed' },
+    { title: 'Development', desc: 'Writing code and building the project with regular updates.', color: '#f472b6' },
+    { title: 'Delivery', desc: 'Testing everything properly and launching the project live.', color: '#10b981' },
   ]
 
   return (
@@ -444,7 +443,7 @@ const CollaborationProcess = () => {
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
           <span style={{ fontSize: '0.8rem', color: '#7c3aed', letterSpacing: '5px', fontWeight: 800 }}>WORKFLOW</span>
-          <h2 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', marginTop: '1rem', fontWeight: 950 }}>Built for <span style={{ background: 'var(--gradient-secondary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Reliability</span></h2>
+          <h2 style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', marginTop: '1rem', fontWeight: 950 }}>How I <span style={{ background: 'var(--gradient-secondary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Work</span></h2>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '3rem', position: 'relative' }}>
@@ -505,14 +504,14 @@ const FinalCTA = () => {
         style={{ position: 'relative', zIndex: 10 }}
       >
         <h2 style={{ fontSize: 'clamp(2.5rem, 8vw, 6rem)', fontWeight: 900, marginBottom: '3rem', lineHeight: 1, letterSpacing: '-4px' }}>
-          Let's Architect <br />
+          Let's Work <br />
           <span style={{
             background: 'var(--gradient-primary)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             animation: 'gradientMove 5s linear infinite',
             backgroundSize: '200% auto'
-          }}>The Future</span>
+          }}>Together</span>
         </h2>
 
         <p style={{
@@ -523,8 +522,7 @@ const FinalCTA = () => {
           lineHeight: 1.8,
           fontWeight: 400
         }}>
-          Now accepting high-impact projects and long-term technical partnerships.
-          Limited slots available for Q2 2026.
+          I am currently available for new projects and freelance work.
         </p>
 
         <Link
@@ -540,7 +538,7 @@ const FinalCTA = () => {
             letterSpacing: '2px'
           }}
         >
-          Initiate Mission <ArrowRight size={24} style={{ marginLeft: '1.5rem' }} />
+          Contact Me <ArrowRight size={24} style={{ marginLeft: '1.5rem' }} />
         </Link>
       </motion.div>
     </section>

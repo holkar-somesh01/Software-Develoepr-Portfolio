@@ -65,7 +65,7 @@ const Skills = () => {
         My <span>Skills</span>
       </motion.h2>
       <p className="section-subtitle">
-        Technologies I work with to bring ideas to life
+        Technologies I use to build applications
       </p>
       <div className="skills-grid">
         {skills.map((skill, index) => (

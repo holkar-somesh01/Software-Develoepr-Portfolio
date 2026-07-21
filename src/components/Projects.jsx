@@ -9,18 +9,18 @@ const projects = [
     stars: 0,
     repo: 'https://github.com/holkar-somesh01/jaibabajigurukul',
     live: 'https://www.jaibabajigurukul.com',
-    image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=400&fit=crop',
+    image: 'https://res.cloudinary.com/dqqputx7b/image/upload/v1784460989/Gemini_Generated_Image_ajm7i4ajm7i4ajm7_a8fjsp.png',
     isPrivate: true
   },
   {
-    title: 'Sandip Sonawane - LIC Agent',
-    description: 'Professional portfolio website for LIC Insurance Agent with services, gallery, testimonials, and WhatsApp contact integration.',
-    tech: ['React', 'Tailwind CSS', 'Framer Motion', 'Responsive'],
+    title: 'Ayurdnyanam',
+    description: 'A comprehensive platform providing BAMS Course Premium handwritten notes and video lectures. The web platform is live and the mobile app is in development.',
+    tech: ['React', 'Node.js', 'React Native (Pending)'],
     stars: 0,
-    repo: 'https://github.com/holkar-somesh01/LIC-Agent-Website',
-    live: 'https://www.sandipmsonawane.in/',
-    image: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop',
-    isPrivate: true
+    repo: '#',
+    live: 'https://ayurdnyanam.com/',
+    image: 'https://res.cloudinary.com/dqqputx7b/image/upload/v1784460003/Gemini_Generated_Image_seackpseackpseac_v5c4eb.png',
+    isPrivate: false
   },
   {
     title: 'Jay Bhadra Construction',
@@ -56,34 +56,35 @@ const MyWork = () => {
   return (
     <section id="my-work" style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden' }}>
       <div style={{ position: 'absolute', top: '10%', right: '-10%', width: '500px', height: '500px', background: 'var(--primary)', filter: 'blur(200px)', opacity: 0.03, borderRadius: '50%', zIndex: 0 }}></div>
-      
+
       <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             style={{ fontSize: '0.8rem', color: 'var(--primary)', letterSpacing: '6px', fontWeight: 800, textTransform: 'uppercase' }}
           >
             PORTFOLIO
           </motion.span>
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', marginTop: '1.5rem', fontWeight: 950, letterSpacing: '-2px' }}
           >
-            My <span style={{ background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Creative Work</span>
+            My <span style={{ background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Projects</span>
           </motion.h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', marginTop: '1.5rem', maxWidth: '600px', margin: '1.5rem auto 0' }}>
-            A selection of high-impact web applications and software solutions crafted with modern engineering.
+            A collection of web applications and software solutions I have built.
           </p>
         </div>
 
-        <div className="work-grid" style={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(3, 1fr)', 
-          gap: '2.5rem' 
+        <div className="work-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '2.5rem'
         }}>
-          <style dangerouslySetInnerHTML={{ __html: `
+          <style dangerouslySetInnerHTML={{
+            __html: `
             @media (max-width: 1200px) {
               .work-grid { grid-template-columns: repeat(2, 1fr) !important; }
             }
@@ -92,7 +93,7 @@ const MyWork = () => {
             }
           `}} />
           {projects.map((project, index) => (
-            <motion.div 
+            <motion.div
               key={project.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -110,10 +111,10 @@ const MyWork = () => {
               }}
             >
               <div style={{ position: 'relative', height: '300px', overflow: 'hidden' }}>
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }} 
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }}
                   onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
                   onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 />
@@ -129,28 +130,28 @@ const MyWork = () => {
               <div style={{ padding: '3rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <h3 style={{ fontSize: '2rem', marginBottom: '1.2rem', fontWeight: 900, letterSpacing: '-0.5px' }}>{project.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '2.5rem', flex: 1 }}>{project.description}</p>
-                
-                <div style={{ 
-                  display: 'grid', 
-                  gridTemplateColumns: project.live ? '1fr 1fr' : '1fr', 
-                  gap: '1rem', 
-                  marginTop: 'auto' 
+
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: project.live ? '1fr 1fr' : '1fr',
+                  gap: '1rem',
+                  marginTop: 'auto'
                 }}>
                   {project.live && (
-                    <a 
-                      href={project.live} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ 
-                        padding: '1rem', 
-                        borderRadius: '16px', 
-                        background: 'var(--primary)', 
-                        color: '#000', 
-                        fontSize: '0.9rem', 
-                        fontWeight: 800, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        padding: '1rem',
+                        borderRadius: '16px',
+                        background: 'var(--primary)',
+                        color: '#000',
+                        fontSize: '0.9rem',
+                        fontWeight: 800,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '0.6rem',
                         textDecoration: 'none',
                         boxShadow: '0 8px 20px rgba(0, 212, 255, 0.2)',
@@ -165,24 +166,24 @@ const MyWork = () => {
                         e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 212, 255, 0.2)';
                       }}
                     >
-                      <ExternalLink size={16} /> Demo
+                      <ExternalLink size={16} /> Preview
                     </a>
                   )}
                   {project.repo !== '#' && (
-                    <a 
-                      href={project.isPrivate ? undefined : project.repo} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ 
-                        padding: '1rem', 
-                        borderRadius: '16px', 
-                        background: project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)', 
-                        color: project.isPrivate ? 'rgba(255,255,255,0.2)' : '#fff', 
-                        fontSize: '0.9rem', 
-                        fontWeight: 700, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center', 
+                    <a
+                      href={project.isPrivate ? undefined : project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        padding: '1rem',
+                        borderRadius: '16px',
+                        background: project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)',
+                        color: project.isPrivate ? 'rgba(255,255,255,0.2)' : '#fff',
+                        fontSize: '0.9rem',
+                        fontWeight: 700,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                         gap: '0.6rem',
                         textDecoration: 'none',
                         border: `1px solid ${project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.1)'}`,
@@ -191,10 +192,10 @@ const MyWork = () => {
                         pointerEvents: project.isPrivate ? 'none' : 'auto'
                       }}
                       onMouseOver={(e) => {
-                        if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+                        if (!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
                       }}
                       onMouseOut={(e) => {
-                        if(!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                        if (!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
                       }}
                       title={project.isPrivate ? "Source code is private" : "View Source"}
                     >

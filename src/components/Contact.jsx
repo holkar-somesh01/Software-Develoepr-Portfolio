@@ -12,6 +12,7 @@ import {
     AlertCircle
 } from 'lucide-react'
 import { useState } from 'react'
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
     const [formState, setFormState] = useState('idle')
@@ -47,11 +48,31 @@ const Contact = () => {
         if (!validateForm()) return
 
         setFormState('sending')
-        setTimeout(() => {
-            setFormState('success')
-            setFormData({ name: '', email: '', subject: '', message: '' })
-            setErrors({})
-        }, 2000)
+
+        const templateParams = {
+            from_name: formData.name,
+            from_email: formData.email,
+            to_name: 'Someshwar Holkar',
+            subject: formData.subject,
+            message: formData.message,
+        };
+
+        emailjs.send(
+            import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id',
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id',
+            templateParams,
+            import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key'
+        )
+            .then((response) => {
+                console.log('SUCCESS!', response.status, response.text);
+                setFormState('success')
+                setFormData({ name: '', email: '', subject: '', message: '' })
+                setErrors({})
+            }, (err) => {
+                console.error('FAILED...', err);
+                setFormState('idle');
+                setErrors({ submit: 'Transmission failed. Please check your network or try again.' });
+            });
     }
 
     const contactMethods = [
@@ -72,7 +93,7 @@ const Contact = () => {
         {
             icon: <MapPin size={24} />,
             title: 'Location',
-            value: 'Aurangabad, India',
+            value: 'Chhatrapati Sambhajinagar (Aurangabad), Maharashtra 431101, ',
             link: 'https://maps.google.com/?q=Aurangabad,Maharashtra',
             color: '#f472b6'
         }
@@ -124,7 +145,7 @@ const Contact = () => {
                     </p>
                 </motion.div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '4rem', alignItems: 'start' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'clamp(2rem, 5vw, 4rem)', alignItems: 'start' }}>
 
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
@@ -139,14 +160,12 @@ const Contact = () => {
                                     style={{
                                         padding: '1.5rem', background: 'rgba(255, 255, 255, 0.02)',
                                         borderRadius: '24px', border: '1px solid rgba(255, 255, 255, 0.05)',
-                                        display: 'flex', gap: '1.5rem', transition: 'all 0.3s ease'
+                                        display: 'flex', transition: 'all 0.3s ease'
                                     }}
                                     className="contact-card-v3"
                                 >
-                                    <div style={{
-                                        width: '50px', height: '50px', borderRadius: '14px',
-                                        background: `${method.color}15`, color: method.color,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                    <div className="contact-icon-box" style={{
+                                        background: `${method.color}15`, color: method.color
                                     }}>
                                         {method.icon}
                                     </div>
@@ -320,9 +339,38 @@ const Contact = () => {
                     display: flex;
                     flex-direction: column;
                 }
+                .contact-card-v3 {
+                    gap: 1.5rem;
+                }
                 .contact-card-v3:hover {
                     background: rgba(255, 255, 255, 0.04) !important;
                     transform: translateX(5px);
+                }
+                .contact-icon-box {
+                    width: 50px;
+                    height: 50px;
+                    min-width: 50px;
+                    border-radius: 14px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                @media (max-width: 768px) {
+                    .contact-card-v3 {
+                        gap: 1rem;
+                        padding: 1.2rem !important;
+                    }
+                    .contact-icon-box {
+                        width: 38px;
+                        height: 38px;
+                        min-width: 38px;
+                        border-radius: 10px;
+                    }
+                    .contact-icon-box svg {
+                        width: 18px !important;
+                        height: 18px !important;
+                    }
                 }
             ` }} />
         </section>
