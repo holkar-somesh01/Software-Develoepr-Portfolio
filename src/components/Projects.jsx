@@ -23,6 +23,16 @@ const projects = [
     isPrivate: false
   },
   {
+    title: 'SS Infra Software',
+    description: 'A mobile application for infrastructure companies for construction machine fleet management, employee work logs, and complete machines data tracking. Built collaboratively as a team project.',
+    tech: ['React Native', 'PHP Laravel'],
+    stars: 1,
+    repo: '#',
+    live: 'https://play.google.com/store/apps/details?id=com.inficom.ssinfra&hl=en_IN',
+    image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop',
+    isPrivate: true
+  },
+  {
     title: 'Jay Bhadra Construction',
     description: 'Construction company website showcasing projects, services, testimonials, and contact information for a building contractor.',
     tech: ['Next.js', 'Tailwind CSS', 'Vercel Deployment'],
@@ -91,6 +101,42 @@ const MyWork = () => {
             @media (max-width: 768px) {
               .work-grid { grid-template-columns: 1fr !important; }
             }
+            
+            .btn-preview-animated {
+              position: relative;
+              background: linear-gradient(90deg, #00d4ff, #0055ff, #00d4ff);
+              background-size: 200% auto;
+              color: #fff !important;
+              animation: shine 3s linear infinite;
+              box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
+              transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .btn-preview-animated:hover {
+              transform: translateY(-5px) scale(1.05);
+              box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+            }
+            @keyframes shine {
+              to {
+                background-position: 200% center;
+              }
+            }
+            
+            .btn-github-animated {
+              background: rgba(255, 255, 255, 0.05);
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              color: #fff !important;
+              transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+            .btn-github-animated:hover {
+              background: #fff !important;
+              color: #000 !important;
+              transform: translateY(-5px) scale(1.05);
+              box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
+            }
+            .btn-github-animated:hover svg {
+              color: #000 !important;
+            }
           `}} />
           {projects.map((project, index) => (
             <motion.div
@@ -142,31 +188,20 @@ const MyWork = () => {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="btn-preview-animated"
                       style={{
                         padding: '1rem',
                         borderRadius: '16px',
-                        background: 'var(--primary)',
-                        color: '#000',
-                        fontSize: '0.9rem',
+                        fontSize: '0.95rem',
                         fontWeight: 800,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '0.6rem',
                         textDecoration: 'none',
-                        boxShadow: '0 8px 20px rgba(0, 212, 255, 0.2)',
-                        transition: 'all 0.3s ease'
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-3px)';
-                        e.currentTarget.style.boxShadow = '0 12px 30px rgba(0, 212, 255, 0.4)';
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 8px 20px rgba(0, 212, 255, 0.2)';
                       }}
                     >
-                      <ExternalLink size={16} /> Preview
+                      <ExternalLink size={18} /> Preview
                     </a>
                   )}
                   {project.repo !== '#' && (
@@ -174,32 +209,28 @@ const MyWork = () => {
                       href={project.isPrivate ? undefined : project.repo}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className={!project.isPrivate ? "btn-github-animated" : ""}
                       style={{
                         padding: '1rem',
                         borderRadius: '16px',
-                        background: project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.05)',
-                        color: project.isPrivate ? 'rgba(255,255,255,0.2)' : '#fff',
-                        fontSize: '0.9rem',
+                        fontSize: '0.95rem',
                         fontWeight: 700,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: '0.6rem',
                         textDecoration: 'none',
-                        border: `1px solid ${project.isPrivate ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.1)'}`,
-                        transition: 'all 0.3s ease',
-                        cursor: project.isPrivate ? 'not-allowed' : 'pointer',
-                        pointerEvents: project.isPrivate ? 'none' : 'auto'
-                      }}
-                      onMouseOver={(e) => {
-                        if (!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-                      }}
-                      onMouseOut={(e) => {
-                        if (!project.isPrivate) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                        ...(project.isPrivate ? {
+                          background: 'rgba(255,255,255,0.02)',
+                          color: 'rgba(255,255,255,0.2)',
+                          border: '1px solid rgba(255,255,255,0.02)',
+                          cursor: 'not-allowed',
+                          pointerEvents: 'none'
+                        } : {})
                       }}
                       title={project.isPrivate ? "Source code is private" : "View Source"}
                     >
-                      <Github size={16} /> Code
+                      <Github size={18} /> Code
                     </a>
                   )}
                 </div>
