@@ -1,6 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect, useRef, Suspense, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useEffect, useRef, Suspense, useState, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
     Check, ArrowLeft, Zap, Smartphone, Globe, Database, Shield, Rocket, 
@@ -9,7 +8,6 @@ import {
     Search, Server, Settings, FileCode, ClipboardList
 } from 'lucide-react'
 import SEO from './components/SEO'
-import { lazy } from 'react'
 
 const ServiceDetailCanvas = lazy(() => import('./components/ServiceDetailCanvas'))
 
