@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Suspense } from 'react'
-import { Canvas } from '@react-three/fiber'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { lazy } from 'react'
-const Scene3D = lazy(() => import('./Scene3D'))
+const HeroCanvas = lazy(() => import('./HeroCanvas'))
 import ConsultationModal from './ConsultationModal'
 
 const Hero = () => {
@@ -29,11 +28,9 @@ const Hero = () => {
   return (
     <section className="hero">
       <div className="hero-canvas">
-        <Canvas camera={{ position: [0, 0, 8], fov: 60 }}>
-          <Suspense fallback={null}>
-            <Scene3D />
-          </Suspense>
-        </Canvas>
+        <Suspense fallback={null}>
+          <HeroCanvas />
+        </Suspense>
       </div>
       <motion.div
         className="hero-content"

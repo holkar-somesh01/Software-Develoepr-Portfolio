@@ -219,7 +219,7 @@ const ServiceDetailPage = () => {
                 padding: '100px 2rem'
             }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-                    <Canvas camera={{ position: [0, 0, 8] }}>
+                    <Canvas camera={{ position: [0, 0, 8] }} dpr={[1, 1.5]} gl={{ powerPreference: "high-performance", antialias: false, stencil: false, depth: false }}>
                         <Suspense fallback={null}>
                             <DetailScene color={detail.color} />
                         </Suspense>

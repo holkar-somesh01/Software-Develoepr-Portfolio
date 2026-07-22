@@ -148,7 +148,7 @@ const ContactPage = () => {
             
             <section style={{ minHeight: '80vh', paddingTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
-                    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+                    <Canvas camera={{ position: [0, 0, 5], fov: 75 }} dpr={[1, 1.5]} gl={{ powerPreference: "high-performance", antialias: false, stencil: false, depth: false }}>
                         <Suspense fallback={null}>
                             <ContactBackground />
                         </Suspense>
