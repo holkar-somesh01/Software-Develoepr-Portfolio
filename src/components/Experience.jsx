@@ -4,25 +4,28 @@ const experiences = [
   {
     company: 'Inficom Solutions',
     role: 'Software Developer',
-    duration: 'Present',
-    description: 'Currently working as a Software Developer, building modern web and mobile applications using MERN stack and React Native.',
+    duration: '16 December 2025 – Present',
+    description: 'Working as a Software Developer, contributing to the development of modern web applications, mobile applications, and scalable backend systems. Responsible for designing, developing, maintaining, and optimizing software solutions while following clean architecture, industry best practices, and performance-focused development.',
     isCurrent: true,
+    badge: 'Current Role',
     position: 'left'
   },
   {
     company: 'Devanta Tech',
-    role: 'Full Stack Developer Intern',
-    duration: '6 Months',
-    description: 'Worked as a Full Stack Developer Intern. Gained hands-on experience with MERN stack development and real-world project implementation.',
+    role: 'Full Stack Developer',
+    duration: '07 August 2025 – 11 December 2025',
+    description: 'Worked as a Full Stack Developer, contributing to real-world software projects by developing responsive frontend interfaces, backend APIs, and database-driven features. Collaborated with the development team to deliver reliable, scalable, and user-focused applications.',
     isCurrent: false,
+    badge: 'Aug 2025 – Dec 2025',
     position: 'right'
   },
   {
     company: 'SkillHub IT Solutions',
-    role: 'Internship',
-    duration: '12 Months',
-    description: 'Completed 1-year internship program in web development. Learned modern technologies including React, Node.js, and MongoDB.',
+    role: 'Web Development Intern',
+    duration: '01 July 2024 – 31 July 2025',
+    description: 'Successfully completed a one-year web development internship focused on modern frontend and backend technologies. Gained practical experience by building responsive web applications, working with databases, collaborating on development tasks, and following professional software development workflows.',
     isCurrent: false,
+    badge: 'Jul 2024 – Jul 2025',
     position: 'left'
   }
 ]
@@ -36,10 +39,10 @@ const Experience = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        My <span>Experience</span>
+        Professional <span>Experience</span>
       </motion.h2>
       <p className="section-subtitle">
-        My professional career journey
+        Building modern software through internships, professional roles, and real-world development experience.
       </p>
 
       <div className="timeline">
@@ -64,7 +67,7 @@ const Experience = () => {
               </div>
               <h4 className="exp-company">{exp.company}</h4>
               <p className="exp-description">{exp.description}</p>
-              {exp.isCurrent && <span className="current-badge">Current</span>}
+              {exp.badge && <span className="current-badge">{exp.badge}</span>}
             </div>
           </motion.div>
         ))}

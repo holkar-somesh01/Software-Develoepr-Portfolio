@@ -5,10 +5,12 @@ import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Scene3D from './Scene3D'
+import ConsultationModal from './ConsultationModal'
 
 const Hero = () => {
   const [text, setText] = useState('')
-  const fullText = 'MERN Stack | React-Native Developer | Freelancer'
+  const [isModalOpen, setModalOpen] = useState(false)
+  const fullText = 'Full Stack Developer | Mobile App Developer | Freelancer'
 
   useEffect(() => {
     let index = 0
@@ -43,16 +45,17 @@ const Hero = () => {
           <span className="typing-text">{text}</span>
         </p>
         <p className="hero-description">
-          Building scalable web & mobile applications with modern technologies.
-          Passionate about creating great user experiences and available for freelance work.
+          I build modern websites, mobile applications, and custom software
+          that help startups, businesses, and organizations transform ideas
+          into fast, secure, and scalable digital solutions.
         </p>
         <div className="hero-buttons">
           <a href="#my-work" className="btn btn-primary">
             View Projects <ArrowRight size={20} />
           </a>
-          <Link to="/contact" className="btn btn-outline">
-            Contact Me <Mail size={20} />
-          </Link>
+          <button onClick={() => setModalOpen(true)} className="btn btn-outline cursor-pointer bg-transparent border border-[#00d4ff] text-[#00d4ff] hover:bg-[#00d4ff] hover:text-black">
+            Hire Me <Mail size={20} />
+          </button>
         </div>
         <div className="social-links">
           <a href="https://github.com/holkar-somesh01" target="_blank" rel="noopener noreferrer" className="social-link">
@@ -66,6 +69,7 @@ const Hero = () => {
           </a>
         </div>
       </motion.div>
+      <ConsultationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
     </section>
   )
 }

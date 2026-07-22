@@ -1,25 +1,60 @@
 import { motion } from 'framer-motion'
-import { GitBranch, Star, Users, Github, Code2, Rocket, Brain, Smartphone } from 'lucide-react'
+import { GitBranch, Star, Users, Github, Code2, Rocket, Brain, Smartphone, Briefcase, Award } from 'lucide-react'
 
 const About = () => {
   const stats = [
-    { label: 'Repositories', value: '51+', icon: GitBranch, color: '#00d4ff' },
-    { label: 'Stars Earned', value: '16+', icon: Star, color: '#7c3aed' },
-    { label: 'Followers', value: '4+', icon: Users, color: '#f472b6' },
-    { label: 'Open Source', value: '100+', icon: Github, color: '#10b981' },
-  ]
-
+    {
+      label: "Projects Completed",
+      value: "5+",
+      icon: Briefcase,
+      color: "#00d4ff",
+    },
+    {
+      label: "Technologies",
+      value: "20+",
+      icon: Code2,
+      color: "#7c3aed",
+    },
+    {
+      label: "Happy Clients",
+      value: "4+",
+      icon: Users,
+      color: "#f472b6",
+    },
+    {
+      label: "Years of Experience",
+      value: "2+",
+      icon: Award,
+      color: "#10b981",
+    },
+  ];
   const expertise = [
-    { title: 'Web Developer', icon: Code2, desc: 'Building MERN stack web applications' },
-    { title: 'Mobile Developer', icon: Smartphone, desc: 'Building React Native mobile apps' },
-    { title: 'Problem Solver', icon: Brain, desc: 'Writing efficient code using Data Structures and Algorithms' },
-    { title: 'Backend Developer', icon: Rocket, desc: 'Building and deploying scalable backend services' },
-  ]
+    {
+      title: "Website Development",
+      icon: Code2,
+      desc: "Building fast, responsive, and SEO-friendly websites for businesses and brands.",
+    },
+    {
+      title: "Mobile App Development",
+      icon: Smartphone,
+      desc: "Creating modern cross-platform mobile applications with smooth user experiences.",
+    },
+    {
+      title: "Custom Software",
+      icon: Brain,
+      desc: "Developing tailored software solutions to solve real business challenges.",
+    },
+    {
+      title: "Backend & APIs",
+      icon: Rocket,
+      desc: "Building secure APIs and scalable backend systems for modern applications.",
+    },
+  ];
 
   return (
     <section id="about" className="section about-section">
       <div className="about-container">
-        <motion.div 
+        <motion.div
           className="about-visual"
           initial={{ opacity: 0, x: -50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -28,19 +63,19 @@ const About = () => {
         >
           <div className="image-wrapper">
             <div className="image-glow"></div>
-            <img 
-              src="https://avatars.githubusercontent.com/u/172102268?v=4" 
-              alt="Someshwar Holkar" 
+            <img
+              src="https://avatars.githubusercontent.com/u/172102268?v=4"
+              alt="Someshwar Holkar"
               className="avatar"
             />
             <div className="experience-badge">
               <span className="years">2+</span>
-              <span className="text">Years of<br/>Experience</span>
+              <span className="text">Years of<br />Experience</span>
             </div>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="about-text"
           initial={{ opacity: 0, x: 50 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -48,10 +83,9 @@ const About = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <span className="section-tag">About Me</span>
-          <h2 className="about-title">Building Professional <br/><span>Software</span></h2>
+          <h2 className="about-title">Helping Businesses to <br /><span>Build Better Software</span></h2>
           <p className="about-description">
-            I am a full-stack developer who enjoys solving complex problems and creating user-friendly web applications. 
-            I specialize in building strong backends and fast, responsive frontends.
+            I build modern websites, mobile applications, and custom software that help startups, businesses, and organizations transform ideas into secure, scalable, and high-performance digital solutions. My focus is on delivering clean architecture, excellent user experience, and reliable software built for long-term growth.
           </p>
 
           <div className="expertise-grid">
@@ -70,7 +104,7 @@ const About = () => {
 
           <div className="stats-grid">
             {stats.map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="stat-card"
                 whileHover={{ y: -5 }}
