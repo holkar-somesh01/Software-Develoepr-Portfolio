@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Shield, ArrowLeft, Check, Lock, Eye, Zap } from 'lucide-react'
 import { useEffect } from 'react'
+import SEO from './components/SEO'
 
 const PrivacyPolicyPage = () => {
     useEffect(() => {
@@ -35,7 +36,11 @@ const PrivacyPolicyPage = () => {
 
     return (
         <div className="privacy-policy-page" style={{ backgroundColor: 'var(--bg-primary)', color: 'white', minHeight: '100vh' }}>
-
+            <SEO 
+                title="Privacy Policy" 
+                description="Privacy Policy for Someshwar Holkar, a Freelance Software Developer."
+                url="/privacy-policy"
+            />
 
             <header style={{ paddingTop: '10rem', paddingBottom: '4rem', textAlign: 'center' }}>
                 <motion.div

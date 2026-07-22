@@ -4,7 +4,8 @@ import { Canvas } from '@react-three/fiber'
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import Scene3D from './Scene3D'
+import { lazy } from 'react'
+const Scene3D = lazy(() => import('./Scene3D'))
 import ConsultationModal from './ConsultationModal'
 
 const Hero = () => {

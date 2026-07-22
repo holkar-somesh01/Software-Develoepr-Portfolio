@@ -2,9 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const SEO = ({ title, description, keywords, image, url, type = 'website' }) => {
-  const siteName = 'Someshwar Holkar | Full Stack Developer';
-  const defaultDescription = 'Professional Portfolio of Someshwar Holkar - MERN Stack Developer, React-Native Developer, and Freelancer. Expertise in React.js, Node.js, MongoDB, and Electron.js.';
-  const defaultKeywords = 'Someshwar Holkar, Somesh Holkar, MERN Stack Developer, React Developer, Node.js Developer, Electron.js Developer, Portfolio, Freelance Developer, Web Development, India';
+  const siteName = 'Someshwar Holkar | Freelance Software Developer';
+  const defaultDescription = 'Professional Portfolio of Someshwar Holkar - Freelance Software Developer specializing in Website Development, Mobile App Development, and custom Application Development. Expertise in React.js, Node.js, MongoDB, and React Native.';
+  const defaultKeywords = 'Someshwar Holkar, Freelancer, Software Developer, Mobile App Developer, Website Developer, Application Development, MERN Stack Developer, React Developer, Node.js Developer, Electron.js Developer, Portfolio, Freelance Developer, Web Development, India';
   const defaultUrl = 'https://someshwarholkar.vercel.app'; // Valid Vercel domain
   const defaultImage = '/og-image.png'; // Make sure to provide a real image path later
 
@@ -44,14 +44,14 @@ const SEO = ({ title, description, keywords, image, url, type = 'website' }) => 
           "@context": "https://schema.org",
           "@type": "Person",
           "name": "Someshwar Holkar",
-          "jobTitle": "Full Stack Developer",
+          "jobTitle": "Freelance Software Developer",
           "url": defaultUrl,
           "sameAs": [
             "https://github.com/holkar-somesh01",
             "https://linkedin.com/in/someshwar-holkar-819503314",
             "https://instagram.com/soma_patil.24"
           ],
-          "knowsAbout": ["React.js", "Node.js", "MongoDB", "Express.js", "React Native", "Electron.js", "RabbitMQ", "Redis", "MERN Stack"],
+          "knowsAbout": ["Software Development", "Website Development", "Mobile App Development", "Application Development", "React.js", "Node.js", "MongoDB", "Express.js", "React Native", "Electron.js", "MERN Stack"],
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Aurangabad",

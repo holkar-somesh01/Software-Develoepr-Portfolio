@@ -66,6 +66,8 @@ const About = () => {
             <img
               src="https://avatars.githubusercontent.com/u/172102268?v=4"
               alt="Someshwar Holkar"
+              loading="lazy"
+              decoding="async"
               className="avatar"
             />
             <div className="experience-badge">

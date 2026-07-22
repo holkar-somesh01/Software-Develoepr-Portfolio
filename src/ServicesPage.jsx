@@ -555,7 +555,7 @@ const ServicesPage = () => {
       <SEO 
         title="Premium Software Services" 
         description="High-quality MERN stack, React Native, and Electron.js development services. Build scalable web and mobile applications with Someshwar Holkar."
-        keywords="Web Development Services, Mobile App Development, React Native Developer, MERN Stack Services, Software Architect"
+        keywords="Freelance Software Developer, Web Development Services, Mobile App Development, Website Developer, Application Development, React Native Developer, MERN Stack Services"
         url="/services"
       />
       <ServicesHero />

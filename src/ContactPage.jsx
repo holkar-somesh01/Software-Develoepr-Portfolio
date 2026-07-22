@@ -131,6 +131,7 @@ const ContactPage = () => {
             <SEO 
                 title="Contact | Hire Me" 
                 description="Get in touch with Someshwar Holkar for freelance projects, collaborations, or job opportunities. Based in Aurangabad, India."
+                keywords="Hire Freelancer, Hire Software Developer, Contact Someshwar Holkar, Freelance Web Developer Contact"
                 url="/contact"
             />
             {/* Database Sync Indicator */}

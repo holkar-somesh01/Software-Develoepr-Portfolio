@@ -204,6 +204,7 @@ const ServiceDetailPage = () => {
             <SEO 
                 title={detail.title} 
                 description={detail.tagline}
+                keywords={`${detail.title}, ${detail.techStack.join(', ')}, Freelance Developer, Custom Application Development`}
                 url={`/services/${id}`}
             />
             {/* Immersive Hero Section */}
