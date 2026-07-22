@@ -1,6 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { Canvas } from '@react-three/fiber'
-import { Stars, Float } from '@react-three/drei'
 import {
     Mail,
     Phone,
@@ -14,20 +12,12 @@ import {
     Mouse,
     AlertCircle
 } from 'lucide-react'
-import { useState, Suspense, useEffect } from 'react'
+import { useState, Suspense, useEffect, lazy } from 'react'
 import SEO from './components/SEO'
 import emailjs from '@emailjs/browser'
 
-const ContactBackground = () => {
-    return (
-        <group>
-            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-            <ambientLight intensity={0.5} />
-            <pointLight position={[10, 10, 10]} color="#00d4ff" intensity={1} />
-            <pointLight position={[-10, -10, -10]} color="#7c3aed" intensity={0.8} />
-        </group>
-    )
-}
+const ContactCanvas = lazy(() => import('./components/ContactCanvas'))
+
 
 const ContactPage = () => {
     const [formState, setFormState] = useState('idle')
@@ -148,11 +138,9 @@ const ContactPage = () => {
             
             <section style={{ minHeight: '80vh', paddingTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
-                    <Canvas camera={{ position: [0, 0, 5], fov: 75 }} dpr={[1, 1.5]} gl={{ powerPreference: "high-performance", antialias: false, stencil: false, depth: false }}>
-                        <Suspense fallback={null}>
-                            <ContactBackground />
-                        </Suspense>
-                    </Canvas>
+                    <Suspense fallback={null}>
+                        <ContactCanvas />
+                    </Suspense>
                 </div>
                 
                 <motion.div

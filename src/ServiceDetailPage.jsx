@@ -1,8 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useEffect, useRef, Suspense, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, OrbitControls, Stars, MeshDistortMaterial, Sphere } from '@react-three/drei'
+import { motion, AnimatePresence } from 'framer-motion'
 import { 
     Check, ArrowLeft, Zap, Smartphone, Globe, Database, Shield, Rocket, 
     Cpu, Briefcase, BarChart3, Users2, HelpCircle, MessageSquare, 
@@ -10,35 +9,9 @@ import {
     Search, Server, Settings, FileCode, ClipboardList
 } from 'lucide-react'
 import SEO from './components/SEO'
+import { lazy } from 'react'
 
-// Advanced 3D Component with deeper visual impact
-const AnimatedShape = ({ color }) => (
-    <Float speed={3} rotationIntensity={1} floatIntensity={1}>
-        <Sphere args={[1.2, 64, 64]} scale={2.0}>
-            <MeshDistortMaterial
-                color={color}
-                speed={1.5}
-                distort={0.4}
-                radius={1}
-                wireframe
-                opacity={0.15}
-                transparent
-                emissive={color}
-                emissiveIntensity={0.2}
-            />
-        </Sphere>
-    </Float>
-)
-
-const DetailScene = ({ color }) => (
-    <>
-        <Stars radius={100} depth={50} count={6000} factor={6} saturation={0} fade speed={2} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} color={color} intensity={2} />
-        <AnimatedShape color={color} />
-        <OrbitControls enableZoom={false} />
-    </>
-)
+const ServiceDetailCanvas = lazy(() => import('./components/ServiceDetailCanvas'))
 
 const ServiceDetailPage = () => {
     const { id } = useParams()
@@ -219,11 +192,9 @@ const ServiceDetailPage = () => {
                 padding: '100px 2rem'
             }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-                    <Canvas camera={{ position: [0, 0, 8] }} dpr={[1, 1.5]} gl={{ powerPreference: "high-performance", antialias: false, stencil: false, depth: false }}>
-                        <Suspense fallback={null}>
-                            <DetailScene color={detail.color} />
-                        </Suspense>
-                    </Canvas>
+                    <Suspense fallback={null}>
+                        <ServiceDetailCanvas color={detail.color} />
+                    </Suspense>
                 </div>
                 <motion.div
                     className="detail-hero-content"
