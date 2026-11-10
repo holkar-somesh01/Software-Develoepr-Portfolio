@@ -46,6 +46,31 @@ export default function ConsultationModal({ isOpen, onClose }) {
   const onSubmit = async (data) => {
     try {
       setStatus('idle');
+
+      // 1. Submit consultation to Laravel Backend Database
+      const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000/api').replace(/\/+$/, '') + '/consultation';
+      const backendPromise = fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          company: data.company || null,
+          project_type: data.projectType || null,
+          budget: data.budget || null,
+          timeline: data.timeline || null,
+          details: data.description || null,
+        })
+      }).then(res => res.json()).catch(err => {
+        console.warn('Consultation API submission unreachable or failed:', err);
+        return null;
+      });
+
+      // 2. EmailJS submission
       const templateParams = {
         name: data.name,
         email: data.email,
@@ -67,9 +92,20 @@ export default function ConsultationModal({ isOpen, onClose }) {
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id';
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key';
 
-      await emailjs.send(serviceId, templateId, templateParams, publicKey);
-      setStatus('success');
-      reset();
+      const emailJsPromise = emailjs.send(serviceId, templateId, templateParams, publicKey).catch(err => {
+        console.warn('EmailJS send error:', err);
+        return null;
+      });
+
+      const [apiRes, emailRes] = await Promise.all([backendPromise, emailJsPromise]);
+
+      if ((apiRes && apiRes.success) || emailRes) {
+        setStatus('success');
+        reset();
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 4000);
+      }
     } catch (err) {
       console.error(err);
       setStatus('error');

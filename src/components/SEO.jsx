@@ -36,7 +36,7 @@ const SEO = ({ title, description, keywords, image, url, type = 'website' }) => 
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
       <meta name="twitter:image" content={seoImage} />
-      <meta name="twitter:creator" content="@soma_patil.24" />
+      <meta name="twitter:creator" content="@patil_soma.24" />
 
       {/* Structured Data (JSON-LD) */}
       <script type="application/ld+json">
@@ -49,7 +49,7 @@ const SEO = ({ title, description, keywords, image, url, type = 'website' }) => 
           "sameAs": [
             "https://github.com/holkar-somesh01",
             "https://linkedin.com/in/someshwar-holkar-819503314",
-            "https://instagram.com/soma_patil.24"
+            "https://instagram.com/patil_soma.24"
           ],
           "knowsAbout": ["Software Development", "Website Development", "Mobile App Development", "Application Development", "React.js", "Node.js", "MongoDB", "Express.js", "React Native", "Electron.js", "MERN Stack"],
           "address": {

@@ -1,11 +1,11 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect, useRef, Suspense, useState, lazy } from 'react'
+import { useEffect, Suspense, useState, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
     Check, ArrowLeft, Zap, Smartphone, Globe, Database, Shield, Rocket, 
-    Cpu, Briefcase, BarChart3, Users2, HelpCircle, MessageSquare, 
-    ChevronDown, CreditCard, Star, Crown, PackageSearch, Wrench, Layout, 
-    Search, Server, Settings, FileCode, ClipboardList
+    Cpu, BarChart3, HelpCircle, MessageSquare, 
+    ChevronDown, CreditCard, Star, Crown, PackageSearch, Settings, 
+    ClipboardList, Layers, Lock, ArrowUpRight, CheckCircle2, Clock
 } from 'lucide-react'
 import SEO from './components/SEO'
 
@@ -17,7 +17,7 @@ const ServiceDetailPage = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+    }, [id])
 
     const serviceDetails = {
         'static-website': {
@@ -25,14 +25,21 @@ const ServiceDetailPage = () => {
             icon: 'https://img.icons8.com/fluency/144/browser.png',
             color: '#00d4ff',
             tagline: 'High-performance, ultra-secure, and SEO-dominant.',
+            categoryTag: 'MODERN JAMSTACK & SSG ARCHITECTURE',
             description: 'Static sites are no longer simple; with modern Headless architectures, they offer sub-second load times and unmatched reliability. We leverage advanced generation frameworks to deliver websites that not only look premium but perform at enterprise levels.',
+            kpis: [
+                { title: 'SPEED', value: 'Sub-Second Load (99+ PageSpeed)', icon: BarChart3 },
+                { title: 'SECURITY', value: 'Zero Database Vulnerabilities', icon: Shield },
+                { title: 'SEO DOMINANCE', value: '100% Core Web Vitals Pass', icon: Rocket },
+                { title: 'AVAILABILITY', value: 'Global Edge CDN Delivery', icon: Globe }
+            ],
             benefits: [
-                'Incredible Speed: Pre-rendered pages load instantly on any device.',
-                'Security Shield: No server-side vulnerabilities or DB injections.',
-                'SEO King: Faster load times mean higher positions on Google.',
-                'Zero Downtime: CDN-distributed content stays up under heavy traffic.',
-                'Scalable for Viral Growth: Handle 100k+ users without slowing down.',
-                'Minimal Maintenance: Set it and forget it. No security patches needed.'
+                { title: 'Incredible Speed', desc: 'Pre-rendered pages load instantly on any mobile or desktop device.', icon: Zap },
+                { title: 'Security Shield', desc: 'No server-side database vulnerabilities, SQL injections, or breach vectors.', icon: Shield },
+                { title: 'SEO Dominance', desc: 'Lightning-fast load times translate to higher rankings and lower bounce rates.', icon: Rocket },
+                { title: 'Zero Downtime', desc: 'CDN-distributed content stays completely accessible under viral traffic surges.', icon: Globe },
+                { title: 'Infinite Scaling', desc: 'Effortlessly serve hundreds of thousands of concurrent users with zero lag.', icon: Layers },
+                { title: 'Minimal Maintenance', desc: 'Set it and forget it with automated CI/CD deployments and no server patches.', icon: Settings }
             ],
             process: [
                 'Strategy & Research: Understanding your target audience and competitors.',
@@ -42,259 +49,413 @@ const ServiceDetailPage = () => {
                 'SEO & Optimization: Maximizing Core Web Vitals for search dominance.',
                 'Global Launch: Deploying on high-availability CDN infrastructures.'
             ],
-            techStack: ['React/Next.js (SSG)', 'Astro', 'Three.js', 'Vite', 'Framer Motion', 'TailwindCSS'],
+            techStack: ['React', 'Next.js (SSG)', 'Astro', 'Three.js', 'Vite', 'Framer Motion', 'TailwindCSS'],
             deliverables: [
-                'Source Code (Clean & Documented)',
-                'SEO Implementation Strategy',
-                'Performance Audit Report',
-                'Hosting Setup & CDN Config',
-                'Basic Training for CMS Updates',
-                'Post-Launch Technical Review'
+                'Production-Ready Clean Source Code',
+                'SEO Implementation Strategy & Audit',
+                'Performance Optimization Audit Report',
+                'Hosting Setup & Custom CDN Routing',
+                'Headless CMS Training & Documentation',
+                'Post-Launch Technical Review & Support'
             ],
             requirements: [
-                'Brand Assets (Logo, Colors)',
-                'Initial Design Preferences',
-                'Sitemap and Page Content',
+                'Brand Assets (Logo, Colors, Fonts)',
+                'Initial Design Style Preferences',
+                'Sitemap and Page Content Outline',
                 'Domain Access (if existing)'
             ],
             pricing: [
-                { name: 'Basic Static', price: '4,999', icon: <PackageSearch />, features: ['5 Pages', 'Responsive Design', 'Basic SEO', '1 Month Support', 'Hosting Setup', 'Contact Form'] },
-                { name: 'Business Static', price: '9,999', icon: <Star />, popular: true, features: ['Up to 15 Pages', 'Custom Animated UI', 'Advanced SEO', '1 Year Support', 'Speed Optimization', 'Blog Integration', 'PWA Support'] },
-                { name: 'Elite Brand', price: '19,999+', icon: <Crown />, features: ['Unlimited Pages', 'Premium Animations', 'Headless CMS Setup', '1-year Support', 'Priority Integration', 'Advanced Analytics', 'Copywriting Support'] }
+                { name: 'Basic Static', price: '4,999', icon: <PackageSearch size={26} />, features: ['5 Responsive Pages', 'Mobile-First Layout', 'Core Web Vitals SEO', '1 Month Technical Support', 'Hosting & CDN Setup', 'Interactive Contact Form'] },
+                { name: 'Business Static', price: '9,999', icon: <Star size={26} />, popular: true, features: ['Up to 15 Custom Pages', 'Smooth Framer Motion Animations', 'Advanced Technical SEO', '1 Year Extended Support', 'Speed Optimization (98+ score)', 'Dynamic Blog Integration', 'PWA Offline Support'] },
+                { name: 'Elite Brand', price: '19,999+', icon: <Crown size={26} />, features: ['Unlimited Custom Pages', 'Interactive 3D / WebGL Effects', 'Headless CMS Integration', '1-Year Priority Support', 'Dedicated Analytics Dashboard', 'Conversion Rate Optimization', 'Priority Technical Roadmapping'] }
             ],
             faqs: [
-                { q: 'What is a "Static" website exactly?', a: 'A static website consists of pre-built pages that are served directly to the user. It doesn\'t require database processing on each request, making it incredibly fast and safe.' },
-                { q: 'Can I add a blog to a static site?', a: 'Definitely. We use Headless CMS like Sanity or Strapi, which allows you to manage content like a regular dashboard while keeping the frontend static and fast.' },
-                { q: 'Is hosting expensive for static sites?', a: 'Actually, it\'s often free or extremely cheap (under ₹500/mo) because they require minimal server resources compared to traditional sites.' },
-                { q: 'How long does a typical build take?', a: 'Small sites take about a week, while larger multi-page brand sites take 2–3 weeks of focused engineering.' }
+                { q: 'What is a "Static" website exactly?', a: 'A static website consists of pre-built, pre-rendered pages served instantly over edge CDNs. Because pages do not need database queries on every click, they are remarkably fast and virtually immune to hacking.' },
+                { q: 'Can I add a blog to a static site?', a: 'Definitely. We connect a Headless CMS such as Sanity, Strapi, or Contentful so you can create and publish articles from an easy dashboard while keeping the site static and fast.' },
+                { q: 'Is hosting expensive for static sites?', a: 'Actually, it is often free or very affordable (often ₹0 to under ₹500/month on Vercel, Netlify, or Cloudflare Pages) because of low server overhead.' },
+                { q: 'How long does a typical build take?', a: 'Compact corporate landing sites typically take 5–7 days, while larger multi-page business sites take 2–3 weeks of focused engineering.' }
             ]
         },
         'dynamic-website': {
             title: 'Dynamic Website Development',
             icon: 'https://img.icons8.com/fluency/144/cloud-database-settings.png',
             color: '#7c3aed',
-            tagline: 'Custom business logic and real-time interaction.',
-            description: 'Transition beyond the static. We build full-stack web applications that adapt to your users. From centralized admin dashboards to automated customer pipelines, our dynamic solutions create real business value through automation and intelligence.',
+            tagline: 'Custom business logic, real-time data, and high-performance APIs.',
+            categoryTag: 'FULL-STACK WEB & CLOUD DATABASE PLATFORMS',
+            description: 'Transition beyond static web pages. We build robust, database-driven full-stack web applications tailored to your business operations. From central administrative management dashboards to real-time client portals, our dynamic web solutions create tangible value through automated workflows and secure cloud architectures.',
+            kpis: [
+                { title: 'LATENCY', value: 'Sub-100ms API Response Time', icon: Zap },
+                { title: 'SECURITY', value: 'JWT, Bcrypt & Role-Based ACL', icon: Lock },
+                { title: 'ARCHITECTURE', value: 'REST & GraphQL Microservices', icon: Database },
+                { title: 'UPTIME SLA', value: '99.9% High Availability Cloud', icon: Shield }
+            ],
             benefits: [
-                'Content Management: Real-time updates via custom admin panels.',
-                'User Intelligence: Personalized experiences tailored to user behavior.',
-                'Database Integrity: Secure and optimized data structures.',
-                'API-First Approach: Easily connect with external tools and third-party apps.',
-                'E-commerce Capabilities: Fully customizable checkout and inventory paths.',
-                'High Interactivity: Everything from real-time chat to advanced filters.'
+                { title: 'Custom Admin Dashboard', desc: 'Manage users, orders, content, and system configurations through a streamlined administrative portal.', icon: Settings },
+                { title: 'User Auth & Role Control', desc: 'Secure JWT authentication with granular permissions for admins, managers, and customers.', icon: Lock },
+                { title: 'Database Optimization', desc: 'High-throughput relational (PostgreSQL/MySQL) and document (MongoDB) database architectures.', icon: Database },
+                { title: 'API-First Ecosystem', desc: 'RESTful API endpoints engineered to seamlessly integrate with payment gateways and third-party tools.', icon: Rocket },
+                { title: 'E-commerce & Payments', desc: 'Integrated payment processing (Razorpay, Stripe, UPI) with automated invoice generation.', icon: CreditCard },
+                { title: 'Real-time Interactions', desc: 'Live data updates, customer push notifications, and instant activity feeds.', icon: Zap }
             ],
             process: [
-                'System Architecture: Designing the logic flow and database relationships.',
-                'Backend Foundation: Developing secure APIs, Auth, and Storage.',
-                'Frontend Orchestration: Building a fast, interactive React dashboard.',
-                'Feature Implementation: Coding business-specific modules (Chat, Payments).',
-                'Rigorous Security Testing: Protecting against SQLi, XSS, and CSRF.',
-                'Performance Hardening: Optimizing database queries for speed.'
+                'System Architecture: Designing business logic, entity relationships, and database schema.',
+                'Backend Foundation: Developing secure RESTful APIs, JWT Auth, and cloud database models.',
+                'Frontend Orchestration: Building a lightning-fast, reactive React/Next.js dashboard.',
+                'Feature Implementation: Coding business-specific workflows (Payments, Search, Chat).',
+                'Security Hardening: Implementing strict validation, CORS, rate-limiting, and SQLi protection.',
+                'Cloud Deployment & CI/CD: Deploying scalable Docker/Cloud infrastructure with automated backups.'
             ],
-            techStack: ['MERN Stack', 'Node.js', 'Express.js', 'PostgreSQL/MySQL', 'Redis', 'Firebase'],
+            techStack: ['MERN Stack', 'Node.js', 'Express.js', 'React', 'MongoDB', 'PostgreSQL', 'Redis', 'Firebase'],
             deliverables: [
-                'Full Stack Source Code',
-                'Advanced Admin Management Panel',
-                'Automated Database Backups',
-                'API Documentation (Swagger)',
-                'Scalability & Security Roadmap',
-                'System Maintenance Guide'
+                'Full-Stack Production Source Code (Documented)',
+                'Dedicated Administrative Control Panel',
+                'Secure Role-Based Access Control System',
+                'Automated Cloud Database Backup Routines',
+                'Interactive API Documentation (Postman / Swagger)',
+                '1-Year Technical Maintenance & Security Updates'
             ],
             requirements: [
-                'List of Required Features',
-                'Database Schema Requirements',
-                'Third-party API Keys (if needed)',
-                'Business Workflow Details'
+                'Business Workflow & Feature Requirements',
+                'Desired User Roles (Admin, Staff, Customer)',
+                'Third-Party Service Credentials (SMS, Email, Payment)',
+                'Branding Guidelines and Assets'
             ],
             pricing: [
-                { name: 'Standard Full-Stack', price: '14,999', icon: <PackageSearch />, features: ['User Auth', 'Admin Dashboard', 'Basic API', '3 Months Support', 'Standard DB', 'Responsive UI'] },
-                { name: 'Corporate Dynamic', price: '24,999', icon: <Star />, popular: true, features: ['E-commerce', 'Payment Gateway', 'Real-time Chat', '1 Year Support', 'Advanced Analytics', 'Cloud Scaling', 'Inventory Sync'] },
-                { name: 'Custom Enterprise', price: '44,999+', icon: <Crown />, features: ['Full ERP/CRM Integration', 'Inventory Management', 'Third-party Sync', 'Priority Support', 'Full System Audit', 'High-Load Ready', 'Dedicated Support Manager'] }
+                { name: 'Standard Full-Stack', price: '14,999', icon: <PackageSearch size={26} />, features: ['User Authentication & Sessions', 'Admin Control Dashboard', 'RESTful API Backend', 'Relational / NoSQL Database', '3 Months Dedicated Support', '100% Fully Responsive UI'] },
+                { name: 'Corporate Dynamic', price: '24,999', icon: <Star size={26} />, popular: true, features: ['Complete E-Commerce / SaaS Logic', 'Integrated Payment Gateway (UPI/Stripe)', 'Real-time Notifications & Analytics', '1 Year Priority Support', 'Cloud Database Auto-Backups', 'Role-Based Access Security', 'Performance & Caching Optimization'] },
+                { name: 'Custom Enterprise', price: '44,999+', icon: <Crown size={26} />, features: ['Full ERP / CRM Custom System', 'Multi-tenant Architecture Support', 'Automated Financial Reports', 'High-Load Horizontal Auto-Scaling', '1 Year VIP Dedicated Support', 'Comprehensive Security Audit', 'Custom Third-Party API Integrations'] }
             ],
             faqs: [
-                { q: 'What makes a website "Dynamic"?', a: 'Dynamic sites use a database to store and retrieve info. Every user gets a personalized experience based on their data, like Amazon, Facebook, or a custom CMS.' },
-                { q: 'Is it hard to manage?', a: 'Not at all. We build a custom, user-friendly Admin Panel so you can manage your data, users, and orders without touching a single line of code.' },
-                { q: 'Can you migrate my existing data?', a: 'Yes! We specialize in data migration from SQL, Excel, or other platforms into your new modern system.' },
-                { q: 'How do you handle security?', a: 'We use JWT for sessions, bcrypt for passwords, and industrial-standard encryption for all data transit.' }
+                { q: 'What makes a website "Dynamic"?', a: 'Dynamic websites connect to a live backend database to render personalized, interactive content. Every customer sees updated account info, real-time data, and customized catalogs—similar to SaaS platforms and modern web portals.' },
+                { q: 'Is it difficult to manage without technical experience?', a: 'Not at all. We build a clean, user-friendly Admin Dashboard tailored to your workflow, enabling you to manage users, orders, and content effortlessly without coding knowledge.' },
+                { q: 'Can you migrate existing customer or product data?', a: 'Yes! We specialize in data extraction, schema cleaning, and migration from legacy SQL databases, Excel spreadsheets, or third-party platforms into your modern architecture.' },
+                { q: 'How is user data kept secure?', a: 'We implement industry-standard security protocols: salted Bcrypt hashing, secure HTTP-only cookies, JSON Web Tokens (JWT), CSRF protections, and encrypted database connections.' }
             ]
         },
         'mobile-app': {
             title: 'Mobile App Development',
             icon: 'https://img.icons8.com/fluency/144/smartphone.png',
             color: '#f472b6',
-            tagline: 'Next-gen apps for iOS and Android platforms.',
-            description: 'Bring your brand to every smartphone with cross-platform excellence. We help you ship faster and perform natively with unified codebases that feel at home on both iOS and Android. Smooth animations and intuitive UX are our top priorities.',
+            tagline: 'High-performance cross-platform apps for iOS and Android.',
+            categoryTag: 'CROSS-PLATFORM MOBILE ENGINEERING',
+            description: 'Bring your business directly into your users’ hands. We build fast, native-feeling mobile applications for both iOS and Android using modern cross-platform frameworks. With fluid 60FPS animations, offline caching, and hardware integration, we build apps that retain users and generate conversions.',
+            kpis: [
+                { title: 'FRAME RATE', value: '60 FPS Native Performance', icon: Smartphone },
+                { title: 'COVERAGE', value: 'Both iOS & Android Platforms', icon: Globe },
+                { title: 'OFFLINE SYNC', value: 'Local Storage & Auto-Sync', icon: Database },
+                { title: 'STORES', value: 'Play Store & App Store Ready', icon: Rocket }
+            ],
             benefits: [
-                'One Codebase: Maintain one version for both major mobile platforms.',
-                'Native Performance: 60FPS fluid animations and interactions.',
-                'User Access: Direct notifications and in-app communications.',
-                'Offline Resilience: Users can interact even without a network connection.',
-                'Hardware Access: Full integration with camera, GPS, and sensors.',
-                'Modern Standards: Compliance with App Store and Google Play guidelines.'
+                { title: 'Unified Codebase', desc: 'Launch simultaneously on both Apple App Store and Google Play from a single clean codebase.', icon: Smartphone },
+                { title: '60FPS Native Feel', desc: 'Hardware-accelerated animations and responsive gesture handling for delightful UX.', icon: Zap },
+                { title: 'Push Notifications', desc: 'Drive customer retention with real-time transactional and marketing push alerts.', icon: Rocket },
+                { title: 'Offline Resilience', desc: 'Local SQLite and caching allow users to browse and interact even without active data.', icon: Database },
+                { title: 'Device Integrations', desc: 'Direct access to native hardware features including camera, GPS location, and biometric auth.', icon: Shield },
+                { title: 'Store Guidelines Ready', desc: 'Complete adherence to strict Apple App Store and Google Play Store submission policies.', icon: CheckCircle2 }
             ],
             process: [
-                'User Journey Mapping: Planning every tap and transition.',
-                'Interactive Prototyping: Testing the look and feel on real devices.',
-                'Mobile-First Dev: Coding with React Native or Native bridges.',
-                'API & Data Sync: Connecting to your backend infrastructure.',
-                'Beta Testing: Releasing to TestFlight and Google Internal Testing.',
-                'App Store Launch: Handling the submission and review process.'
+                'User Journey Mapping: Planning wireframes, tap targets, and interactive screen states.',
+                'Interactive Prototyping: Testing physical touch ergonomics on real test devices.',
+                'Mobile-First Engineering: Coding with React Native or Expo for native speed.',
+                'API & Data Orchestration: Connecting backends, cloud databases, and push notifications.',
+                'Device Quality Testing: Rigorous testing across varying screen sizes and OS versions.',
+                'App Store & Play Store Release: Managing signing certificates, metadata, and reviews.'
             ],
-            techStack: ['React Native', 'Expo', 'Flutter', 'Redux/Context API', 'Axios', 'Firebase/Supabase'],
+            techStack: ['React Native', 'Expo', 'Redux Toolkit', 'REST APIs', 'Firebase', 'SQLite', 'Tailwind'],
             deliverables: [
-                'Ready-to-Ship APK & IPA Files',
-                'UX Audit & Mobile Strategy Document',
-                'App Store Optimization (ASO) Plan',
-                'Push Notification Strategy',
-                'Maintenance and Update Guide'
+                'Production Signed APK & iOS IPA Release Bundles',
+                'Complete Cross-Platform Application Source Code',
+                'App Store Optimization (ASO) Metadata & Graphics',
+                'Push Notification Gateway Setup',
+                '1-Year Maintenance & OS Compatibility Updates'
             ],
             requirements: [
-                'App Idea & Core Purpose',
-                'Target Platforms (iOS/Android)',
-                'Existing API access (if any)',
-                'Branding Guidelines'
+                'Core App Goals and Screen Requirements',
+                'Target Operating Systems (iOS, Android, or Both)',
+                'Existing Backend APIs (or we can build one)',
+                'App Store & Google Play Developer Accounts'
             ],
             pricing: [
-                { name: 'Basic App', price: '14,999', icon: <PackageSearch />, features: ['Cross-platform (Both)', 'UI/UX Design', 'API Integration', '3 Months Support', 'Release Files', 'Search/Filter'] },
-                { name: 'Advanced App', price: '29,999', icon: <Star />, popular: true, features: ['User Profiles', 'Push Notifications', 'Database Sync', '1 Year Support', 'Store Submission', 'Maps/GPS Integration', 'Payment Flows'] },
-                { name: 'Ultimate Solution', price: '54,999+', icon: <Crown />, features: ['Advanced AI/Chat', 'Full Offline Mode', 'Custom Backend', '1 Year Support', 'Biometric Security', 'Ongoing Maintenance', 'Multilingual Support'] }
+                { name: 'Basic App', price: '14,999', icon: <PackageSearch size={26} />, features: ['iOS & Android Support', 'Modern Clean UI/UX Design', 'API Integration', '3 Months Bugfix Support', 'Production Release Files', 'Search and Filter Navigation'] },
+                { name: 'Advanced App', price: '29,999', icon: <Star size={26} />, popular: true, features: ['User Profiles & Auth', 'Push Notification Messaging', 'Offline Database Sync', '1 Year Extended Support', 'App Store & Play Store Upload', 'Maps & GPS Geolocation', 'In-App Payment Gateway'] },
+                { name: 'Ultimate Solution', price: '54,999+', icon: <Crown size={26} />, features: ['Full Custom Backend Included', 'Real-time WebSocket Chat', 'Biometric Fingerprint/Face Login', '1 Year Priority Support', 'Multi-Language Localization', 'Advanced App Analytics', 'Continuous OS Upgrades Support'] }
             ],
             faqs: [
-                { q: 'Will my app work on both iPhone and Android?', a: 'Yes! We use cross-platform technologies like React Native that ensure 100% native functionality on both platforms simultaneously.' },
-                { q: 'Who owns the code?', a: 'You do. Once the final payment is cleared, the full source code and rights are handed over to you.' },
-                { q: 'How do you handle updates?', a: 'We use OTA (Over-the-Air) updates when possible, so you don\'t have to wait for app store reviews for small bug fixes or content changes.' },
-                { q: 'Can you help with App Store rejection?', a: 'Absolutely. We follow all Apple and Google guidelines and provide guidance if any review issues arise during submission.' }
+                { q: 'Will the app work on both iPhone and Android?', a: 'Yes! We use cutting-edge cross-platform technology (React Native) ensuring 100% native execution and UI responsiveness across both operating systems.' },
+                { q: 'Who owns the completed code?', a: 'You have full, unencumbered ownership of the source code, repositories, and build artifacts once project delivery is completed.' },
+                { q: 'How are app updates handled?', a: 'We implement Over-The-Air (OTA) update pipelines when possible, allowing you to push small fixes and content updates instantly without waiting for store re-reviews.' },
+                { q: 'Do you assist with Google Play and Apple App Store submission?', a: 'Yes! We configure production keystores, signing certificates, privacy manifests, and guide the submission through app approval.' }
             ]
         }
     }
 
-    const detail = serviceDetails[id] || serviceDetails['static-website']
+    const detail = serviceDetails[id] || serviceDetails['dynamic-website']
 
     return (
-        <div className="service-detail-page" style={{ backgroundColor: 'var(--bg-primary)', color: 'white', minHeight: '100vh', overflowX: 'hidden' }}>
+        <div className="service-detail-page">
             <SEO 
-                title={detail.title} 
+                title={`${detail.title} | Someshwar Holkar`} 
                 description={detail.tagline}
                 keywords={`${detail.title}, ${detail.techStack.join(', ')}, Freelance Developer, Custom Application Development`}
                 url={`/services/${id}`}
             />
+
+            {/* Breadcrumb Navigation */}
+            <div className="service-detail-nav">
+                <Link to="/services" className="service-back-link">
+                    <ArrowLeft size={16} />
+                    <span>All Services</span>
+                </Link>
+                <div className="service-breadcrumb-tag">
+                    <span>Services</span>
+                    <span style={{ opacity: 0.4 }}>/</span>
+                    <span style={{ color: detail.color }}>{detail.title}</span>
+                </div>
+            </div>
+
             {/* Immersive Hero Section */}
-            <section className="detail-hero" style={{ 
-                height: '100vh', 
-                display: 'flex', 
-                flexDirection: 'column',
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                position: 'relative',
-                overflow: 'hidden',
-                padding: '100px 2rem'
-            }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+            <section className="service-detail-hero">
+                {/* 3D Canvas Background */}
+                <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
                     <Suspense fallback={null}>
                         <ServiceDetailCanvas color={detail.color} />
                     </Suspense>
                 </div>
-                <motion.div
-                    className="detail-hero-content"
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1 }}
-                    style={{ position: 'relative', zIndex: 10, textAlign: 'center', maxWidth: '1200px', width: '100%' }}
-                >
+
+                <div style={{ position: 'relative', zIndex: 10, maxWidth: '1100px', width: '100%', margin: '0 auto' }}>
+                    {/* Floating Service Icon */}
                     <motion.div 
-                        initial={{ scale: 0, rotate: -45 }} 
+                        initial={{ scale: 0, rotate: -30 }} 
                         animate={{ scale: 1, rotate: 0 }} 
-                        transition={{ type: 'spring', damping: 15, delay: 0.3 }}
+                        transition={{ type: 'spring', damping: 15, delay: 0.2 }}
                         style={{ 
-                            background: `${detail.color}08`, 
-                            padding: '1.5rem', 
-                            borderRadius: '20px', 
-                            display: 'inline-block', 
-                            marginBottom: '3rem', 
-                            border: `1px solid ${detail.color}20`,
-                            backdropFilter: 'blur(10px)',
-                            boxShadow: `0 0 40px ${detail.color}15`
+                            background: `radial-gradient(circle, ${detail.color}20 0%, ${detail.color}05 100%)`, 
+                            padding: '1.25rem', 
+                            borderRadius: '24px', 
+                            display: 'inline-flex', 
+                            marginBottom: '1.75rem', 
+                            border: `1px solid ${detail.color}35`,
+                            backdropFilter: 'blur(16px)',
+                            WebkitBackdropFilter: 'blur(16px)',
+                            boxShadow: `0 0 35px ${detail.color}25`
                         }}
                     >
-                        <img src={detail.icon} alt={detail.title} style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+                        <img 
+                            src={detail.icon} 
+                            alt={detail.title} 
+                            style={{ width: '56px', height: '56px', objectFit: 'contain' }} 
+                        />
                     </motion.div>
-                    <h1 style={{ 
-                        fontSize: 'clamp(2.5rem, 9vw, 6rem)', 
-                        fontWeight: 950, 
-                        marginBottom: '2rem', 
-                        lineHeight: 1.05, 
-                        background: `linear-gradient(to bottom, #fff, ${detail.color})`,
-                        WebkitBackgroundClip: 'text', 
-                        WebkitTextFillColor: 'transparent', 
-                        letterSpacing: '-3px'
-                    }}>
-                        {detail.title}
-                    </h1>
-                    <p style={{ 
-                        fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)', 
-                        color: 'rgba(255,255,255,0.7)', 
-                        maxWidth: '800px', 
-                        margin: '0 auto', 
-                        fontWeight: 400,
-                        lineHeight: 1.6 
-                    }}>
+
+                    {/* Category Pill */}
+                    <div>
+                        <span 
+                            className="service-hero-badge"
+                            style={{ 
+                                background: `${detail.color}15`, 
+                                border: `1px solid ${detail.color}35`,
+                                color: detail.color,
+                                boxShadow: `0 0 20px ${detail.color}15`
+                            }}
+                        >
+                            <Zap size={14} />
+                            <span>{detail.categoryTag}</span>
+                        </span>
+                    </div>
+
+                    {/* Main Title */}
+                    <motion.h1 
+                        className="service-hero-title"
+                        initial={{ opacity: 0, y: 25 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.3 }}
+                    >
+                        {detail.title.split(' ')[0]} <span style={{
+                            background: `linear-gradient(135deg, #ffffff 30%, ${detail.color} 100%)`,
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text'
+                        }}>
+                            {detail.title.split(' ').slice(1).join(' ')}
+                        </span>
+                    </motion.h1>
+
+                    {/* Tagline */}
+                    <motion.p 
+                        className="service-hero-tagline"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.4 }}
+                    >
                         {detail.tagline}
-                    </p>
-                </motion.div>
-                
+                    </motion.p>
+
+                    {/* Description */}
+                    <motion.p 
+                        className="service-hero-description"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.7, delay: 0.45 }}
+                    >
+                        {detail.description}
+                    </motion.p>
+
+                    {/* Tech Stack Chips in Hero */}
+                    <motion.div 
+                        className="service-tech-chips-row"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                    >
+                        {detail.techStack.map((tech) => (
+                            <span key={tech} className="service-tech-chip">
+                                {tech}
+                            </span>
+                        ))}
+                    </motion.div>
+
+                    {/* Hero Actions */}
+                    <motion.div 
+                        className="service-hero-actions"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.55 }}
+                    >
+                        <a 
+                            href="#pricing"
+                            className="btn-portfolio-primary"
+                            style={{ 
+                                padding: '0.95rem 2.2rem', 
+                                fontSize: '1rem',
+                                borderRadius: '14px',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            <span>Explore Packages</span>
+                            <ArrowUpRight size={18} />
+                        </a>
+                        <Link 
+                            to="/#contact"
+                            className="btn-portfolio-secondary"
+                            style={{ 
+                                padding: '0.95rem 2.2rem', 
+                                fontSize: '1rem',
+                                borderRadius: '14px',
+                                textDecoration: 'none'
+                            }}
+                        >
+                            <MessageSquare size={18} />
+                            <span>Discuss Your Project</span>
+                        </Link>
+                    </motion.div>
+                </div>
+
+                {/* Scroll Indicator */}
                 <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5 }}
-                    style={{ position: 'absolute', bottom: '3rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}
+                    transition={{ delay: 1.2 }}
+                    style={{ 
+                        position: 'absolute', 
+                        bottom: '2rem', 
+                        left: '50%', 
+                        transform: 'translateX(-50%)', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        gap: '0.5rem',
+                        zIndex: 10
+                    }}
                 >
-                    <span style={{ fontSize: '0.7rem', letterSpacing: '4px', opacity: 0.5, fontWeight: 800 }}>SCROLL TO DETAILS</span>
+                    <span style={{ fontSize: '0.7rem', letterSpacing: '3px', opacity: 0.6, fontWeight: 800 }}>SCROLL DOWN</span>
                     <motion.div 
-                        animate={{ y: [0, 8, 0] }}
+                        animate={{ y: [0, 6, 0] }}
                         transition={{ repeat: Infinity, duration: 2 }}
                     >
-                        <ChevronDown size={24} color={detail.color} />
+                        <ChevronDown size={20} color={detail.color} />
                     </motion.div>
                 </motion.div>
             </section>
 
-            {/* Core Strategy Section */}
-            <section style={{ padding: 'clamp(4rem, 10vw, 8rem) 1.5rem', borderTop: '1px solid var(--card-border)', background: 'linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.05))' }}>
-                <div style={{ maxWidth: '1240px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: 'clamp(3rem, 8vw, 6rem)', alignItems: 'center' }}>
-                    <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px' }}>
-                            <Zap size={18} fill={detail.color}/> Execution Power
+            {/* Architecture & Deliverables Section */}
+            <section style={{ 
+                padding: 'clamp(4.5rem, 8vw, 7.5rem) clamp(1rem, 4vw, 2.5rem)', 
+                borderTop: '1px solid rgba(255, 255, 255, 0.07)', 
+                background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.03) 0%, transparent 100%)',
+                position: 'relative'
+            }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', gap: 'clamp(2.5rem, 6vw, 5rem)', alignItems: 'center' }}>
+                    {/* Left: Execution & Architecture */}
+                    <motion.div 
+                        initial={{ opacity: 0, x: -40 }} 
+                        whileInView={{ opacity: 1, x: 0 }} 
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.7 }}
+                    >
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.6rem', color: detail.color, marginBottom: '1.25rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '3px' }}>
+                            <Zap size={16} fill={detail.color} />
+                            <span>EXECUTION POWER & RELIABILITY</span>
                         </div>
-                        <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', marginBottom: '2.5rem', lineHeight: 1.1, letterSpacing: '-1px' }}>Building for the <br /> <span style={{ color: detail.color }}>Next Generation</span></h2>
-                        <p style={{ fontSize: 'clamp(1rem, 1.5vw, 1.2rem)', lineHeight: 1.8, color: 'var(--text-secondary)', marginBottom: '3.5rem' }}>
+                        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.6rem)', marginBottom: '1.5rem', lineHeight: 1.15, fontWeight: 900, letterSpacing: '-1.5px' }}>
+                            Engineering for <br />
+                            <span style={{ color: detail.color }}>Maximum Scale & Speed</span>
+                        </h2>
+                        <p style={{ fontSize: 'clamp(1rem, 1.6vw, 1.15rem)', lineHeight: 1.75, color: 'var(--text-secondary)', marginBottom: '2rem' }}>
                             {detail.description}
                         </p>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '2rem' }}>
-                            <div style={{ borderLeft: `3px solid ${detail.color}`, paddingLeft: '1.5rem' }}>
-                                <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><BarChart3 size={20} color={detail.color}/> Speed</h4>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Score 98+ Tested</p>
-                            </div>
-                            <div style={{ borderLeft: `3px solid ${detail.color}`, paddingLeft: '1.5rem' }}>
-                                <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}><Shield size={20} color={detail.color}/> Security</h4>
-                                <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>FIPS Compliant</p>
-                            </div>
+
+                        {/* KPI Metric Cards Grid */}
+                        <div className="detail-kpi-grid">
+                            {detail.kpis.map((kpi, idx) => {
+                                const Icon = kpi.icon
+                                return (
+                                    <div key={idx} className="detail-kpi-card">
+                                        <div className="detail-kpi-header" style={{ color: detail.color }}>
+                                            <Icon size={16} />
+                                            <span>{kpi.title}</span>
+                                        </div>
+                                        <p className="detail-kpi-value">{kpi.value}</p>
+                                    </div>
+                                )
+                            })}
                         </div>
                     </motion.div>
                     
+                    {/* Right: Deliverables Success Package Card */}
                     <motion.div 
-                        initial={{ opacity: 0, scale: 0.9 }} 
+                        initial={{ opacity: 0, scale: 0.95 }} 
                         whileInView={{ opacity: 1, scale: 1 }} 
                         viewport={{ once: true }}
+                        transition={{ duration: 0.7, delay: 0.15 }}
                         className="deliverables-card"
-                        style={{ background: 'rgba(255,255,255,0.015)', borderRadius: '16px', border: `1px solid ${detail.color}15`, backdropFilter: 'blur(30px)', position: 'relative' }}
+                        style={{ border: `1px solid ${detail.color}35`, boxShadow: `0 15px 45px ${detail.color}15` }}
                     >
-                        <div className="deliverables-badge" style={{ position: 'absolute', top: '-0.8rem', background: detail.color, color: '#fff', padding: '0.4rem 1.5rem', borderRadius: '50px', fontWeight: 800, fontSize: '0.7rem', letterSpacing: '1px' }}>DELIVERABLES</div>
-                        <h3 className="deliverables-title" style={{ fontSize: '1.8rem', marginBottom: '2.5rem', fontWeight: 800 }}>Success Package</h3>
-                        <ul className="deliverables-list" style={{ listStyle: 'none', padding: 0 }}>
+                        <div 
+                            className="deliverables-badge" 
+                            style={{ 
+                                background: detail.color,
+                                boxShadow: `0 0 20px ${detail.color}50`
+                            }}
+                        >
+                            DELIVERABLES
+                        </div>
+                        <h3 className="deliverables-title">
+                            What You Get in the Package
+                        </h3>
+                        <ul className="deliverables-list">
                             {detail.deliverables.map((item, i) => (
-                                <li key={i} style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem', alignItems: 'center' }}>
-                                    <div style={{ background: `${detail.color}15`, padding: '0.5rem', borderRadius: '50%', color: detail.color, flexShrink: 0 }}><Check size={16} /></div>
-                                    <span style={{ fontSize: '1.05rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}>{item}</span>
+                                <li key={i}>
+                                    <div 
+                                        className="deliverables-icon-wrap"
+                                        style={{ 
+                                            background: `${detail.color}20`, 
+                                            color: detail.color,
+                                            border: `1px solid ${detail.color}40`
+                                        }}
+                                    >
+                                        <Check size={16} />
+                                    </div>
+                                    <span>{item}</span>
                                 </li>
                             ))}
                         </ul>
@@ -302,54 +463,155 @@ const ServiceDetailPage = () => {
                 </div>
             </section>
 
-            {/* Enhanced Pricing Packages in INR */}
-            <section style={{ padding: 'clamp(5rem, 10vw, 10rem) 1.5rem', background: 'rgba(255,255,255,0.005)', borderTop: '1px solid var(--card-border)' }}>
-                <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-                    <div style={{ textAlign: 'center', marginBottom: 'clamp(4rem, 8vw, 7rem)' }}>
-                        <div style={{ color: detail.color, marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}><CreditCard size={32}/></div>
-                        <h2 style={{ fontSize: 'clamp(2.5rem, 8vw, 4.5rem)', marginBottom: '1.5rem', fontWeight: 900, letterSpacing: '-2px' }}>Investment <span style={{ color: detail.color }}>Packages</span></h2>
-                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '600px', margin: '0 auto' }}>Premium engineering focused on your ROI. All prices are starting values in INR.</p>
+            {/* Core Capabilities & Features 6-Card Grid */}
+            <section style={{ 
+                padding: 'clamp(4.5rem, 8vw, 7.5rem) clamp(1rem, 4vw, 2.5rem)',
+                background: 'var(--bg-primary)',
+                position: 'relative'
+            }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', maxWidth: '780px', margin: '0 auto 3rem' }}>
+                        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', color: detail.color, marginBottom: '1rem', fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '3px' }}>
+                            <Layers size={16} />
+                            <span>CAPABILITIES & ARCHITECTURE</span>
+                        </div>
+                        <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', fontWeight: 900, letterSpacing: '-1.5px', marginBottom: '1.2rem', lineHeight: 1.15 }}>
+                            Core Capabilities & <span style={{ color: detail.color }}>Business Value</span>
+                        </h2>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: 'clamp(1rem, 1.6vw, 1.15rem)', lineHeight: 1.7 }}>
+                            Key architectural features built directly into your dynamic system to automate operations, empower admins, and delight users.
+                        </p>
+                    </div>
+
+                    <div className="detail-capabilities-grid">
+                        {detail.benefits.map((benefit, i) => {
+                            const Icon = benefit.icon
+                            return (
+                                <motion.div
+                                    key={benefit.title}
+                                    initial={{ opacity: 0, y: 25 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: i * 0.08 }}
+                                    className="detail-capability-card group"
+                                    style={{
+                                        border: '1px solid rgba(255, 255, 255, 0.07)'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        e.currentTarget.style.borderColor = `${detail.color}60`
+                                        e.currentTarget.style.boxShadow = `0 14px 40px -10px ${detail.color}25`
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.07)'
+                                        e.currentTarget.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.25)'
+                                    }}
+                                >
+                                    <div 
+                                        className="detail-capability-icon"
+                                        style={{
+                                            background: `radial-gradient(circle, ${detail.color}25 0%, ${detail.color}08 100%)`,
+                                            color: detail.color,
+                                            border: `1px solid ${detail.color}40`,
+                                            boxShadow: `0 0 15px ${detail.color}20`
+                                        }}
+                                    >
+                                        <Icon size={24} />
+                                    </div>
+                                    <h3 className="detail-capability-title">{benefit.title}</h3>
+                                    <p className="detail-capability-desc">{benefit.desc}</p>
+                                </motion.div>
+                            )
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* Investment Packages Section */}
+            <section id="pricing" style={{ 
+                padding: 'clamp(5rem, 9vw, 8.5rem) clamp(1rem, 4vw, 2.5rem)', 
+                background: 'linear-gradient(180deg, rgba(124, 58, 237, 0.04) 0%, rgba(10, 10, 15, 0.8) 100%)', 
+                borderTop: '1px solid rgba(255, 255, 255, 0.07)' 
+            }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <div style={{ textAlign: 'center', marginBottom: 'clamp(3.5rem, 6vw, 5rem)', maxWidth: '750px', margin: '0 auto clamp(3.5rem, 6vw, 5rem)' }}>
+                        <div style={{ color: detail.color, marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+                            <CreditCard size={32} />
+                        </div>
+                        <h2 style={{ fontSize: 'clamp(2.3rem, 6vw, 4rem)', marginBottom: '1.25rem', fontWeight: 900, letterSpacing: '-1.5px', lineHeight: 1.15 }}>
+                            Investment <span style={{ color: detail.color }}>Packages</span>
+                        </h2>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: 1.7 }}>
+                            Engineered for high performance, business scalability, and long-term reliability. All prices are in INR.
+                        </p>
                     </div>
                     
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '2rem' }}>
+                    <div className="detail-pricing-grid">
                         {detail.pricing.map((plan, i) => (
                             <motion.div 
                                 key={plan.name}
-                                whileHover={{ y: -10, borderColor: detail.color }}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                style={{ 
-                                    background: plan.popular ? 'rgba(255,255,255,0.03)' : 'rgba(255,255,255,0.01)', 
-                                    padding: 'clamp(2rem, 5vw, 4rem) 2.5rem', borderRadius: '16px', 
-                                    border: plan.popular ? `2px solid ${detail.color}` : '1px solid var(--card-border)',
-                                    position: 'relative', overflow: 'hidden',
-                                    display: 'flex', flexDirection: 'column'
+                                transition={{ delay: i * 0.1, duration: 0.6 }}
+                                className={`detail-pricing-card ${plan.popular ? 'popular' : ''}`}
+                                style={{
+                                    borderColor: plan.popular ? detail.color : 'rgba(255, 255, 255, 0.08)',
+                                    boxShadow: plan.popular ? `0 15px 50px -10px ${detail.color}40, 0 0 25px ${detail.color}20` : undefined
                                 }}
                             >
-                                {plan.popular && <div style={{ position: 'absolute', top: '1.2rem', right: '-3rem', background: detail.color, color: '#fff', padding: '0.4rem 4rem', transform: 'rotate(45deg)', fontSize: '0.7rem', fontWeight: 900, letterSpacing: '1px' }}>BEST VALUE</div>}
-                                <div style={{ color: detail.color, marginBottom: '1.8rem', background: `${detail.color}15`, width: '60px', height: '60px', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{plan.icon}</div>
-                                <h3 style={{ fontSize: '1.8rem', marginBottom: '0.8rem', fontWeight: 800 }}>{plan.name}</h3>
-                                <div style={{ marginBottom: '2.5rem' }}>
-                                    <span style={{ fontSize: '3rem', fontWeight: 950, color: '#fff' }}>₹{plan.price}</span>
-                                    <span style={{ color: 'rgba(255,255,255,0.4)', marginLeft: '0.8rem', fontSize: '0.9rem', fontWeight: 600 }}>Starting</span>
+                                {plan.popular && (
+                                    <div 
+                                        className="popular-badge-pill"
+                                        style={{ 
+                                            background: `linear-gradient(135deg, ${detail.color}, #00d4ff)`,
+                                            boxShadow: `0 0 15px ${detail.color}60`
+                                        }}
+                                    >
+                                        MOST POPULAR
+                                    </div>
+                                )}
+                                <div 
+                                    className="detail-plan-icon"
+                                    style={{
+                                        background: `${detail.color}20`,
+                                        color: detail.color,
+                                        border: `1px solid ${detail.color}40`
+                                    }}
+                                >
+                                    {plan.icon}
                                 </div>
-                                <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)', marginBottom: '2.5rem' }}></div>
-                                <ul style={{ listStyle: 'none', padding: 0, marginBottom: '3.5rem', flex: 1 }}>
+                                <h3 className="detail-plan-name">{plan.name}</h3>
+                                
+                                <div className="detail-plan-price-row">
+                                    <span className="detail-plan-price">₹{plan.price}</span>
+                                    <span className="detail-plan-starting">Starting</span>
+                                </div>
+                                
+                                <div className="detail-plan-divider" />
+                                
+                                <ul className="detail-plan-features">
                                     {plan.features.map((feat, index) => (
-                                        <li key={index} style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', alignItems: 'flex-start' }}>
-                                            <Check size={16} color={detail.color} style={{ marginTop: '2px', flexShrink: 0 }}/> {feat}
+                                        <li key={index}>
+                                            <Check size={16} color={detail.color} />
+                                            <span>{feat}</span>
                                         </li>
                                     ))}
                                 </ul>
-                                <Link to="/#contact" className={`plan-cta ${plan.popular ? 'primary' : 'secondary'}`} style={{ 
-                                    width: '100%', padding: '1.2rem', fontSize: '1rem', textAlign: 'center', display: 'block', borderRadius: '12px',
-                                    background: plan.popular ? detail.color : 'rgba(255,255,255,0.05)',
-                                    color: '#fff', textDecoration: 'none', fontWeight: 800,
-                                    border: plan.popular ? 'none' : '1px solid rgba(255,255,255,0.1)'
-                                }}>
-                                    Launch Project
+
+                                <Link 
+                                    to="/#contact"
+                                    className="detail-plan-btn"
+                                    style={{ 
+                                        background: plan.popular 
+                                            ? `linear-gradient(135deg, ${detail.color} 0%, #0066ff 100%)` 
+                                            : 'rgba(255, 255, 255, 0.06)',
+                                        color: '#ffffff',
+                                        border: plan.popular ? 'none' : '1px solid rgba(255, 255, 255, 0.12)',
+                                        boxShadow: plan.popular ? `0 8px 25px ${detail.color}50` : undefined
+                                    }}
+                                >
+                                    <span>Launch Project</span>
+                                    <ArrowUpRight size={17} />
                                 </Link>
                             </motion.div>
                         ))}
@@ -357,105 +619,204 @@ const ServiceDetailPage = () => {
                 </div>
             </section>
 
-            {/* Preparation Roadmap & Requirements */}
-            <section style={{ padding: '10rem 2rem', background: 'linear-gradient(to top, var(--bg-primary), rgba(124, 58, 237, 0.03))' }}>
-                <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: 'clamp(4rem, 8vw, 8rem)' }}>
+            {/* Development Roadmap & Prerequisites Section */}
+            <section style={{ 
+                padding: 'clamp(4.5rem, 8vw, 8rem) clamp(1rem, 4vw, 2.5rem)', 
+                background: 'var(--bg-primary)'
+            }}>
+                <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 460px), 1fr))', gap: 'clamp(3rem, 6vw, 6rem)' }}>
+                        {/* Process Roadmap Column */}
                         <div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', color: detail.color, marginBottom: '2.5rem' }}><ClipboardList size={30}/> <h2 style={{ fontSize: 'clamp(2rem, 5vw, 2.5rem)', margin: 0 }}>My <span style={{ color: detail.color }}>Process</span></h2></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: detail.color, marginBottom: '2.5rem' }}>
+                                <ClipboardList size={28} />
+                                <h2 style={{ fontSize: 'clamp(2rem, 4vw, 2.6rem)', margin: 0, fontWeight: 900, letterSpacing: '-1px' }}>
+                                    Development <span style={{ color: detail.color }}>Process</span>
+                                </h2>
+                            </div>
+
                             {detail.process.map((step, i) => (
                                 <motion.div 
                                     key={i} 
                                     initial={{ opacity: 0, x: -30 }}
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ delay: i * 0.1 }}
-                                    style={{ display: 'flex', gap: '2.5rem', marginBottom: '4rem', position: 'relative' }}
+                                    transition={{ delay: i * 0.08, duration: 0.5 }}
+                                    className="detail-process-step"
                                 >
-                                    {i !== detail.process.length - 1 && <div style={{ position: 'absolute', top: '45px', left: '21px', bottom: '-40px', width: '2px', background: `linear-gradient(to bottom, ${detail.color}, transparent)` }}></div>}
-                                    <div style={{ 
-                                        width: '45px', height: '45px', borderRadius: '12px', background: detail.color, 
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', 
-                                        fontWeight: 900, flexShrink: 0, zIndex: 1, fontSize: '1.1rem'
-                                    }}>
+                                    {i !== detail.process.length - 1 && (
+                                        <div 
+                                            className="detail-process-line"
+                                            style={{ background: `linear-gradient(180deg, ${detail.color}, rgba(255, 255, 255, 0.1))` }}
+                                        />
+                                    )}
+                                    <div 
+                                        className="detail-process-node"
+                                        style={{ 
+                                            background: detail.color,
+                                            boxShadow: `0 0 15px ${detail.color}50`
+                                        }}
+                                    >
                                         {i + 1}
                                     </div>
-                                    <div>
-                                        <h4 style={{ fontSize: '1.4rem', marginBottom: '0.8rem', color: '#fff', fontWeight: 700 }}>{step.split(':')[0]}</h4>
-                                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7 }}>{step.split(':')[1] || ''}</p>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <h4 style={{ fontSize: '1.25rem', marginBottom: '0.45rem', color: '#ffffff', fontWeight: 800 }}>
+                                            {step.split(':')[0]}
+                                        </h4>
+                                        <p style={{ color: 'var(--text-secondary)', fontSize: '0.96rem', lineHeight: 1.65, margin: 0 }}>
+                                            {step.split(':')[1] || ''}
+                                        </p>
                                     </div>
                                 </motion.div>
                             ))}
                         </div>
 
-                        <div>
-                            {/* Requirements Card */}
-                            <div style={{ background: 'rgba(255,255,255,0.02)', padding: '4rem', borderRadius: '24px', border: '1px solid var(--card-border)', marginBottom: '4rem' }}>
-                                <h2 style={{ fontSize: '2.2rem', marginBottom: '3rem', display: 'flex', alignItems: 'center', gap: '1rem' }}><Settings color={detail.color} size={30}/> Prerequisites</h2>
-                                <p style={{ color: 'var(--text-secondary)', marginBottom: '2.5rem', fontSize: '1.05rem' }}>To ensure a lightning-fast delivery, we ideally need the following from your side:</p>
-                                {detail.requirements.map((req, i) => (
-                                    <div key={i} style={{ display: 'flex', gap: '1.2rem', marginBottom: '1.5rem', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '1.2rem', borderRadius: '12px' }}>
-                                        <Check size={18} color={detail.color}/>
-                                        <span style={{ fontSize: '1.05rem', fontWeight: 600 }}>{req}</span>
-                                    </div>
-                                ))}
+                        {/* Prerequisites & FAQ Column */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem' }}>
+                            {/* Prerequisites Card */}
+                            <div style={{ 
+                                background: 'rgba(18, 18, 28, 0.65)', 
+                                padding: 'clamp(1.75rem, 4vw, 2.75rem)', 
+                                borderRadius: '22px', 
+                                border: '1px solid rgba(255, 255, 255, 0.08)',
+                                backdropFilter: 'blur(20px)',
+                                WebkitBackdropFilter: 'blur(20px)',
+                                boxShadow: '0 8px 30px rgba(0, 0, 0, 0.2)'
+                            }}>
+                                <h3 style={{ fontSize: '1.6rem', marginBottom: '1.2rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 800 }}>
+                                    <Settings color={detail.color} size={24} />
+                                    <span>Prerequisites</span>
+                                </h3>
+                                <p style={{ color: 'var(--text-secondary)', marginBottom: '1.75rem', fontSize: '0.98rem', lineHeight: 1.6 }}>
+                                    To kick off engineering without bottlenecks, we ideally gather these essentials upfront:
+                                </p>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                                    {detail.requirements.map((req, i) => (
+                                        <div 
+                                            key={i} 
+                                            style={{ 
+                                                display: 'flex', 
+                                                gap: '1rem', 
+                                                alignItems: 'center', 
+                                                background: 'rgba(255, 255, 255, 0.03)', 
+                                                padding: '1rem 1.2rem', 
+                                                borderRadius: '14px',
+                                                border: '1px solid rgba(255, 255, 255, 0.06)'
+                                            }}
+                                        >
+                                            <Check size={18} color={detail.color} style={{ flexShrink: 0 }} />
+                                            <span style={{ fontSize: '0.95rem', fontWeight: 600, color: '#ffffff' }}>{req}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
 
                             {/* FAQ Section */}
-                            <div style={{ background: 'rgba(0, 212, 255, 0.02)', padding: '4rem', borderRadius: '24px', border: `1px solid ${detail.color}11` }}>
-                                <h2 style={{ fontSize: '2.2rem', marginBottom: '3rem', display: 'flex', alignItems: 'center', gap: '1rem' }}><HelpCircle color={detail.color} size={30}/> Client <span style={{ color: detail.color }}>Faqs</span></h2>
-                                {detail.faqs.map((faq, i) => (
-                                    <div key={i} style={{ marginBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)', paddingBottom: '1.5rem' }}>
-                                        <button 
-                                            onClick={() => setActiveFaq(activeFaq === i ? null : i)}
-                                            style={{ width: '100%', background: 'none', border: 'none', textAlign: 'left', color: '#fff', fontSize: '1.15rem', fontWeight: 700, display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
-                                        >
-                                            {faq.q}
-                                            <motion.div animate={{ rotate: activeFaq === i ? 180 : 0 }}>
-                                                <ChevronDown size={20} color={detail.color}/>
-                                            </motion.div>
-                                        </button>
-                                        <AnimatePresence>
-                                            {activeFaq === i && (
-                                                <motion.div
-                                                    initial={{ height: 0, opacity: 0 }}
-                                                    animate={{ height: 'auto', opacity: 1 }}
-                                                    exit={{ height: 0, opacity: 0 }}
-                                                    style={{ overflow: 'hidden' }}
-                                                >
-                                                    <p style={{ marginTop: '1.2rem', color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '1.05rem' }}>{faq.a}</p>
+                            <div style={{ 
+                                background: 'rgba(18, 18, 28, 0.65)', 
+                                padding: 'clamp(1.75rem, 4vw, 2.75rem)', 
+                                borderRadius: '22px', 
+                                border: `1px solid ${detail.color}25`,
+                                backdropFilter: 'blur(20px)',
+                                WebkitBackdropFilter: 'blur(20px)',
+                                boxShadow: `0 8px 30px ${detail.color}10`
+                            }}>
+                                <h3 style={{ fontSize: '1.6rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 800 }}>
+                                    <HelpCircle color={detail.color} size={24} />
+                                    <span>Client <span style={{ color: detail.color }}>FAQs</span></span>
+                                </h3>
+                                <div>
+                                    {detail.faqs.map((faq, i) => (
+                                        <div key={i} className="detail-faq-card">
+                                            <button 
+                                                onClick={() => setActiveFaq(activeFaq === i ? null : i)}
+                                                className="detail-faq-btn"
+                                                aria-expanded={activeFaq === i}
+                                            >
+                                                <span>{faq.q}</span>
+                                                <motion.div animate={{ rotate: activeFaq === i ? 180 : 0 }} transition={{ duration: 0.25 }}>
+                                                    <ChevronDown size={19} color={detail.color} />
                                                 </motion.div>
-                                            )}
-                                        </AnimatePresence>
-                                    </div>
-                                ))}
+                                            </button>
+                                            <AnimatePresence>
+                                                {activeFaq === i && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        exit={{ height: 0, opacity: 0 }}
+                                                        transition={{ duration: 0.3 }}
+                                                        style={{ overflow: 'hidden' }}
+                                                    >
+                                                        <p className="detail-faq-answer">{faq.a}</p>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Strategic CTA Footer */}
-            <section style={{ padding: '6rem 2rem 10rem', textAlign: 'center' }}>
+            {/* Strategic Bottom Conversion CTA */}
+            <section style={{ padding: 'clamp(4rem, 8vw, 8rem) clamp(1rem, 4vw, 2.5rem)', textAlign: 'center' }}>
                <motion.div 
-                 whileHover={{ scale: 1.01 }}
+                 initial={{ opacity: 0, y: 30 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ duration: 0.7 }}
                  style={{ 
-                   maxWidth: '1200px', margin: '0 auto', background: `linear-gradient(135deg, ${detail.color}11, transparent)`, 
-                   padding: '8rem 4rem', borderRadius: '16px', border: `1px solid ${detail.color}22`,
-                   boxShadow: `0 35px 100px ${detail.color}10`, position: 'relative', overflow: 'hidden'
+                   maxWidth: '1100px', 
+                   margin: '0 auto', 
+                   background: `linear-gradient(135deg, ${detail.color}15, rgba(18, 18, 28, 0.8))`, 
+                   padding: 'clamp(3.5rem, 6vw, 6rem) clamp(1.5rem, 4vw, 4rem)', 
+                   borderRadius: '26px', 
+                   border: `1px solid ${detail.color}35`,
+                   boxShadow: `0 25px 80px ${detail.color}15`, 
+                   position: 'relative', 
+                   overflow: 'hidden'
                  }}
                >
-                 <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '400px', height: '400px', background: detail.color, filter: 'blur(180px)', opacity: 0.08, borderRadius: '50%' }}></div>
-                 <h2 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', marginBottom: '2.5rem', lineHeight: 1, fontWeight: 900 }}>Ready to build something <br /><span style={{ color: detail.color }}>Exceptional</span>?</h2>
-                 <p style={{ fontSize: '1.3rem', color: 'var(--text-secondary)', marginBottom: '4rem', maxWidth: '750px', margin: '0 auto 4rem', lineHeight: 1.8, fontWeight: 500 }}>
-                    Stop browsing. Start building. Get a partner who scales your vision with industrial-grade precision and breathtaking design.
+                 <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '350px', height: '350px', background: detail.color, filter: 'blur(160px)', opacity: 0.12, borderRadius: '50%', pointerEvents: 'none' }}></div>
+                 <div style={{ position: 'absolute', bottom: '-80px', left: '-80px', width: '350px', height: '350px', background: '#00d4ff', filter: 'blur(160px)', opacity: 0.08, borderRadius: '50%', pointerEvents: 'none' }}></div>
+                 
+                 <h2 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.8rem)', marginBottom: '1.5rem', lineHeight: 1.15, fontWeight: 950, letterSpacing: '-1.5px' }}>
+                    Ready to build something <br />
+                    <span style={{ color: detail.color }}>Exceptional</span>?
+                 </h2>
+                 <p style={{ fontSize: 'clamp(1rem, 1.8vw, 1.25rem)', color: 'var(--text-secondary)', maxWidth: '720px', margin: '0 auto 3rem', lineHeight: 1.75, fontWeight: 500 }}>
+                    Let's architect a high-performance system that accelerates your business goals with industrial-grade precision and modern UX.
                  </p>
-                 <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <Link to="/#contact" className="btn btn-primary" style={{ padding: '1.6rem 4.5rem', fontSize: '1.2rem', borderRadius: '16px', boxShadow: `0 12px 35px ${detail.color}25` }}>
-                        Start Project Now <MessageSquare size={22} style={{ marginLeft: '1rem' }} />
+                 <div style={{ display: 'flex', gap: '1.25rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                    <Link 
+                        to="/#contact" 
+                        className="btn-portfolio-primary" 
+                        style={{ 
+                            padding: '1rem 2.5rem', 
+                            fontSize: '1.05rem', 
+                            borderRadius: '14px', 
+                            boxShadow: `0 10px 30px ${detail.color}40`,
+                            textDecoration: 'none'
+                        }}
+                    >
+                        <span>Start Project Now</span>
+                        <MessageSquare size={19} />
                     </Link>
-                    <Link to="/services" className="btn btn-outline" style={{ border: `2px solid ${detail.color}`, color: detail.color, padding: '1.6rem 4.5rem', fontSize: '1.2rem', borderRadius: '16px' }}>
-                        Browse Services
+                    <Link 
+                        to="/services" 
+                        className="btn-portfolio-secondary" 
+                        style={{ 
+                            border: `1px solid ${detail.color}60`, 
+                            padding: '1rem 2.5rem', 
+                            fontSize: '1.05rem', 
+                            borderRadius: '14px',
+                            textDecoration: 'none'
+                        }}
+                    >
+                        <span>Browse All Services</span>
+                        <ArrowUpRight size={19} />
                     </Link>
                  </div>
                </motion.div>

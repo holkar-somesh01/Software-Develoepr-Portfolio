@@ -10,13 +10,109 @@ import {
     ArrowRight,
     ExternalLink,
     Mouse,
-    AlertCircle
+    AlertCircle,
+    Copy,
+    Check,
+    ArrowUpRight
 } from 'lucide-react'
 import { useState, Suspense, useEffect, lazy } from 'react'
 import SEO from './components/SEO'
 import emailjs from '@emailjs/browser'
 
 const ContactCanvas = lazy(() => import('./components/ContactCanvas'))
+
+const ContactMethodCard = ({ method, index }) => {
+    const [copied, setCopied] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
+
+    const handleCopy = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        navigator.clipboard.writeText(method.copyValue || method.value)
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+    }
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+            className="contact-card-modern group"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            style={{
+                borderColor: isHovered ? `${method.color}70` : 'rgba(255, 255, 255, 0.08)',
+                boxShadow: isHovered
+                    ? `0 14px 35px -8px ${method.color}35, 0 0 20px ${method.color}15`
+                    : '0 4px 20px rgba(0, 0, 0, 0.25)'
+            }}
+        >
+            <div
+                className="contact-card-glow"
+                style={{
+                    background: `radial-gradient(circle at 20% 50%, ${method.color}15 0%, transparent 70%)`,
+                    opacity: isHovered ? 1 : 0
+                }}
+            />
+
+            <a
+                href={method.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-card-main-link"
+                aria-label={`${method.title}: ${method.value}`}
+            >
+                <div
+                    className="contact-card-icon"
+                    style={{
+                        background: `radial-gradient(circle, ${method.color}25 0%, ${method.color}08 100%)`,
+                        color: method.color,
+                        borderColor: `${method.color}40`,
+                        boxShadow: isHovered ? `0 0 20px ${method.color}50` : `0 0 12px ${method.color}20`,
+                        transform: isHovered ? 'scale(1.08)' : 'scale(1)'
+                    }}
+                >
+                    {method.icon}
+                </div>
+
+                <div className="contact-card-info">
+                    <div className="contact-card-label-row">
+                        <span className="contact-card-label" style={{ color: method.color }}>
+                            {method.title}
+                        </span>
+                        <span className="contact-card-action-hint">
+                            <span>{method.actionLabel}</span>
+                            <ArrowUpRight size={13} className="contact-card-action-icon" />
+                        </span>
+                    </div>
+
+                    <p className="contact-card-value">
+                        {method.value}
+                    </p>
+                </div>
+            </a>
+
+            {method.copyable && (
+                <button
+                    onClick={handleCopy}
+                    className="contact-card-copy-btn"
+                    title={copied ? "Copied to clipboard!" : `Copy ${method.title}`}
+                    aria-label={`Copy ${method.title}`}
+                    style={{
+                        color: copied ? '#34d399' : '#94a3b8',
+                        borderColor: copied ? 'rgba(52, 211, 153, 0.4)' : 'rgba(255, 255, 255, 0.1)',
+                        background: copied ? 'rgba(52, 211, 153, 0.15)' : 'rgba(255, 255, 255, 0.05)'
+                    }}
+                >
+                    {copied ? <Check size={15} /> : <Copy size={15} />}
+                    <span className="contact-copy-tooltip">{copied ? 'Copied!' : 'Copy'}</span>
+                </button>
+            )}
+        </motion.div>
+    )
+}
 
 
 const ContactPage = () => {
@@ -47,12 +143,33 @@ const ContactPage = () => {
         return Object.keys(newErrors).length === 0
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (!validateForm()) return
 
         setFormState('sending')
-        
+
+        const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000/api').replace(/\/+$/, '') + '/contact'
+
+        // 1. Submit to Laravel Backend Database
+        const backendPromise = fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                name: formData.name,
+                email: formData.email,
+                subject: formData.subject,
+                message: formData.message
+            })
+        }).then(res => res.json()).catch(err => {
+            console.warn('Backend API submission unreachable or failed:', err);
+            return null;
+        });
+
+        // 2. Dual-dispatch to EmailJS
         const templateParams = {
             from_name: formData.name,
             from_email: formData.email,
@@ -61,55 +178,70 @@ const ContactPage = () => {
             message: formData.message,
         };
 
-        emailjs.send(
+        const emailJsPromise = emailjs.send(
             import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id', 
             import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id', 
             templateParams,
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key'
-        )
-        .then((response) => {
-            console.log('SUCCESS!', response.status, response.text);
-            setFormState('success')
-            setFormData({ name: '', email: '', subject: '', message: '' })
-            setErrors({})
-        }, (err) => {
-            console.error('FAILED...', err);
-            setFormState('idle');
-            setErrors({ submit: 'Transimission failed. Please check your network or try again.' });
+        ).catch(err => {
+            console.warn('EmailJS transmission failed:', err);
+            return null;
         });
+
+        try {
+            const [apiRes, emailRes] = await Promise.all([backendPromise, emailJsPromise]);
+
+            if ((apiRes && apiRes.success) || emailRes) {
+                setFormState('success')
+                setFormData({ name: '', email: '', subject: '', message: '' })
+                setErrors({})
+            } else {
+                setFormState('idle');
+                setErrors({ submit: 'Transmission failed. Please check your network or try again.' });
+            }
+        } catch (err) {
+            console.error('Submission failed:', err);
+            setFormState('idle');
+            setErrors({ submit: 'Transmission failed. Please check your network or try again.' });
+        }
     }
 
     const contactMethods = [
         {
             icon: <Mail size={22} />,
-            title: 'Email',
+            title: 'EMAIL',
             value: 'someshwarsholkar22@gmail.com',
             link: 'mailto:someshwarsholkar22@gmail.com',
-            description: 'Expect a response within 24 hours',
+            copyValue: 'someshwarsholkar22@gmail.com',
+            actionLabel: 'Send Email',
+            copyable: true,
             color: '#00d4ff'
         },
         {
             icon: <Phone size={22} />,
-            title: 'Phone',
+            title: 'PHONE',
             value: '+91 84828 16761',
-            link: 'tel:+8482816761',
-            description: 'Available Mon-Sat, 9am - 7pm',
+            link: 'tel:+918482816761',
+            copyValue: '+918482816761',
+            actionLabel: 'Call Directly',
+            copyable: true,
             color: '#7c3aed'
         },
         {
             icon: <MapPin size={22} />,
-            title: 'Location',
-            value: 'Aurangabad, India',
+            title: 'LOCATION',
+            value: 'Chhatrapati Sambhajinagar (Aurangabad), Maharashtra 431101',
             link: 'https://maps.google.com/?q=Aurangabad,Maharashtra',
-            description: 'Open to remote work worldwide',
+            actionLabel: 'Open Maps',
+            copyable: false,
             color: '#f472b6'
         }
     ]
 
     const socialLinks = [
-        { icon: <Github size={20} />, url: 'https://github.com/holkar-somesh01', name: 'GitHub', color: '#333' },
-        { icon: <Linkedin size={20} />, url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', name: 'LinkedIn', color: '#0077b5' },
-        { icon: <Instagram size={20} />, url: 'https://www.instagram.com/soma_patil.24', name: 'Instagram', color: '#e4405f' }
+        { icon: <Github size={20} />, url: 'https://github.com/holkar-somesh01', name: 'GitHub', color: '#ffffff', glow: 'rgba(255, 255, 255, 0.35)' },
+        { icon: <Linkedin size={20} />, url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', name: 'LinkedIn', color: '#0077b5', glow: 'rgba(0, 119, 181, 0.45)' },
+        { icon: <Instagram size={20} />, url: 'https://www.instagram.com/patil_soma.24', name: 'Instagram', color: '#e4405f', glow: 'rgba(228, 64, 95, 0.45)' }
     ]
 
     useEffect(() => {
@@ -211,56 +343,40 @@ const ContactPage = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 800, marginBottom: '2.5rem', letterSpacing: '-1px' }}>Contact <span style={{ color: 'var(--primary)' }}>Details</span></h2>
-                        <div style={{ display: 'grid', gap: '1.2rem' }}>
+                        <div className="contact-cards-list">
                             {contactMethods.map((method, index) => (
-                                <motion.div
-                                    key={index}
-                                    style={{
-                                        padding: '1.5rem',
-                                        background: 'rgba(255, 255, 255, 0.02)',
-                                        borderRadius: '16px',
-                                        border: '1px solid rgba(255, 255, 255, 0.05)',
-                                        display: 'flex',
-                                        gap: '1.2rem',
-                                        transition: 'all 0.3s ease',
-                                        boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
-                                    }}
-                                    className="contact-card"
-                                >
-                                    <div style={{
-                                        width: '48px', height: '48px', borderRadius: '12px',
-                                        background: `${method.color}15`, color: method.color,
-                                        display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0
-                                    }}>
-                                        {method.icon}
-                                    </div>
-                                    <div>
-                                        <h3 style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '0.2rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px' }}>{method.title}</h3>
-                                        <p style={{ fontSize: '1rem', color: '#fff', fontWeight: 700, marginBottom: '0.4rem' }}>{method.value}</p>
-                                        <a href={method.link} target="_blank" rel="noopener noreferrer" style={{
-                                            color: method.color, textDecoration: 'none', fontSize: '0.8rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '0.4rem', opacity: 0.8
-                                        }}>
-                                            Reach Out <ArrowRight size={14} />
-                                        </a>
-                                    </div>
-                                </motion.div>
+                                <ContactMethodCard
+                                    key={method.title}
+                                    method={method}
+                                    index={index}
+                                />
                             ))}
                         </div>
 
-                        <div style={{ marginTop: '3rem' }}>
-                            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.2rem', fontWeight: 800, fontSize: '0.75rem', letterSpacing: '2px', textTransform: 'uppercase' }}>Social Presence</p>
-                            <div style={{ display: 'flex', gap: '1rem' }}>
+                        <div style={{ marginTop: '2.5rem' }}>
+                            <p style={{ color: 'var(--text-secondary)', marginBottom: '1.2rem', fontWeight: 800, fontSize: '0.78rem', letterSpacing: '2px', textTransform: 'uppercase' }}>
+                                Social Presence
+                            </p>
+                            <div className="contact-social-row">
                                 {socialLinks.map((social, idx) => (
                                     <motion.a
                                         key={idx}
                                         href={social.url}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        whileHover={{ y: -5, scale: 1.05, backgroundColor: social.color }}
-                                        style={{
-                                            width: '50px', height: '50px', borderRadius: '12px',
-                                            background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)',
-                                            display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', transition: 'all 0.3s ease'
+                                        aria-label={social.name}
+                                        whileHover={{ y: -4, scale: 1.1 }}
+                                        whileTap={{ scale: 0.95 }}
+                                        className="contact-social-btn"
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.borderColor = social.color
+                                            e.currentTarget.style.boxShadow = `0 8px 25px ${social.glow}`
+                                            e.currentTarget.style.color = social.color
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)'
+                                            e.currentTarget.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.2)'
+                                            e.currentTarget.style.color = '#cbd5e1'
                                         }}
                                     >
                                         {social.icon}

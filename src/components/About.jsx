@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import { GitBranch, Star, Users, Github, Code2, Rocket, Brain, Smartphone, Briefcase, Award } from 'lucide-react'
-
+import profile from '../../public/profile.png'
 const About = () => {
   const stats = [
     {
@@ -64,7 +64,7 @@ const About = () => {
           <div className="image-wrapper">
             <div className="image-glow"></div>
             <img
-              src="https://avatars.githubusercontent.com/u/172102268?v=4"
+              src={profile}
               alt="Someshwar Holkar"
               loading="lazy"
               decoding="async"

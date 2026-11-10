@@ -40,7 +40,7 @@ const Navbar = () => {
   const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/holkar-somesh01', icon: Github },
     { name: 'LinkedIn', url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', icon: Linkedin },
-    { name: 'Instagram', url: 'https://www.instagram.com/soma_patil.24', icon: Instagram },
+    { name: 'Instagram', url: 'https://www.instagram.com/patil_soma.24', icon: Instagram },
     { name: 'Email', url: 'mailto:someshwarsholkar22@gmail.com', icon: Mail },
   ]
 

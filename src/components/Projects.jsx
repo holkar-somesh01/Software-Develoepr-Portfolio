@@ -1,245 +1,384 @@
-import { motion } from 'framer-motion'
-import { Github, ExternalLink, Star } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  ExternalLink,
+  Github,
+  Lock,
+  Sparkles,
+  Smartphone,
+  Globe,
+  ArrowUpRight,
+  Code2,
+  Layers
+} from 'lucide-react'
 
 const projects = [
   {
+    id: 'gurukul',
     title: 'Jai Baba Ji Gurukul',
-    description: 'Official website for Shree Sant Janardhan Swami School & Gurukul - A Next.js institutional website with admission, gallery, departments, and alumni sections.',
+    category: 'Web Apps',
+    domain: 'Institutional Platform',
+    description: 'Official responsive web platform for Shree Sant Janardhan Swami School & Gurukul featuring dynamic admissions inquiries, photo galleries, departmental showcases, and alumni management.',
     tech: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
     stars: 0,
     repo: 'https://github.com/holkar-somesh01/jaibabajigurukul',
     live: 'https://www.jaibabajigurukul.com',
     image: 'https://res.cloudinary.com/dqqputx7b/image/upload/v1784460989/Gemini_Generated_Image_ajm7i4ajm7i4ajm7_a8fjsp.png',
-    isPrivate: true
+    isPrivate: true,
+    status: 'live',
+    statusLabel: 'Live Website',
+    platformTag: 'Next.js 14'
   },
   {
+    id: 'ayurdnyanam',
     title: 'Ayurdnyanam',
-    description: 'A comprehensive platform providing BAMS Course Premium handwritten notes and video lectures. The web platform is live and the mobile app is in development.',
-    tech: ['React', 'Node.js', 'React Native (Pending)'],
+    category: 'Full Stack',
+    domain: 'EdTech & Learning Platform',
+    description: 'Comprehensive Ayurvedic educational ecosystem providing verified BAMS handwritten notes, interactive study guides, and video lectures. The web platform is active with mobile app in development.',
+    tech: ['React', 'Node.js', 'Express', 'React Native (In Dev)'],
     stars: 0,
     repo: '#',
     live: 'https://ayurdnyanam.com/',
     image: 'https://res.cloudinary.com/dqqputx7b/image/upload/v1784460003/Gemini_Generated_Image_seackpseackpseac_v5c4eb.png',
-    isPrivate: false
+    isPrivate: false,
+    status: 'live',
+    statusLabel: 'Live Portal',
+    platformTag: 'Full Stack Web'
   },
   {
+    id: 'ssinfra',
     title: 'SS Infra Software',
-    description: 'A mobile application for infrastructure companies for construction machine fleet management, employee work logs, and complete machines data tracking. Built collaboratively as a team project.',
-    tech: ['React Native', 'PHP Laravel'],
+    category: 'Mobile App',
+    domain: 'Fleet Management System',
+    description: 'Production mobile application engineered for civil infrastructure enterprises enabling real-time heavy construction fleet tracking, operator work logs, machine telemetry, and maintenance records.',
+    tech: ['React Native', 'PHP Laravel', 'REST APIs', 'MySQL'],
     stars: 1,
     repo: '#',
-    live: 'https://play.google.com/store/apps/details?id=com.inficom.ssinfra&hl=en_IN',
+    live: 'https://play.google.com/store/apps/details?id=com.ssinfrastructure.app',
     image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&h=400&fit=crop',
-    isPrivate: true
+    isPrivate: true,
+    status: 'playstore',
+    statusLabel: 'On Play Store',
+    platformTag: 'React Native'
   },
   {
+    id: 'jaybhadra',
     title: 'Jay Bhadra Construction',
-    description: 'Construction company website showcasing projects, services, testimonials, and contact information for a building contractor.',
-    tech: ['Next.js', 'Tailwind CSS', 'Vercel Deployment'],
+    category: 'Web Apps',
+    domain: 'Corporate Construction Portal',
+    description: 'Modern corporate website for a premier infrastructure and building contractor showcasing architectural projects, civil services, client testimonials, and online quote requests.',
+    tech: ['Next.js', 'Tailwind CSS', 'Vercel Deployment', 'Framer Motion'],
     stars: 0,
     repo: 'https://github.com/holkar-somesh01/jaybhadraconstruction',
     live: 'https://jaybhadraconstruction.vercel.app/',
     image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&h=400&fit=crop',
-    isPrivate: true
+    isPrivate: true,
+    status: 'live',
+    statusLabel: 'Live Website',
+    platformTag: 'Next.js'
   },
   {
+    id: 'quickbilling',
     title: 'Quick Billing App',
-    description: 'A billing and invoice management application for businesses to track transactions.',
+    category: 'Full Stack',
+    domain: 'Point-of-Sale & Invoicing',
+    description: 'Full-stack point-of-sale and invoice generation suite allowing businesses to generate GST-compliant tax invoices, track sales transactions, manage stock, and export financial reports.',
     tech: ['React', 'Node.js', 'MongoDB', 'Material UI'],
     stars: 1,
     repo: 'https://github.com/holkar-somesh01/Quick-Billing-App-Frontend',
     live: null,
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop'
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
+    isPrivate: false,
+    status: 'opensource',
+    statusLabel: 'Open Source',
+    platformTag: 'MERN Stack'
   },
   {
+    id: 'hrm',
     title: 'Human Resource Management',
-    description: 'HR management system for employee tracking, attendance, and payroll management.',
-    tech: ['MERN Stack', 'JWT', 'Express'],
+    category: 'Full Stack',
+    domain: 'Enterprise HRMS Platform',
+    description: 'Enterprise HR management system featuring end-to-end employee lifecycle tracking, attendance and leave automation, role-based access security, and automated salary payroll processing.',
+    tech: ['MERN Stack', 'JWT Auth', 'Express.js', 'MongoDB'],
     stars: 1,
     repo: 'https://github.com/holkar-somesh01/Human-Resource-Management-Backend',
     live: null,
-    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop'
+    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&h=400&fit=crop',
+    isPrivate: false,
+    status: 'opensource',
+    statusLabel: 'Open Source',
+    platformTag: 'Node & Express'
   }
 ]
 
-const MyWork = () => {
-  return (
-    <section id="my-work" style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden' }}>
-      <div style={{ position: 'absolute', top: '10%', right: '-10%', width: '500px', height: '500px', background: 'var(--primary)', filter: 'blur(200px)', opacity: 0.03, borderRadius: '50%', zIndex: 0 }}></div>
+const categories = [
+  { id: 'all', label: 'All Projects', icon: Layers },
+  { id: 'Web Apps', label: 'Web Apps', icon: Globe },
+  { id: 'Mobile App', label: 'Mobile Apps', icon: Smartphone },
+  { id: 'Full Stack', label: 'Full Stack', icon: Code2 },
+]
 
-      <div style={{ maxWidth: '1400px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-        <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-          <motion.span
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            style={{ fontSize: '0.8rem', color: 'var(--primary)', letterSpacing: '6px', fontWeight: 800, textTransform: 'uppercase' }}
+const ProjectCard = ({ project, index }) => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+  const [isHovered, setIsHovered] = useState(false)
+  const cardRef = useRef(null)
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    })
+  }
+
+  const primaryActionUrl = project.live || (project.repo !== '#' && !project.isPrivate ? project.repo : null)
+  const isPlayStore = project.status === 'playstore'
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      layout
+      initial={{ opacity: 0, y: 35 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{
+        duration: 0.5,
+        delay: index * 0.08,
+        ease: [0.16, 1, 0.3, 1]
+      }}
+      className="portfolio-card group"
+    >
+      {/* Interactive cursor spotlight overlay */}
+      <div
+        className="portfolio-card-spotlight"
+        style={{
+          opacity: isHovered ? 1 : 0,
+          background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(0, 212, 255, 0.12), transparent 45%)`,
+        }}
+      />
+
+      {/* Media Image Section */}
+      <div className="portfolio-card-media">
+        <img
+          src={project.image}
+          alt={project.title}
+          loading="lazy"
+          decoding="async"
+          className="portfolio-card-img"
+        />
+
+        {/* Ambient Vignette Gradient */}
+        <div className="portfolio-card-media-overlay" />
+
+        {/* Top Floating Badges */}
+        <div className="portfolio-card-topbar">
+          <div className={`portfolio-status-pill ${project.status === 'live'
+            ? 'status-live'
+            : project.status === 'playstore'
+              ? 'status-playstore'
+              : 'status-opensource'
+            }`}>
+            <span className="pulse-beacon">
+              <span className="pulse-beacon-ping" />
+              <span className="pulse-beacon-core" />
+            </span>
+            <span>{project.statusLabel}</span>
+          </div>
+
+          <div className="portfolio-category-tag">
+            {project.platformTag}
+          </div>
+        </div>
+
+        {/* Quick View Floating Action on Hover */}
+        {primaryActionUrl && (
+          <a
+            href={primaryActionUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="media-quick-preview"
+            aria-label={`View ${project.title}`}
           >
-            PORTFOLIO
-          </motion.span>
+            {isPlayStore ? <Smartphone size={16} /> : <ExternalLink size={16} />}
+            <span>{isPlayStore ? 'View App' : 'Visit Site'}</span>
+            <ArrowUpRight size={15} />
+          </a>
+        )}
+      </div>
+
+      {/* Card Content Body */}
+      <div className="portfolio-card-body">
+        {/* Domain Label */}
+        <div className="portfolio-domain-label">
+          <Layers size={13} />
+          <span>{project.domain}</span>
+        </div>
+
+        {/* Card Title */}
+        <div className="portfolio-card-title-row">
+          <h3 className="portfolio-card-title">
+            {project.title}
+          </h3>
+          <ArrowUpRight size={20} className="portfolio-card-title-icon" />
+        </div>
+
+        {/* Description */}
+        <p className="portfolio-card-desc">
+          {project.description}
+        </p>
+
+        {/* Tech Stack Chips */}
+        <div className="portfolio-tech-list">
+          {project.tech.map((tech) => (
+            <span key={tech} className="tech-chip">
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        {/* Card Action Buttons */}
+        <div className={`portfolio-card-actions ${!project.live && (project.isPrivate || project.repo === '#') ? 'single-action' : ''}`}>
+          {/* Live / Preview / Play Store Button */}
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-portfolio-primary"
+            >
+              {isPlayStore ? <Smartphone size={17} /> : <ExternalLink size={17} />}
+              <span>{isPlayStore ? 'Google Play' : 'Live Preview'}</span>
+            </a>
+          )}
+
+          {/* GitHub / Source Code Button */}
+          {project.repo !== '#' && !project.isPrivate ? (
+            <a
+              href={project.repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-portfolio-secondary"
+            >
+              <Github size={17} />
+              <span>Source Code</span>
+            </a>
+          ) : project.isPrivate ? (
+            <div
+              className="btn-portfolio-private"
+              title="Proprietary source code under client confidentiality"
+            >
+              <Lock size={15} />
+              <span>Private Repo</span>
+            </div>
+          ) : (
+            <div
+              className="btn-portfolio-private"
+              title="Internal proprietary code"
+            >
+              <Code2 size={15} />
+              <span>Internal System</span>
+            </div>
+          )}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
+const MyWork = () => {
+  const [activeCategory, setActiveCategory] = useState('all')
+
+  const filteredProjects = activeCategory === 'all'
+    ? projects
+    : projects.filter((p) => p.category === activeCategory)
+
+  return (
+    <section id="my-work" className="projects-section">
+      {/* Background Ambient Glow Orbs */}
+      <div className="projects-ambient-glow-1" />
+      <div className="projects-ambient-glow-2" />
+
+      <div className="projects-container">
+        {/* Section Header */}
+        <div className="projects-header">
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="projects-badge"
+          >
+            <Sparkles size={14} />
+            <span>FEATURED WORK</span>
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', marginTop: '1.5rem', fontWeight: 950, letterSpacing: '-2px' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="projects-title"
           >
-            My <span style={{ background: 'var(--gradient-primary)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Projects</span>
+            Featured <span className="projects-title-gradient">Projects</span>
           </motion.h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', marginTop: '1.5rem', maxWidth: '600px', margin: '1.5rem auto 0' }}>
-            A collection of web applications and software solutions I have built.
-          </p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="projects-subtitle"
+          >
+            A curated showcase of production web platforms, enterprise mobile applications, and scalable full-stack software engineered with modern technologies and clean architecture.
+          </motion.p>
         </div>
 
-        <div className="work-grid" style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '2.5rem'
-        }}>
-          <style dangerouslySetInnerHTML={{
-            __html: `
-            @media (max-width: 1200px) {
-              .work-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            }
-            @media (max-width: 768px) {
-              .work-grid { grid-template-columns: 1fr !important; }
-            }
-            
-            .btn-preview-animated {
-              position: relative;
-              background: linear-gradient(90deg, #00d4ff, #0055ff, #00d4ff);
-              background-size: 200% auto;
-              color: #fff !important;
-              animation: shine 3s linear infinite;
-              box-shadow: 0 0 15px rgba(0, 212, 255, 0.4);
-              transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-            .btn-preview-animated:hover {
-              transform: translateY(-5px) scale(1.05);
-              box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
-            }
-            @keyframes shine {
-              to {
-                background-position: 200% center;
-              }
-            }
-            
-            .btn-github-animated {
-              background: rgba(255, 255, 255, 0.05);
-              backdrop-filter: blur(10px);
-              border: 1px solid rgba(255, 255, 255, 0.2);
-              color: #fff !important;
-              transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            }
-            .btn-github-animated:hover {
-              background: #fff !important;
-              color: #000 !important;
-              transform: translateY(-5px) scale(1.05);
-              box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-            }
-            .btn-github-animated:hover svg {
-              color: #000 !important;
-            }
-          `}} />
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              className="project-card"
-              style={{
-                background: 'rgba(255,255,255,0.015)',
-                border: '1px solid rgba(255,255,255,0.05)',
-                overflow: 'hidden',
-                backdropFilter: 'blur(20px)',
-                display: 'flex',
-                flexDirection: 'column',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-              }}
-            >
-              <div style={{ position: 'relative', height: '300px', overflow: 'hidden' }}>
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease' }}
-                  onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                  onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                />
-                <div style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', display: 'flex', gap: '0.8rem' }}>
-                  {project.tech.slice(0, 2).map(t => (
-                    <span key={t} style={{ background: 'rgba(10,10,15,0.7)', backdropFilter: 'blur(10px)', color: '#fff', padding: '0.5rem 1rem', borderRadius: '12px', fontSize: '0.7rem', fontWeight: 700, border: '1px solid rgba(255,255,255,0.1)' }}>
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
+        {/* Category Filter Badges (Attractive & 100% Responsive) */}
+        <div className="projects-filter-container">
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat.id
+            const count = cat.id === 'all'
+              ? projects.length
+              : projects.filter((p) => p.category === cat.id).length
+            const Icon = cat.icon
 
-              <div style={{ padding: '3rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ fontSize: '2rem', marginBottom: '1.2rem', fontWeight: 900, letterSpacing: '-0.5px' }}>{project.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '2.5rem', flex: 1 }}>{project.description}</p>
-
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: project.live ? '1fr 1fr' : '1fr',
-                  gap: '1rem',
-                  marginTop: 'auto'
-                }}>
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-preview-animated"
-                      style={{
-                        padding: '1rem',
-                        borderRadius: '16px',
-                        fontSize: '0.95rem',
-                        fontWeight: 800,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.6rem',
-                        textDecoration: 'none',
-                      }}
-                    >
-                      <ExternalLink size={18} /> Preview
-                    </a>
-                  )}
-                  {project.repo !== '#' && (
-                    <a
-                      href={project.isPrivate ? undefined : project.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={!project.isPrivate ? "btn-github-animated" : ""}
-                      style={{
-                        padding: '1rem',
-                        borderRadius: '16px',
-                        fontSize: '0.95rem',
-                        fontWeight: 700,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: '0.6rem',
-                        textDecoration: 'none',
-                        ...(project.isPrivate ? {
-                          background: 'rgba(255,255,255,0.02)',
-                          color: 'rgba(255,255,255,0.2)',
-                          border: '1px solid rgba(255,255,255,0.02)',
-                          cursor: 'not-allowed',
-                          pointerEvents: 'none'
-                        } : {})
-                      }}
-                      title={project.isPrivate ? "Source code is private" : "View Source"}
-                    >
-                      <Github size={18} /> Code
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+            return (
+              <motion.button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.96 }}
+                className={`filter-badge-btn ${isActive ? 'active' : ''}`}
+                aria-pressed={isActive}
+              >
+                <span className="filter-badge-icon">
+                  <Icon size={14} />
+                </span>
+                <span>{cat.label}</span>
+                <span className="filter-badge-count">
+                  {count}
+                </span>
+              </motion.button>
+            )
+          })}
         </div>
+
+        {/* Projects Grid */}
+        <motion.div layout className="projects-grid">
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id || project.title}
+                project={project}
+                index={index}
+              />
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   )
