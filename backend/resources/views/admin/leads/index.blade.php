@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <!-- Leads List -->
+    <!-- Leads Table -->
     @if($leads->isEmpty())
         <div class="glass-panel rounded-2xl p-12 text-center text-slate-400">
             <svg class="w-16 h-16 mx-auto text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
@@ -78,116 +78,234 @@
             </p>
         </div>
     @else
-        <div class="space-y-4">
-            @foreach($leads as $lead)
-                <div class="glass-panel rounded-2xl p-5 md:p-6 border border-white/5 hover:border-cyan-500/30 transition-all space-y-4">
-                    <!-- Top Bar: Sender details & Status Badge -->
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/5 pb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/30 text-cyan-300 flex items-center justify-center font-bold text-base font-heading">
-                                {{ strtoupper(substr($lead->name, 0, 1)) }}
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-base text-white font-heading">{{ $lead->name }}</h4>
-                                    <span class="text-[11px] text-slate-500 font-mono">#{{ $lead->id }}</span>
+        <!-- Responsive Data Table Container -->
+        <div class="glass-panel rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left text-xs text-slate-300 border-collapse">
+                    <!-- Table Head -->
+                    <thead>
+                        <tr class="bg-black/60 border-b border-white/10 text-[11px] font-bold text-slate-400 uppercase tracking-wider font-heading">
+                            <th class="py-3.5 px-4 w-12 text-center">#ID</th>
+                            <th class="py-3.5 px-4 min-w-[220px]">Client / Contact</th>
+                            <th class="py-3.5 px-4 min-w-[280px]">Subject & Inquiry</th>
+                            <th class="py-3.5 px-4 min-w-[140px]">Pipeline Status</th>
+                            <th class="py-3.5 px-4 min-w-[140px]">Email History</th>
+                            <th class="py-3.5 px-4 min-w-[130px]">Received At</th>
+                            <th class="py-3.5 px-4 min-w-[160px] text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <!-- Table Body -->
+                    <tbody class="divide-y divide-white/5">
+                        @foreach($leads as $lead)
+                            @php
+                                $statusBadgeClasses = [
+                                    'new' => 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40',
+                                    'contacted' => 'bg-blue-500/20 text-blue-300 border-blue-500/40',
+                                    'in_progress' => 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+                                    'converted' => 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+                                    'archived' => 'bg-slate-500/20 text-slate-400 border-slate-500/40',
+                                ][$lead->status] ?? 'bg-slate-500/20 text-slate-300 border-slate-500/40';
+
+                                $statusLabels = [
+                                    'new' => '🔵 New / Unread',
+                                    'contacted' => '💬 Contacted',
+                                    'in_progress' => '⏳ In Discussion',
+                                    'converted' => '🟢 Converted',
+                                    'archived' => '⚪ Archived',
+                                ];
+                            @endphp
+
+                            <!-- Main Lead Row -->
+                            <tr class="hover:bg-white/[0.03] transition-colors group">
+                                <!-- ID -->
+                                <td class="py-4 px-4 text-center font-mono text-slate-500 font-bold">
+                                    #{{ $lead->id }}
+                                </td>
+
+                                <!-- Client / Contact -->
+                                <td class="py-4 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/20 to-purple-600/20 border border-cyan-500/30 text-cyan-300 flex items-center justify-center font-bold text-sm font-heading flex-shrink-0">
+                                            {{ strtoupper(substr($lead->name, 0, 1)) }}
+                                        </div>
+                                        <div class="min-w-0">
+                                            <div class="font-bold text-white text-sm font-heading truncate flex items-center gap-2">
+                                                <span>{{ $lead->name }}</span>
+                                                @if($lead->notes)
+                                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400" title="Has internal notes"></span>
+                                                @endif
+                                            </div>
+                                            <div class="flex items-center gap-1.5 text-xs text-slate-400 mt-0.5">
+                                                <a href="mailto:{{ $lead->email }}" class="hover:text-cyan-400 transition-colors truncate max-w-[160px]" title="{{ $lead->email }}">
+                                                    {{ $lead->email }}
+                                                </a>
+                                                <button type="button" onclick="navigator.clipboard.writeText('{{ $lead->email }}'); alert('Email copied!');" class="text-slate-500 hover:text-slate-300 p-0.5" title="Copy email">
+                                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                                </button>
+                                            </div>
+                                            @if($lead->phone)
+                                                <div class="text-[11px] text-slate-500 mt-0.5">
+                                                    <a href="tel:{{ $lead->phone }}" class="hover:text-emerald-400 transition-colors">
+                                                        📞 {{ $lead->phone }}
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Subject & Message Snippet -->
+                                <td class="py-4 px-4">
+                                    <div class="space-y-1">
+                                        <div class="font-semibold text-white truncate max-w-xs flex items-center gap-1.5">
+                                            <span>{{ $lead->subject }}</span>
+                                        </div>
+                                        <p class="text-slate-400 text-xs line-clamp-2 max-w-md leading-relaxed cursor-pointer hover:text-slate-200 transition-colors" onclick="toggleDetails({{ $lead->id }})">
+                                            {{ $lead->message }}
+                                        </p>
+                                        <button type="button" onclick="toggleDetails({{ $lead->id }})" class="text-[11px] text-cyan-400 hover:text-cyan-300 font-medium inline-flex items-center gap-1 mt-0.5">
+                                            <span id="btnText-{{ $lead->id }}">View Full Message & Notes &darr;</span>
+                                        </button>
+                                    </div>
+                                </td>
+
+                                <!-- Status Dropdown -->
+                                <td class="py-4 px-4">
+                                    <form method="POST" action="{{ route('admin.leads.update', $lead->id) }}" id="statusForm-{{ $lead->id }}">
+                                        @csrf
+                                        <input type="hidden" name="notes" value="{{ $lead->notes }}">
+                                        <select name="status" onchange="document.getElementById('statusForm-{{ $lead->id }}').submit()"
+                                                class="px-2.5 py-1.5 rounded-xl text-xs font-semibold border bg-black/60 focus:outline-none focus:border-cyan-500 cursor-pointer transition-all {{ $statusBadgeClasses }}">
+                                            <option value="new" {{ $lead->status === 'new' ? 'selected' : '' }}>🔵 New</option>
+                                            <option value="contacted" {{ $lead->status === 'contacted' ? 'selected' : '' }}>💬 Contacted</option>
+                                            <option value="in_progress" {{ $lead->status === 'in_progress' ? 'selected' : '' }}>⏳ In Discussion</option>
+                                            <option value="converted" {{ $lead->status === 'converted' ? 'selected' : '' }}>🟢 Converted</option>
+                                            <option value="archived" {{ $lead->status === 'archived' ? 'selected' : '' }}>⚪ Archived</option>
+                                        </select>
+                                    </form>
+                                </td>
+
+                                <!-- Email History -->
+                                <td class="py-4 px-4">
                                     @if(($lead->email_count ?? 0) > 0)
-                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1" title="Last emailed: {{ $lead->last_emailed_at?->format('M d, Y h:i A') }}">
-                                            <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                            Emailed ({{ $lead->email_count }})
-                                        </span>
+                                        <div class="inline-flex flex-col gap-1">
+                                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 inline-flex items-center gap-1 w-max">
+                                                <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                                Sent ({{ $lead->email_count }})
+                                            </span>
+                                            @if($lead->last_emailed_at)
+                                                <span class="text-[10px] text-slate-500 font-mono" title="{{ $lead->last_emailed_at->format('Y-m-d H:i:s') }}">
+                                                    {{ $lead->last_emailed_at->diffForHumans() }}
+                                                </span>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <span class="text-[11px] text-slate-500 italic">No email sent</span>
                                     @endif
-                                </div>
-                                <div class="flex flex-wrap items-center gap-2 text-xs text-slate-400 mt-0.5">
-                                    <span class="text-cyan-400 flex items-center gap-1">
-                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                        {{ $lead->email }}
-                                    </span>
-                                    @if($lead->phone)
-                                        <span>•</span>
-                                        <a href="tel:{{ $lead->phone }}" class="text-slate-300 hover:underline">{{ $lead->phone }}</a>
-                                    @endif
-                                    <span>•</span>
-                                    <span class="text-slate-500 font-mono">{{ $lead->ip_address }}</span>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
 
-                        <!-- Date & Quick Actions -->
-                        <div class="flex items-center gap-2.5 sm:self-auto self-end">
-                            <span class="text-xs text-slate-400 font-mono hidden md:inline" title="{{ $lead->created_at->format('Y-m-d H:i:s') }}">
-                                {{ $lead->created_at->format('M d, Y • h:i A') }}
-                            </span>
-
-                            <!-- Send Email Button (Opens Composer Modal) -->
-                            <button type="button"
-                                    onclick="openContactEmailModal({{ json_encode($lead) }})"
-                                    class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs transition-all shadow-md shadow-cyan-500/20 flex items-center gap-1.5">
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                                <span>Send Email</span>
-                            </button>
-
-                            <a href="mailto:{{ $lead->email }}?subject=Re: {{ rawurlencode($lead->subject) }}"
-                               class="px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 text-xs font-semibold transition-colors" title="Open in default mail client">
-                                ↗
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Subject & Full Message -->
-                    <div>
-                        <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mb-1">Subject</div>
-                        <div class="text-sm font-semibold text-white bg-black/40 px-3.5 py-2.5 rounded-xl border border-white/5">
-                            {{ $lead->subject }}
-                        </div>
-
-                        <div class="text-[11px] text-slate-400 font-bold uppercase tracking-wider mt-3 mb-1">Message Content</div>
-                        <div class="text-sm text-slate-200 bg-black/20 p-4 rounded-xl border border-white/5 whitespace-pre-wrap leading-relaxed">
-                            {{ $lead->message }}
-                        </div>
-                    </div>
-
-                    <!-- Internal Note & Status Update Form -->
-                    <div class="pt-3 border-t border-white/5 bg-black/20 -mx-5 -mb-5 md:-mx-6 md:-mb-6 p-4 rounded-b-2xl">
-                        <form method="POST" action="{{ route('admin.leads.update', $lead->id) }}" class="space-y-3">
-                            @csrf
-                            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-end">
-                                <!-- Status Selector -->
-                                <div class="md:col-span-3">
-                                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Pipeline Status</label>
-                                    <select name="status" class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-xs text-white focus:outline-none focus:border-cyan-500">
-                                        <option value="new" {{ $lead->status === 'new' ? 'selected' : '' }}>🔵 New / Unread</option>
-                                        <option value="contacted" {{ $lead->status === 'contacted' ? 'selected' : '' }}>💬 Contacted</option>
-                                        <option value="in_progress" {{ $lead->status === 'in_progress' ? 'selected' : '' }}>⏳ In Discussion</option>
-                                        <option value="converted" {{ $lead->status === 'converted' ? 'selected' : '' }}>🟢 Converted / Won</option>
-                                        <option value="archived" {{ $lead->status === 'archived' ? 'selected' : '' }}>⚪ Archived</option>
-                                    </select>
-                                </div>
-
-                                <!-- Internal Notes -->
-                                <div class="md:col-span-6">
-                                    <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Admin Internal Notes & Activity Log</label>
-                                    <input type="text" name="notes" value="{{ $lead->notes }}" placeholder="Add private notes (e.g. Quoted $500, waiting on response)..."
-                                           class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
-                                </div>
+                                <!-- Received At -->
+                                <td class="py-4 px-4">
+                                    <div class="text-xs text-white font-medium">
+                                        {{ $lead->created_at->format('M d, Y') }}
+                                    </div>
+                                    <div class="text-[11px] text-slate-500 font-mono mt-0.5">
+                                        {{ $lead->created_at->format('h:i A') }} • {{ $lead->created_at->diffForHumans() }}
+                                    </div>
+                                </td>
 
                                 <!-- Action Buttons -->
-                                <div class="md:col-span-3 flex items-center gap-2">
-                                    <button type="submit" class="flex-1 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs border border-white/10 transition-all">
-                                        Save Note
-                                    </button>
-                                    <button type="button" onclick="confirmDelete('{{ route('admin.leads.delete', $lead->id) }}', '{{ $lead->id }}')" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-colors" title="Delete lead">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            @endforeach
+                                <td class="py-4 px-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <!-- Compose Email Trigger -->
+                                        <button type="button"
+                                                onclick="openContactEmailModal({{ json_encode($lead) }})"
+                                                class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-bold text-xs transition-all shadow-md shadow-cyan-500/20 inline-flex items-center gap-1.5 flex-shrink-0"
+                                                title="Send email via SMTP">
+                                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                            <span>Email</span>
+                                        </button>
 
-            <!-- Pagination -->
-            <div class="pt-4">
+                                        <!-- Toggle Details Accordion -->
+                                        <button type="button"
+                                                onclick="toggleDetails({{ $lead->id }})"
+                                                class="p-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10 transition-colors"
+                                                title="View message & edit notes">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        </button>
+
+                                        <!-- Delete Lead -->
+                                        <button type="button"
+                                                onclick="confirmDelete('{{ route('admin.leads.delete', $lead->id) }}', '{{ $lead->id }}')"
+                                                class="p-1.5 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-colors"
+                                                title="Delete lead">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Expandable Details Row (Accordion) -->
+                            <tr id="details-{{ $lead->id }}" class="hidden bg-black/40 border-b border-white/10">
+                                <td colspan="7" class="p-5 md:p-6">
+                                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+                                        <!-- Full Message Content (7 cols) -->
+                                        <div class="lg:col-span-7 space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-[11px] font-bold text-cyan-400 uppercase tracking-wider flex items-center gap-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                                                    Full Inquiry Message
+                                                </span>
+                                                <span class="text-[11px] text-slate-500 font-mono">
+                                                    IP: {{ $lead->ip_address }} • {{ $lead->user_agent ? Str::limit($lead->user_agent, 45) : 'Direct' }}
+                                                </span>
+                                            </div>
+                                            <div class="p-4 rounded-xl bg-black/60 border border-white/10 text-sm text-slate-200 whitespace-pre-wrap leading-relaxed select-text font-sans">
+                                                {{ $lead->message }}
+                                            </div>
+                                            <div class="flex items-center gap-2 pt-1">
+                                                <button type="button"
+                                                        onclick="openContactEmailModal({{ json_encode($lead) }})"
+                                                        class="px-3.5 py-1.5 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-bold text-xs border border-cyan-500/40 transition-colors inline-flex items-center gap-1.5">
+                                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                                    Compose Reply to {{ $lead->name }}
+                                                </button>
+                                                <a href="mailto:{{ $lead->email }}?subject=Re: {{ rawurlencode($lead->subject) }}"
+                                                   class="px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 text-xs font-semibold border border-white/10 transition-colors">
+                                                    Open in External Mail App ↗
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Notes & Pipeline Management (5 cols) -->
+                                        <div class="lg:col-span-5 space-y-3">
+                                            <span class="text-[11px] font-bold text-purple-400 uppercase tracking-wider flex items-center gap-1.5">
+                                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                                Internal Admin Notes & Activity Log
+                                            </span>
+                                            <form method="POST" action="{{ route('admin.leads.update', $lead->id) }}" class="space-y-3">
+                                                @csrf
+                                                <input type="hidden" name="status" value="{{ $lead->status }}">
+                                                <textarea name="notes" rows="4" placeholder="Record private discussion notes, quoted pricing, meeting links, or call summaries..."
+                                                          class="w-full p-3 rounded-xl bg-black/60 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors">{{ $lead->notes }}</textarea>
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-[11px] text-slate-500">Only visible to administrators.</span>
+                                                    <button type="submit" class="px-4 py-1.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-colors shadow-md shadow-purple-600/20">
+                                                        Save Note
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Table Pagination Footer -->
+            <div class="p-4 bg-black/40 border-t border-white/5">
                 {{ $leads->links() }}
             </div>
         </div>
@@ -403,6 +521,20 @@ ${PORTFOLIO_CONFIG.ownerName}`;
             const form = document.getElementById('deleteForm');
             form.action = url;
             form.submit();
+        }
+    }
+
+    function toggleDetails(id) {
+        const row = document.getElementById(`details-${id}`);
+        const btnText = document.getElementById(`btnText-${id}`);
+        if (!row) return;
+
+        if (row.classList.contains('hidden')) {
+            row.classList.remove('hidden');
+            if (btnText) btnText.innerHTML = 'Hide Full Message & Notes &uarr;';
+        } else {
+            row.classList.add('hidden');
+            if (btnText) btnText.innerHTML = 'View Full Message & Notes &darr;';
         }
     }
 </script>
