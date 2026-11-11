@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\ContactLead;
 use App\Models\ConsultationLead;
 use App\Models\User;
+use App\Mail\AdminDirectReplyMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class AdminDashboardController extends Controller
@@ -103,6 +106,52 @@ class AdminDashboardController extends Controller
     }
 
     /**
+     * Send email to client directly from the admin panel.
+     */
+    public function sendContactEmail(Request $request, $id)
+    {
+        $lead = ContactLead::findOrFail($id);
+
+        $request->validate([
+            'subject' => 'required|string|max:200',
+            'message' => 'required|string|min:5|max:10000',
+            'update_status' => 'nullable|in:new,contacted,in_progress,converted,archived',
+        ]);
+
+        try {
+            Mail::to($lead->email)->send(
+                new AdminDirectReplyMail(
+                    recipientName: $lead->name,
+                    recipientEmail: $lead->email,
+                    mailSubject: $request->subject,
+                    mailMessage: $request->message,
+                    lead: $lead
+                )
+            );
+
+            // Update lead tracking info
+            $lead->last_emailed_at = now();
+            $lead->email_count = ($lead->email_count ?? 0) + 1;
+
+            if ($request->filled('update_status')) {
+                $lead->status = $request->update_status;
+            } elseif ($lead->status === 'new') {
+                $lead->status = 'contacted';
+            }
+
+            $timestamp = now()->format('M d, Y h:i A');
+            $logEntry = "[{$timestamp}] Sent Email to {$lead->email}: \"{$request->subject}\"";
+            $lead->notes = trim(($lead->notes ? $lead->notes . "\n" : '') . $logEntry);
+            $lead->save();
+
+            return back()->with('success', "Email successfully sent to {$lead->name} ({$lead->email})!");
+        } catch (\Throwable $e) {
+            Log::error("Failed to send email to lead #{$lead->id}: " . $e->getMessage());
+            return back()->with('error', "Failed to send email. Please verify your MAIL_* SMTP settings in backend/.env. Error: " . $e->getMessage());
+        }
+    }
+
+    /**
      * Delete a contact lead.
      */
     public function deleteContactLead($id)
@@ -169,6 +218,52 @@ class AdminDashboardController extends Controller
         ]);
 
         return back()->with('success', 'Consultation inquiry updated.');
+    }
+
+    /**
+     * Send email to consultation client directly from the admin panel.
+     */
+    public function sendConsultationEmail(Request $request, $id)
+    {
+        $consultation = ConsultationLead::findOrFail($id);
+
+        $request->validate([
+            'subject' => 'required|string|max:200',
+            'message' => 'required|string|min:5|max:10000',
+            'update_status' => 'nullable|in:new,contacted,in_progress,converted,archived',
+        ]);
+
+        try {
+            Mail::to($consultation->email)->send(
+                new AdminDirectReplyMail(
+                    recipientName: $consultation->name,
+                    recipientEmail: $consultation->email,
+                    mailSubject: $request->subject,
+                    mailMessage: $request->message,
+                    lead: $consultation
+                )
+            );
+
+            // Update consultation tracking info
+            $consultation->last_emailed_at = now();
+            $consultation->email_count = ($consultation->email_count ?? 0) + 1;
+
+            if ($request->filled('update_status')) {
+                $consultation->status = $request->update_status;
+            } elseif ($consultation->status === 'new') {
+                $consultation->status = 'contacted';
+            }
+
+            $timestamp = now()->format('M d, Y h:i A');
+            $logEntry = "[{$timestamp}] Sent Consultation Email to {$consultation->email}: \"{$request->subject}\"";
+            $consultation->notes = trim(($consultation->notes ? $consultation->notes . "\n" : '') . $logEntry);
+            $consultation->save();
+
+            return back()->with('success', "Email successfully sent to {$consultation->name} ({$consultation->email})!");
+        } catch (\Throwable $e) {
+            Log::error("Failed to send consultation email #{$consultation->id}: " . $e->getMessage());
+            return back()->with('error', "Failed to send email. Please verify your MAIL_* SMTP settings in backend/.env. Error: " . $e->getMessage());
+        }
     }
 
     /**
@@ -259,6 +354,32 @@ class AdminDashboardController extends Controller
         $user->save();
 
         return back()->with('success', 'Profile and security credentials updated successfully.');
+    }
+
+    /**
+     * Send test email to verify SMTP configuration in .env.
+     */
+    public function sendTestEmail(Request $request)
+    {
+        $request->validate([
+            'test_email' => 'required|email',
+        ]);
+
+        try {
+            Mail::to($request->test_email)->send(
+                new AdminDirectReplyMail(
+                    recipientName: Auth::user()->name ?? 'Administrator',
+                    recipientEmail: $request->test_email,
+                    mailSubject: 'SMTP Test Successful — Someshwar Portfolio System',
+                    mailMessage: "Great news! Your SMTP credentials in backend/.env are configured and communicating properly with the mail server.\n\nYou are ready to send and receive real client emails directly from your system admin panel."
+                )
+            );
+
+            return back()->with('success', "Test email delivered successfully to {$request->test_email}! Your SMTP configuration is working perfectly.");
+        } catch (\Throwable $e) {
+            Log::error("SMTP test failed: " . $e->getMessage());
+            return back()->with('error', "SMTP Connection Failed. Please review your backend/.env mail credentials. Error: " . $e->getMessage());
+        }
     }
 }
 

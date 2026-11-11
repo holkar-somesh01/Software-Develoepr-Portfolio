@@ -1,19 +1,19 @@
 @extends('admin.layouts.app')
 
-@section('title', 'Security & Account Profile')
-@section('page_title', 'Admin Account & Security')
+@section('title', 'Security & Email Settings')
+@section('page_title', 'Admin Account & Email Configuration')
 
 @section('content')
-<div class="max-w-4xl space-y-6">
+<div class="space-y-6">
     <!-- Header -->
     <div>
-        <h2 class="text-xl font-bold text-white font-heading">Security & Account Settings</h2>
-        <p class="text-xs text-slate-400 mt-1">Manage your administrator account details, email address, and login password.</p>
+        <h2 class="text-xl font-bold text-white font-heading">Security & Email Configuration</h2>
+        <p class="text-xs text-slate-400 mt-1">Manage administrator credentials, inspect active SMTP mail settings, and test outgoing client email delivery.</p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Form Column -->
-        <div class="lg:col-span-2 space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Left Column: Profile & Credentials Update Form (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
             <div class="glass-panel rounded-2xl p-6 border border-white/5 space-y-6">
                 <form method="POST" action="{{ route('admin.profile.update') }}" class="space-y-6">
                     @csrf
@@ -75,50 +75,119 @@
                     </div>
                 </form>
             </div>
+
+            <!-- Email Setup Guide -->
+            <div class="glass-panel rounded-2xl p-6 border border-white/5 space-y-4">
+                <div class="flex items-center gap-2 pb-2 border-b border-white/5">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">How to Set Up Your Gmail App Password</h3>
+                </div>
+                <div class="text-xs text-slate-300 space-y-2.5 leading-relaxed">
+                    <p>To allow this admin panel to send real emails to your clients through your Gmail address, use a secure Google <strong>App Password</strong>:</p>
+                    <ol class="list-decimal pl-5 space-y-1.5 text-slate-400">
+                        <li>Visit your <a href="https://myaccount.google.com/security" target="_blank" class="text-cyan-400 underline font-semibold">Google Account Security page</a>.</li>
+                        <li>Ensure <strong>2-Step Verification</strong> is switched ON.</li>
+                        <li>Search for <strong>"App passwords"</strong> in the search bar.</li>
+                        <li>Create a new App Password named <code class="text-white bg-black/60 px-1.5 py-0.5 rounded">Portfolio Admin</code>.</li>
+                        <li>Google will generate a <strong>16-character code</strong> (e.g. <code class="text-emerald-400 font-mono">abcd efgh ijkl mnop</code>).</li>
+                        <li>Open <code class="text-cyan-300">backend/.env</code> in your editor and set:
+                            <pre class="mt-1.5 p-2.5 rounded-lg bg-black/70 text-slate-300 font-mono text-[11px] overflow-x-auto border border-white/5">MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=someshwarsholkar22@gmail.com
+MAIL_PASSWORD=your_16_character_code
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=someshwarsholkar22@gmail.com
+MAIL_FROM_NAME="Someshwar Holkar"</pre>
+                        </li>
+                    </ol>
+                </div>
+            </div>
         </div>
 
-        <!-- Info Column -->
-        <div class="space-y-6">
+        <!-- Right Column: Live SMTP Status & Test Email (5 cols) -->
+        <div class="lg:col-span-5 space-y-6">
             <!-- Account Info Card -->
             <div class="glass-panel rounded-2xl p-6 border border-white/5 space-y-4">
-                <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center font-bold text-xl font-heading">
-                    {{ strtoupper(substr($user->name, 0, 1)) }}
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center font-bold text-xl font-heading">
+                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base font-heading">{{ $user->name }}</h4>
+                        <p class="text-xs text-slate-400">{{ $user->email }}</p>
+                    </div>
                 </div>
-                <div>
-                    <h4 class="font-bold text-white text-base font-heading">{{ $user->name }}</h4>
-                    <p class="text-xs text-slate-400">{{ $user->email }}</p>
-                    <span class="inline-block mt-2 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                        Primary Super Administrator
-                    </span>
-                </div>
-                <div class="pt-4 border-t border-white/5 text-xs text-slate-400 space-y-2">
+                <div class="pt-3 border-t border-white/5 text-xs text-slate-400 space-y-2">
                     <div class="flex items-center justify-between">
-                        <span>Account ID:</span>
+                        <span>Account Role:</span>
+                        <span class="text-cyan-300 font-semibold">Super Administrator</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span>Database ID:</span>
                         <span class="text-white font-mono">#{{ $user->id }}</span>
                     </div>
                     <div class="flex items-center justify-between">
-                        <span>Registered On:</span>
-                        <span class="text-white">{{ $user->created_at->format('M d, Y') }}</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span>Session IP:</span>
+                        <span>Current Session IP:</span>
                         <span class="text-white font-mono">{{ request()->ip() }}</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Security Notice -->
-            <div class="glass-panel rounded-2xl p-5 border border-cyan-500/20 bg-cyan-950/20 space-y-2">
-                <div class="flex items-center gap-2 text-cyan-400 font-bold text-xs uppercase tracking-wider">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                    Security Best Practices
+            <!-- Active SMTP Configuration Card -->
+            <div class="glass-panel rounded-2xl p-6 border border-white/5 space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></div>
+                        <h3 class="text-xs font-bold text-white uppercase tracking-wider">Active SMTP Mailer</h3>
+                    </div>
+                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-mono">
+                        {{ strtoupper(config('mail.default', 'smtp')) }}
+                    </span>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed">
-                    Protect this administrator login URL (<code class="text-cyan-300">/admin/login</code>). Passwords use bcrypt hashing with rate-limited login defense (5 attempts per minute).
-                </p>
+
+                <div class="p-3.5 rounded-xl bg-black/40 border border-white/5 space-y-2 text-xs">
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">Host:</span>
+                        <span class="text-white font-mono font-medium">{{ config('mail.mailers.smtp.host') ?: 'smtp.gmail.com' }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">Port / Encryption:</span>
+                        <span class="text-white font-mono font-medium">{{ config('mail.mailers.smtp.port', 587) }} ({{ strtoupper(config('mail.mailers.smtp.encryption', 'tls')) }})</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">Username:</span>
+                        <span class="text-white font-mono truncate max-w-[180px]">{{ config('mail.mailers.smtp.username') ?: 'Not configured' }}</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">Password:</span>
+                        <span class="font-mono {{ config('mail.mailers.smtp.password') ? 'text-emerald-400' : 'text-amber-400' }}">
+                            {{ config('mail.mailers.smtp.password') ? '••••••••••••' : 'Missing / Placeholder' }}
+                        </span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-slate-400">Sender "From":</span>
+                        <span class="text-white font-mono truncate max-w-[180px]">{{ config('mail.from.address') }}</span>
+                    </div>
+                </div>
+
+                <!-- One-Click SMTP Test Form -->
+                <form method="POST" action="{{ route('admin.email.test') }}" class="pt-2 border-t border-white/5 space-y-3">
+                    @csrf
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase tracking-wider mb-1">
+                            Verify Email Delivery
+                        </label>
+                        <input type="email" name="test_email" value="{{ old('test_email', $user->email) }}" required placeholder="recipient@example.com"
+                               class="w-full px-3 py-2 rounded-xl bg-black/60 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500">
+                    </div>
+                    <button type="submit" class="w-full px-4 py-2 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 font-bold text-xs border border-cyan-500/40 transition-colors flex items-center justify-center gap-2">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        <span>Send Test Email Now</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
-

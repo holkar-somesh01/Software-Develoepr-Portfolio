@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ContactLead;
 use App\Models\ConsultationLead;
+use App\Mail\ClientAcknowledgementMail;
+use App\Mail\NewLeadNotificationMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class LeadApiController extends Controller
@@ -42,6 +46,19 @@ class LeadApiController extends Controller
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ]);
+
+            // Dispatch automatic acknowledgment email to client & alert to admin
+            try {
+                if (filter_var($lead->email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::to($lead->email)->send(new ClientAcknowledgementMail($lead, 'contact'));
+                }
+                $adminEmail = config('mail.from.address') ?: env('ADMIN_NOTIFICATION_EMAIL', 'someshwarsholkar22@gmail.com');
+                if ($adminEmail) {
+                    Mail::to($adminEmail)->send(new NewLeadNotificationMail($lead, 'contact'));
+                }
+            } catch (\Throwable $mailError) {
+                Log::warning('Automatic email dispatch failed (check .env SMTP credentials): ' . $mailError->getMessage());
+            }
 
             return response()->json([
                 'success' => true,
@@ -93,6 +110,19 @@ class LeadApiController extends Controller
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
             ]);
+
+            // Dispatch automatic acknowledgment email to client & alert to admin
+            try {
+                if (filter_var($lead->email, FILTER_VALIDATE_EMAIL)) {
+                    Mail::to($lead->email)->send(new ClientAcknowledgementMail($lead, 'consultation'));
+                }
+                $adminEmail = config('mail.from.address') ?: env('ADMIN_NOTIFICATION_EMAIL', 'someshwarsholkar22@gmail.com');
+                if ($adminEmail) {
+                    Mail::to($adminEmail)->send(new NewLeadNotificationMail($lead, 'consultation'));
+                }
+            } catch (\Throwable $mailError) {
+                Log::warning('Automatic email dispatch failed (check .env SMTP credentials): ' . $mailError->getMessage());
+            }
 
             return response()->json([
                 'success' => true,

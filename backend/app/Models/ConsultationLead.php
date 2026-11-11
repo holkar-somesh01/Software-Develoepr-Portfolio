@@ -18,6 +18,8 @@ class ConsultationLead extends Model
         'timeline',
         'details',
         'status',
+        'last_emailed_at',
+        'email_count',
         'notes',
         'ip_address',
         'user_agent',
@@ -26,6 +28,8 @@ class ConsultationLead extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'last_emailed_at' => 'datetime',
+        'email_count' => 'integer',
     ];
 
     public function scopeRecent($query)

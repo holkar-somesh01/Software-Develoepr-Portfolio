@@ -16,6 +16,8 @@ class ContactLead extends Model
         'message',
         'phone',
         'status',
+        'last_emailed_at',
+        'email_count',
         'notes',
         'ip_address',
         'user_agent',
@@ -24,6 +26,8 @@ class ContactLead extends Model
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
+        'last_emailed_at' => 'datetime',
+        'email_count' => 'integer',
     ];
 
     public function scopeRecent($query)

@@ -178,8 +178,9 @@
                             <div class="text-right flex-shrink-0">
                                 <span class="text-[11px] text-slate-500 font-mono">{{ $lead->created_at->diffForHumans() }}</span>
                                 <div class="mt-2">
-                                    <a href="mailto:{{ $lead->email }}?subject=Re: {{ rawurlencode($lead->subject) }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/5 hover:bg-white/10 text-cyan-300 border border-white/10 transition-colors">
-                                        Reply
+                                    <a href="{{ route('admin.leads.index', ['search' => $lead->email]) }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 transition-colors">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                        Compose Email
                                     </a>
                                 </div>
                             </div>
@@ -233,8 +234,9 @@
                             <div class="text-right flex-shrink-0">
                                 <span class="text-[11px] text-slate-500 font-mono">{{ $consult->created_at->diffForHumans() }}</span>
                                 <div class="mt-2">
-                                    <a href="mailto:{{ $consult->email }}?subject=Consultation Regarding {{ rawurlencode($consult->project_type ?? 'Your Project') }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 transition-colors">
-                                        Email Client
+                                    <a href="{{ route('admin.consultations.index', ['search' => $consult->email]) }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/30 transition-colors">
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                                        Compose Email
                                     </a>
                                 </div>
                             </div>
