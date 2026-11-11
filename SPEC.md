@@ -9,11 +9,11 @@
 ## Developer Profile
 - **Name**: Someshwar Holkar
 - **Title**: MERN Stack Developer | React-Native Developer | Electron.js | Freelancer
-- **Location**: Aurangabad, Maharashtra, India
+- **Location**: Chhatrapati Sambhajinagar (Aurangabad), Maharashtra, India
 - **Email**: someshwarsholkar22@gmail.com
 - **GitHub**: holkar-somesh01
 - **LinkedIn**: in/someshwar-holkar-819503314
-- **Instagram**: @soma_patil.24
+- **Instagram**: @patil_soma.24
 
 ## Tech Stack (Personal)
 - Frontend: React.js, Tailwind CSS, Redux, TypeScript, Micro Frontend, Electron.js
