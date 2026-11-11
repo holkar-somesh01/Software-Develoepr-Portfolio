@@ -405,30 +405,47 @@ const ContactPage = () => {
                         <AnimatePresence>
                             {formState === 'success' && (
                                 <motion.div
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    exit={{ opacity: 0 }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
                                     style={{
-                                        position: 'absolute', inset: 0, background: 'var(--bg-primary)',
+                                        position: 'absolute', inset: 0, background: '#0a0a0f',
                                         zIndex: 10, display: 'flex', flexDirection: 'column',
-                                        alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem',
-                                        borderRadius: '24px'
+                                        alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2.5rem 2rem',
+                                        borderRadius: '24px', border: '1px solid rgba(0, 212, 255, 0.3)', backdropFilter: 'blur(30px)'
                                     }}
                                 >
-                                    <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2rem', color: '#fff', boxShadow: '0 20px 40px rgba(0, 212, 255, 0.3)' }}>
-                                        <Send size={32} />
+                                    <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(16, 185, 129, 0.2))', border: '1px solid rgba(16, 185, 129, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', color: '#34d399', boxShadow: '0 0 25px rgba(16, 185, 129, 0.3)' }}>
+                                        <Check size={36} />
                                     </div>
-                                    <h2 style={{ fontSize: '2rem', fontWeight: 900 }}>Message Sent!</h2>
-                                    <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontSize: '1.1rem' }}>Thank you for reaching out. <br /> I will get back to you soon.</p>
-                                    <button className="btn btn-outline" onClick={() => setFormState('idle')} style={{ marginTop: '2.5rem', borderRadius: '100px', padding: '1rem 3rem' }}>Send Another</button>
+                                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#34d399', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                                        TRANSMISSION CONFIRMED
+                                    </span>
+                                    <h2 style={{ fontSize: '2rem', fontWeight: 900, color: '#ffffff' }}>Message Sent Successfully!</h2>
+                                    <p style={{ color: '#94a3b8', marginTop: '0.6rem', fontSize: '1rem', maxWidth: '380px', lineHeight: 1.6 }}>
+                                        Thank you for reaching out! A confirmation email has been dispatched to your inbox. Someshwar will get back to you within 24 hours.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormState('idle')}
+                                        style={{ marginTop: '2rem', padding: '0.85rem 2.5rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#ffffff', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s ease' }}
+                                    >
+                                        Send Another Message
+                                    </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 900, marginBottom: '1rem', letterSpacing: '-1px' }}>Quick Message</h2>
-                        <p style={{ color: 'var(--text-secondary)', marginBottom: '3rem', fontSize: '1rem' }}>Please fill the form below and I will reply to you as soon as possible.</p>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', fontSize: '1rem' }}>Please fill the form below and I will reply to you as soon as possible.</p>
 
                         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.2rem' }} noValidate>
+                            {errors.submit && (
+                                <div style={{ padding: '0.9rem 1.1rem', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '12px', color: '#fca5a5', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                                    <AlertCircle size={18} color="#f87171" style={{ flexShrink: 0 }} />
+                                    <span>{errors.submit}</span>
+                                </div>
+                            )}
                             <div className="input-row" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem' }}>
                                 <div className="input-group">
                                     <input

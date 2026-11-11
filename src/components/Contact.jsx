@@ -360,20 +360,39 @@ const Contact = () => {
                         <AnimatePresence>
                             {formState === 'success' && (
                                 <motion.div
-                                    initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-                                    style={{ position: 'absolute', inset: 0, background: 'var(--bg-primary)', borderRadius: '32px', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2rem' }}
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    style={{ position: 'absolute', inset: 0, background: '#0a0a0f', borderRadius: '32px', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '2.5rem 2rem', border: '1px solid rgba(0, 212, 255, 0.3)', backdropFilter: 'blur(20px)' }}
                                 >
-                                    <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--gradient-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
-                                        <Send size={24} color="#fff" />
+                                    <div style={{ width: '68px', height: '68px', borderRadius: '50%', background: 'linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(16, 185, 129, 0.2))', border: '1px solid rgba(16, 185, 129, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.2rem', boxShadow: '0 0 25px rgba(16, 185, 129, 0.25)' }}>
+                                        <Check size={34} color="#34d399" />
                                     </div>
-                                    <h3 style={{ fontSize: '1.5rem', fontWeight: 800 }}>Message Sent!</h3>
-                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.5rem' }}>I'll get back to you soon.</p>
-                                    <button onClick={() => setFormState('idle')} style={{ marginTop: '2rem', padding: '0.8rem 2rem', borderRadius: '50px', background: 'transparent', border: '1px solid var(--primary)', color: '#fff', cursor: 'pointer' }}>Send Another</button>
+                                    <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#34d399', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                                        TRANSMISSION CONFIRMED
+                                    </span>
+                                    <h3 style={{ fontSize: '1.6rem', fontWeight: 900, color: '#ffffff' }}>Message Sent Successfully!</h3>
+                                    <p style={{ color: '#94a3b8', fontSize: '0.92rem', marginTop: '0.5rem', maxWidth: '380px', lineHeight: 1.6 }}>
+                                        Thank you for reaching out! A confirmation email has been dispatched to your inbox. Someshwar will get back to you within 24 hours.
+                                    </p>
+                                    <button
+                                        type="button"
+                                        onClick={() => setFormState('idle')}
+                                        style={{ marginTop: '1.8rem', padding: '0.8rem 2.2rem', borderRadius: '12px', background: 'rgba(255, 255, 255, 0.08)', border: '1px solid rgba(255, 255, 255, 0.2)', color: '#ffffff', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s ease' }}
+                                    >
+                                        Send Another Message
+                                    </button>
                                 </motion.div>
                             )}
                         </AnimatePresence>
 
                         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '1.2rem' }} noValidate>
+                            {errors.submit && (
+                                <div style={{ padding: '0.9rem 1.1rem', background: 'rgba(239, 68, 68, 0.12)', border: '1px solid rgba(239, 68, 68, 0.3)', borderRadius: '12px', color: '#fca5a5', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                                    <AlertCircle size={18} color="#f87171" style={{ flexShrink: 0 }} />
+                                    <span>{errors.submit}</span>
+                                </div>
+                            )}
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.2rem' }}>
                                 <div className="input-field">
                                     <input
