@@ -46,7 +46,7 @@
                             <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="margin: 30px 0 10px 0;">
                                 <tr>
                                     <td align="center" style="border-radius: 10px; background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%);">
-                                        <a href="mailto:someshwarsholkar22@gmail.com?subject=Re: {{ rawurlencode($mailSubject) }}" style="display: inline-block; padding: 13px 28px; font-size: 14px; font-weight: 700; color: #0a0a0f; text-decoration: none; border-radius: 10px; background-color: #00d4ff;">
+                                        <a href="mailto:{{ config('mail.from.address') }}?subject=Re: {{ rawurlencode($mailSubject) }}" style="display: inline-block; padding: 13px 28px; font-size: 14px; font-weight: 700; color: #0a0a0f; text-decoration: none; border-radius: 10px; background-color: #00d4ff;">
                                             Reply to This Email &rarr;
                                         </a>
                                     </td>
@@ -55,24 +55,24 @@
                         </td>
                     </tr>
 
-                    <!-- Someshwar Holkar Signature Block -->
+                    <!-- Signature Block -->
                     <tr>
                         <td style="padding: 24px 32px 32px 32px; background-color: #0b0b12; border-top: 1px solid rgba(255, 255, 255, 0.06);">
                             <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td width="56" valign="top">
                                         <div style="width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, #00d4ff 0%, #7c3aed 100%); font-weight: 800; font-size: 20px; color: #0a0a0f; text-align: center; line-height: 48px;">
-                                            SH
+                                            &lt;/&gt;
                                         </div>
                                     </td>
                                     <td valign="top" style="padding-left: 14px;">
-                                        <div style="font-size: 15px; font-weight: 700; color: #ffffff;">Someshwar Holkar</div>
+                                        <div style="font-size: 15px; font-weight: 700; color: #ffffff;">{{ config('portfolio.owner_name') }}</div>
                                         <div style="font-size: 13px; color: #00d4ff; margin-top: 2px;">Software Developer & Consultant</div>
                                         <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">
-                                            Email: <a href="mailto:someshwarsholkar22@gmail.com" style="color: #38bdf8; text-decoration: none;">someshwarsholkar22@gmail.com</a> | Phone: <a href="tel:+918482816761" style="color: #38bdf8; text-decoration: none;">+91 84828 16761</a>
-                                        </div>
-                                        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">
-                                            Portfolio: <a href="https://someshwar-portfolio.com" target="_blank" style="color: #a855f7; text-decoration: none;">Explore Portfolio & Case Studies</a>
+                                            Email: <a href="mailto:{{ config('mail.from.address') }}" style="color: #38bdf8; text-decoration: none;">{{ config('mail.from.address') }}</a>
+                                            @if(config('portfolio.contact_phone'))
+                                                | Phone: <a href="tel:{{ preg_replace('/[^0-9+]/', '', config('portfolio.contact_phone')) }}" style="color: #38bdf8; text-decoration: none;">{{ config('portfolio.contact_phone') }}</a>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>

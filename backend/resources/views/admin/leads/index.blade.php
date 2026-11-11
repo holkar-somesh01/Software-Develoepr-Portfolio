@@ -225,7 +225,7 @@
                     To: <span id="modalTo" class="font-bold text-white"></span>
                 </div>
                 <div class="text-[11px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    From: {{ config('mail.from.address', 'someshwarsholkar22@gmail.com') }}
+                    From: {{ config('mail.from.address') ?: config('portfolio.contact_email') }}
                 </div>
             </div>
 
@@ -292,6 +292,13 @@
 </form>
 
 <script>
+    const PORTFOLIO_CONFIG = {
+        ownerName: @json(config('portfolio.owner_name')),
+        contactPhone: @json(config('portfolio.contact_phone')),
+        contactEmail: @json(config('portfolio.contact_email')),
+        fromAddress: @json(config('mail.from.address'))
+    };
+
     let currentLead = null;
 
     function openContactEmailModal(lead) {
@@ -333,10 +340,9 @@ Could you let me know what day and time window works best for you? Alternatively
 Looking forward to collaborating with you!
 
 Warm regards,
-Someshwar Holkar
+${PORTFOLIO_CONFIG.ownerName}
 Full-Stack Software Developer & Mobile Specialist
-Phone / WhatsApp: +91 84828 16761
-Website: https://someshwar-portfolio.com`;
+Phone / WhatsApp: ${PORTFOLIO_CONFIG.contactPhone}`;
         } else if (val === 'quotation') {
             subjectInput.value = `Project Scope & Quotation Discussion — ${currentLead.subject}`;
             messageInput.value = `Hi ${currentLead.name},
@@ -353,10 +359,10 @@ To ensure accuracy, could you share a few more details:
 Once confirmed, I will prepare a transparent proposal with milestone estimates.
 
 Best regards,
-Someshwar Holkar
-+91 84828 16761`;
+${PORTFOLIO_CONFIG.ownerName}
+${PORTFOLIO_CONFIG.contactPhone}`;
         } else if (val === 'meeting') {
-            subjectInput.value = `Invitation: Discovery Call with Someshwar Holkar`;
+            subjectInput.value = `Invitation: Discovery Call with ${PORTFOLIO_CONFIG.ownerName}`;
             messageInput.value = `Hi ${currentLead.name},
 
 Thanks again for connecting through my portfolio!
@@ -370,8 +376,8 @@ Let's schedule a quick call to go over your requirements for "${currentLead.subj
 If none of these suit your schedule, please propose a time that works best for you.
 
 Talk soon,
-Someshwar Holkar
-+91 84828 16761`;
+${PORTFOLIO_CONFIG.ownerName}
+${PORTFOLIO_CONFIG.contactPhone}`;
         } else if (val === 'followup') {
             subjectInput.value = `Following up regarding "${currentLead.subject}"`;
             messageInput.value = `Hi ${currentLead.name},
@@ -380,10 +386,10 @@ I wanted to quickly follow up regarding the inquiry you submitted on my portfoli
 
 Are you still looking to move forward with this project? I would love to answer any questions you have and help bring your ideas to life.
 
-Feel free to reply directly or call/WhatsApp me at +91 84828 16761.
+Feel free to reply directly or call/WhatsApp me at ${PORTFOLIO_CONFIG.contactPhone}.
 
 Best regards,
-Someshwar Holkar`;
+${PORTFOLIO_CONFIG.ownerName}`;
         } else {
             subjectInput.value = `Re: ${currentLead.subject}`;
             messageInput.value = `Hi ${currentLead.name},

@@ -37,11 +37,16 @@ const Navbar = () => {
     { name: 'Services', href: '/services', icon: Briefcase },
   ]
 
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || ''
+  const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com'
+  const linkedinUrl = import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com'
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || 'https://instagram.com'
+
   const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/holkar-somesh01', icon: Github },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', icon: Linkedin },
-    { name: 'Instagram', url: 'https://www.instagram.com/patil_soma.24', icon: Instagram },
-    { name: 'Email', url: 'mailto:someshwarsholkar22@gmail.com', icon: Mail },
+    { name: 'GitHub', url: githubUrl, icon: Github },
+    { name: 'LinkedIn', url: linkedinUrl, icon: Linkedin },
+    { name: 'Instagram', url: instagramUrl, icon: Instagram },
+    ...(contactEmail ? [{ name: 'Email', url: `mailto:${contactEmail}`, icon: Mail }] : []),
   ]
 
   return (

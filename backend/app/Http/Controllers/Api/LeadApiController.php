@@ -52,7 +52,7 @@ class LeadApiController extends Controller
                 if (filter_var($lead->email, FILTER_VALIDATE_EMAIL)) {
                     Mail::to($lead->email)->send(new ClientAcknowledgementMail($lead, 'contact'));
                 }
-                $adminEmail = config('mail.from.address') ?: env('ADMIN_NOTIFICATION_EMAIL', 'someshwarsholkar22@gmail.com');
+                $adminEmail = config('portfolio.notification_email') ?: config('mail.from.address');
                 if ($adminEmail) {
                     Mail::to($adminEmail)->send(new NewLeadNotificationMail($lead, 'contact'));
                 }
@@ -116,7 +116,7 @@ class LeadApiController extends Controller
                 if (filter_var($lead->email, FILTER_VALIDATE_EMAIL)) {
                     Mail::to($lead->email)->send(new ClientAcknowledgementMail($lead, 'consultation'));
                 }
-                $adminEmail = config('mail.from.address') ?: env('ADMIN_NOTIFICATION_EMAIL', 'someshwarsholkar22@gmail.com');
+                $adminEmail = config('portfolio.notification_email') ?: config('mail.from.address');
                 if ($adminEmail) {
                     Mail::to($adminEmail)->send(new NewLeadNotificationMail($lead, 'consultation'));
                 }
@@ -126,7 +126,7 @@ class LeadApiController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Consultation request submitted successfully! Someshwar will contact you to schedule your session.',
+                'message' => 'Consultation request submitted successfully! ' . (config('portfolio.owner_name') ?: 'I') . ' will contact you to schedule your session.',
                 'lead_id' => $lead->id,
                 'created_at' => $lead->created_at->toIso8601String(),
             ], 201);

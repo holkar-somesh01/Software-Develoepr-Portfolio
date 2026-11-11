@@ -76,7 +76,7 @@ const PrivacyPolicyPage = () => {
 
                     <div style={{ padding: '2rem', borderTop: '1px solid var(--card-border)', textAlign: 'center' }}>
                         <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>If you have any questions about this Privacy Policy, please contact us.</p>
-                        <a href="mailto:someshwarsholkar22@gmail.com" className="btn btn-outline">
+                        <a href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL || ''}`} className="btn btn-outline">
                             Contact Us
                         </a>
                     </div>

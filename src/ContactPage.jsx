@@ -173,7 +173,7 @@ const ContactPage = () => {
         const templateParams = {
             from_name: formData.name,
             from_email: formData.email,
-            to_name: 'Someshwar Holkar',
+            to_name: import.meta.env.VITE_OWNER_NAME || 'Portfolio Owner',
             subject: formData.subject,
             message: formData.message,
         };
@@ -206,13 +206,17 @@ const ContactPage = () => {
         }
     }
 
+    const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || '';
+    const contactPhone = import.meta.env.VITE_CONTACT_PHONE || '';
+    const contactLocation = import.meta.env.VITE_CONTACT_LOCATION || '';
+
     const contactMethods = [
         {
             icon: <Mail size={22} />,
             title: 'EMAIL',
-            value: 'someshwarsholkar22@gmail.com',
-            link: 'mailto:someshwarsholkar22@gmail.com',
-            copyValue: 'someshwarsholkar22@gmail.com',
+            value: contactEmail,
+            link: `mailto:${contactEmail}`,
+            copyValue: contactEmail,
             actionLabel: 'Send Email',
             copyable: true,
             color: '#00d4ff'
@@ -220,9 +224,9 @@ const ContactPage = () => {
         {
             icon: <Phone size={22} />,
             title: 'PHONE',
-            value: '+91 84828 16761',
-            link: 'tel:+918482816761',
-            copyValue: '+918482816761',
+            value: contactPhone,
+            link: `tel:${contactPhone.replace(/\s+/g, '')}`,
+            copyValue: contactPhone.replace(/\s+/g, ''),
             actionLabel: 'Call Directly',
             copyable: true,
             color: '#7c3aed'
@@ -230,8 +234,8 @@ const ContactPage = () => {
         {
             icon: <MapPin size={22} />,
             title: 'LOCATION',
-            value: 'Chhatrapati Sambhajinagar (Aurangabad), Maharashtra 431101',
-            link: 'https://maps.google.com/?q=Aurangabad,Maharashtra',
+            value: contactLocation,
+            link: `https://maps.google.com/?q=${encodeURIComponent(contactLocation)}`,
             actionLabel: 'Open Maps',
             copyable: false,
             color: '#f472b6'
@@ -239,9 +243,9 @@ const ContactPage = () => {
     ]
 
     const socialLinks = [
-        { icon: <Github size={20} />, url: 'https://github.com/holkar-somesh01', name: 'GitHub', color: '#ffffff', glow: 'rgba(255, 255, 255, 0.35)' },
-        { icon: <Linkedin size={20} />, url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', name: 'LinkedIn', color: '#0077b5', glow: 'rgba(0, 119, 181, 0.45)' },
-        { icon: <Instagram size={20} />, url: 'https://www.instagram.com/patil_soma.24', name: 'Instagram', color: '#e4405f', glow: 'rgba(228, 64, 95, 0.45)' }
+        { icon: <Github size={20} />, url: import.meta.env.VITE_GITHUB_URL || 'https://github.com', name: 'GitHub', color: '#ffffff', glow: 'rgba(255, 255, 255, 0.35)' },
+        { icon: <Linkedin size={20} />, url: import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com', name: 'LinkedIn', color: '#0077b5', glow: 'rgba(0, 119, 181, 0.45)' },
+        { icon: <Instagram size={20} />, url: import.meta.env.VITE_INSTAGRAM_URL || 'https://instagram.com', name: 'Instagram', color: '#e4405f', glow: 'rgba(228, 64, 95, 0.45)' }
     ]
 
     useEffect(() => {

@@ -94,11 +94,11 @@
                             <pre class="mt-1.5 p-2.5 rounded-lg bg-black/70 text-slate-300 font-mono text-[11px] overflow-x-auto border border-white/5">MAIL_MAILER=smtp
 MAIL_HOST=smtp.gmail.com
 MAIL_PORT=587
-MAIL_USERNAME=someshwarsholkar22@gmail.com
-MAIL_PASSWORD=your_16_character_code
+MAIL_USERNAME=your_gmail_address@gmail.com
+MAIL_PASSWORD=your_16_character_app_password
 MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=someshwarsholkar22@gmail.com
-MAIL_FROM_NAME="Someshwar Holkar"</pre>
+MAIL_FROM_ADDRESS=your_gmail_address@gmail.com
+MAIL_FROM_NAME="Portfolio Admin"</pre>
                         </li>
                     </ol>
                 </div>

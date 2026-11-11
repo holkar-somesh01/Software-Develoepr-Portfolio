@@ -62,10 +62,10 @@
                             type="email" 
                             name="email" 
                             id="email" 
-                            value="{{ old('email', 'admin@portfolio.com') }}" 
+                            value="{{ old('email', config('portfolio.admin_email', '')) }}" 
                             required 
                             autofocus 
-                            placeholder="admin@portfolio.com"
+                            placeholder="admin@example.com"
                             class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all"
                         >
                     </div>
@@ -86,7 +86,6 @@
                             type="password" 
                             name="password" 
                             id="password" 
-                            value="AdminPassword@123"
                             required 
                             placeholder="••••••••••••"
                             class="w-full pl-10 pr-4 py-3 rounded-xl bg-white/[0.04] border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all"
@@ -113,11 +112,10 @@
                 </button>
             </form>
 
-            <!-- Quick Demo Credentials Box -->
+            <!-- Security Notice -->
             <div class="mt-6 pt-5 border-t border-white/5 text-center">
                 <p class="text-[11px] text-slate-400">
-                    Default Credentials Seeded: <br>
-                    <code class="text-cyan-400 font-mono text-xs">admin@portfolio.com</code> / <code class="text-cyan-400 font-mono text-xs">AdminPassword@123</code>
+                    Protected administrator portal. Credentials configured via environment variables.
                 </p>
             </div>
         </div>

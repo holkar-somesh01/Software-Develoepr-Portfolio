@@ -81,20 +81,24 @@
                                 I am currently reviewing your requirements and will get back to you with next steps, available timeline slots, or a project proposal shortly (typically within <strong>12 to 24 hours</strong>).
                             </p>
 
+                            @if(config('portfolio.contact_phone'))
                             <p style="margin: 0 0 24px 0; font-size: 14px; line-height: 1.6; color: #94a3b8;">
-                                If you have urgent questions or prefer instant messaging, feel free to connect directly via WhatsApp or phone at <strong style="color: #38bdf8;">+91 84828 16761</strong>.
+                                If you have urgent questions or prefer instant messaging, feel free to connect directly via WhatsApp or phone at <strong style="color: #38bdf8;">{{ config('portfolio.contact_phone') }}</strong>.
                             </p>
+                            @endif
 
+                            @if(config('portfolio.whatsapp_number'))
                             <!-- Direct Action Button -->
                             <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="margin: 28px 0 10px 0;">
                                 <tr>
                                     <td align="center" style="border-radius: 10px; background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);">
-                                        <a href="https://wa.me/918482816761?text={{ urlencode('Hi Someshwar, I just submitted an inquiry on your portfolio!') }}" target="_blank" style="display: inline-block; padding: 13px 26px; font-size: 14px; font-weight: 700; color: #0a0a0f; text-decoration: none; border-radius: 10px;">
+                                        <a href="https://wa.me/{{ config('portfolio.whatsapp_number') }}?text={{ urlencode('Hi ' . (config('portfolio.owner_name') ?: 'there') . ', I just submitted an inquiry on your portfolio!') }}" target="_blank" style="display: inline-block; padding: 13px 26px; font-size: 14px; font-weight: 700; color: #0a0a0f; text-decoration: none; border-radius: 10px;">
                                             Chat on WhatsApp &rarr;
                                         </a>
                                     </td>
                                 </tr>
                             </table>
+                            @endif
                         </td>
                     </tr>
 
@@ -102,16 +106,18 @@
                     <tr>
                         <td style="padding: 24px 32px 32px 32px; background-color: #0b0b12; border-top: 1px solid rgba(255, 255, 255, 0.06);">
                             <div style="font-size: 14px; font-weight: 700; color: #f8fafc;">
-                                Someshwar Holkar
+                                {{ config('portfolio.owner_name', 'Full-Stack Developer') }}
                             </div>
                             <div style="font-size: 12px; color: #94a3b8; margin-top: 2px;">
                                 Full-Stack Software Developer & Mobile Specialist
                             </div>
+                            @if(config('portfolio.contact_email'))
                             <div style="font-size: 12px; color: #64748b; margin-top: 8px;">
-                                Chhatrapati Sambhajinagar (Aurangabad), Maharashtra 431101
+                                {{ config('portfolio.contact_email') }}
                             </div>
+                            @endif
                             <div style="margin-top: 16px; font-size: 11px; color: #475569; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px;">
-                                This is an automated confirmation sent from Someshwar's Portfolio System. You can reply directly to this email to reach me.
+                                This is an automated confirmation sent from {{ config('portfolio.owner_name', 'Portfolio') }}'s Portfolio System. You can reply directly to this email to reach me.
                             </div>
                         </td>
                     </tr>

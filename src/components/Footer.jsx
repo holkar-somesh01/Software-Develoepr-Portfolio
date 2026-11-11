@@ -3,12 +3,18 @@ import { Github, Linkedin, Mail, MapPin, Globe, Instagram } from 'lucide-react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
+  const contactEmail = import.meta.env.VITE_CONTACT_EMAIL || ''
+  const contactLocation = import.meta.env.VITE_CONTACT_LOCATION || 'Aurangabad, Maharashtra'
+  const ownerName = import.meta.env.VITE_OWNER_NAME || 'Someshwar Holkar'
+  const githubUrl = import.meta.env.VITE_GITHUB_URL || 'https://github.com'
+  const linkedinUrl = import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com'
+  const instagramUrl = import.meta.env.VITE_INSTAGRAM_URL || 'https://instagram.com'
 
   const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/holkar-somesh01', icon: Github },
-    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/someshwar-holkar-819503314/', icon: Linkedin },
-    { name: 'Email', url: 'mailto:someshwarsholkar22@gmail.com', icon: Mail },
-    { name: 'Instagram', url: 'https://www.instagram.com/patil_soma.24', icon: Instagram },
+    { name: 'GitHub', url: githubUrl, icon: Github },
+    { name: 'LinkedIn', url: linkedinUrl, icon: Linkedin },
+    { name: 'Email', url: `mailto:${contactEmail}`, icon: Mail },
+    { name: 'Instagram', url: instagramUrl, icon: Instagram },
   ]
 
   const quickLinks = [
@@ -26,7 +32,7 @@ const Footer = () => {
             <img src="/logos/ai-logo.png" className="logo-img-footer" alt="AI Logo" />
             <div className="footer-logo-text">
               <span className="logo-text">SH</span>
-              <span className="logo-tagline">Someshwar Holkar</span>
+              <span className="logo-tagline">{ownerName}</span>
             </div>
           </div>
           <p className="footer-bio">
@@ -67,12 +73,16 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-heading">Contact Info</h4>
           <div className="footer-contact">
-            <a href="mailto:someshwarsholkar22@gmail.com" className="contact-item">
-              <Mail size={16} /> someshwarsholkar22@gmail.com
-            </a>
-            <span className="contact-item">
-              <MapPin size={16} /> Aurangabad, Maharashtra
-            </span>
+            {contactEmail && (
+              <a href={`mailto:${contactEmail}`} className="contact-item">
+                <Mail size={16} /> {contactEmail}
+              </a>
+            )}
+            {contactLocation && (
+              <span className="contact-item">
+                <MapPin size={16} /> {contactLocation}
+              </span>
+            )}
             <span className="contact-item">
               <Globe size={16} /> Available for Freelance Work
             </span>

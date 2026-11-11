@@ -15,25 +15,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Create or update default Super Admin
-        User::updateOrCreate(
-            ['email' => 'admin@portfolio.com'],
-            [
-                'name' => 'Someshwar Holkar',
-                'password' => Hash::make('AdminPassword@123'),
-                'email_verified_at' => now(),
-            ]
-        );
+        // Create or update default Super Admin from environment config
+        $adminEmail = config('portfolio.admin_email') ?: env('ADMIN_DEFAULT_EMAIL');
+        $adminPassword = config('portfolio.admin_password') ?: env('ADMIN_DEFAULT_PASSWORD');
+        $adminName = config('portfolio.owner_name') ?: env('ADMIN_DEFAULT_NAME', 'Administrator');
 
-        // Also create user's personal email as secondary admin login
-        User::updateOrCreate(
-            ['email' => 'someshwarsholkar22@gmail.com'],
-            [
-                'name' => 'Someshwar Holkar',
-                'password' => Hash::make('AdminPassword@123'),
-                'email_verified_at' => now(),
-            ]
-        );
+        if ($adminEmail && $adminPassword) {
+            User::updateOrCreate(
+                ['email' => $adminEmail],
+                [
+                    'name' => $adminName,
+                    'password' => Hash::make($adminPassword),
+                    'email_verified_at' => now(),
+                ]
+            );
+        }
 
         // Seed sample contact leads
         if (ContactLead::count() === 0) {

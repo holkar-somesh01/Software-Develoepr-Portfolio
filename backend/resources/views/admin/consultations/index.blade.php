@@ -238,7 +238,7 @@
                     To: <span id="consultModalTo" class="font-bold text-white"></span>
                 </div>
                 <div class="text-[11px] px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                    From: {{ config('mail.from.address', 'someshwarsholkar22@gmail.com') }}
+                    From: {{ config('mail.from.address') ?: config('portfolio.contact_email') }}
                 </div>
             </div>
 
@@ -304,6 +304,13 @@
 </form>
 
 <script>
+    const PORTFOLIO_CONFIG = {
+        ownerName: @json(config('portfolio.owner_name')),
+        contactPhone: @json(config('portfolio.contact_phone')),
+        contactEmail: @json(config('portfolio.contact_email')),
+        fromAddress: @json(config('mail.from.address'))
+    };
+
     let activeConsult = null;
 
     function openConsultEmailModal(consult) {
@@ -334,7 +341,7 @@
         const proj = activeConsult.project_type || 'your project';
 
         if (val === 'call') {
-            subjectInput.value = `Strategy Call: ${proj} Consultation — Someshwar Holkar`;
+            subjectInput.value = `Strategy Call: ${proj} Consultation — ${PORTFOLIO_CONFIG.ownerName}`;
             messageInput.value = `Hi ${activeConsult.name},
 
 Thank you for requesting a project consultation for ${proj}.
@@ -349,9 +356,9 @@ I would love to jump on a quick 15-minute video call to outline technical archit
 Are you available for a brief call tomorrow or day after? Please let me know what time works best for you.
 
 Best regards,
-Someshwar Holkar
+${PORTFOLIO_CONFIG.ownerName}
 Full-Stack Software Developer
-Phone / WhatsApp: +91 84828 16761`;
+Phone / WhatsApp: ${PORTFOLIO_CONFIG.contactPhone}`;
         } else if (val === 'proposal') {
             subjectInput.value = `Proposal & Architecture Overview for ${proj}`;
             messageInput.value = `Hi ${activeConsult.name},
@@ -365,8 +372,8 @@ Could you please confirm if you have any third-party APIs, database preferences,
 I look forward to finalizing the project scope with you.
 
 Warm regards,
-Someshwar Holkar
-+91 84828 16761`;
+${PORTFOLIO_CONFIG.ownerName}
+${PORTFOLIO_CONFIG.contactPhone}`;
         } else if (val === 'budget') {
             subjectInput.value = `Budget & Milestone Confirmation — ${proj}`;
             messageInput.value = `Hi ${activeConsult.name},
@@ -381,7 +388,7 @@ Regarding the ${activeConsult.budget || 'discussed'} budget and timeline, I can 
 Let me know if this aligns with your expectations so we can get started!
 
 Best regards,
-Someshwar Holkar`;
+${PORTFOLIO_CONFIG.ownerName}`;
         } else {
             subjectInput.value = `Regarding your consultation for ${proj}`;
             messageInput.value = `Hi ${activeConsult.name},

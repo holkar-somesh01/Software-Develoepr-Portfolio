@@ -33,6 +33,9 @@ export default function ConsultationModal({ isOpen, onClose }) {
   const [errorMessage, setErrorMessage] = useState('');
   const [submittedData, setSubmittedData] = useState(null);
 
+  const ownerName = import.meta.env.VITE_OWNER_NAME || 'Someshwar';
+  const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER || '').replace(/[^0-9]/g, '');
+
   const descriptionValue = watch('description') || '';
 
   useEffect(() => {
@@ -180,7 +183,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-slate-400 mt-0.5" style={{ fontFamily: "'Outfit', sans-serif" }}>
-                      Discuss your software project architecture, scope, budget & timeline with Someshwar.
+                      Discuss your software project architecture, scope, budget & timeline with {ownerName}.
                     </p>
                   </div>
                 </div>
@@ -245,21 +248,23 @@ export default function ConsultationModal({ isOpen, onClose }) {
                   </div>
 
                   {/* WhatsApp Quick Contact Prompt */}
-                  <div className="max-w-md mx-auto p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs text-slate-300 flex items-center justify-between gap-3">
-                    <div className="text-left">
-                      <div className="font-bold text-emerald-300">Need instant project discussion?</div>
-                      <div className="text-[11px] text-slate-400">Connect with Someshwar directly on WhatsApp.</div>
+                  {whatsappNumber && (
+                    <div className="max-w-md mx-auto p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs text-slate-300 flex items-center justify-between gap-3">
+                      <div className="text-left">
+                        <div className="font-bold text-emerald-300">Need instant project discussion?</div>
+                        <div className="text-[11px] text-slate-400">Connect with {ownerName} directly on WhatsApp.</div>
+                      </div>
+                      <a 
+                        href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Hi ${ownerName}! I just booked a consultation on your website for ${submittedData?.projectType || 'my project'}.`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs transition-colors flex items-center gap-1.5 flex-shrink-0"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        Chat Now
+                      </a>
                     </div>
-                    <a 
-                      href={`https://wa.me/918482816761?text=${encodeURIComponent(`Hi Someshwar! I just booked a consultation on your website for ${submittedData?.projectType || 'my project'}.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold text-xs transition-colors flex items-center gap-1.5 flex-shrink-0"
-                    >
-                      <Phone className="w-3.5 h-3.5" />
-                      Chat Now
-                    </a>
-                  </div>
+                  )}
 
                   {/* Action Buttons with High-Contrast Styles */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -309,14 +314,16 @@ export default function ConsultationModal({ isOpen, onClose }) {
                             <p className="text-xs text-rose-300/90 mt-0.5">{errorMessage || 'Unable to submit request. Please try again.'}</p>
                           </div>
                         </div>
-                        <a 
-                          href="https://wa.me/918482816761"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-2.5 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-[11px] font-semibold border border-rose-500/30 flex-shrink-0"
-                        >
-                          Use WhatsApp
-                        </a>
+                        {whatsappNumber && (
+                          <a 
+                            href={`https://wa.me/${whatsappNumber}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-2.5 py-1 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-[11px] font-semibold border border-rose-500/30 flex-shrink-0"
+                          >
+                            Use WhatsApp
+                          </a>
+                        )}
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -331,7 +338,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
                             required: "Full name is required",
                             minLength: { value: 2, message: "Name must be at least 2 characters" }
                           })}
-                          placeholder="Someshwar Holkar"
+                          placeholder="Your Full Name"
                           className={cn(
                             "w-full bg-black/40 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors",
                             errors.name && "border-rose-500 focus:border-rose-500 focus:ring-rose-500"
@@ -474,7 +481,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
                           className="mt-0.5 w-4 h-4 rounded border border-white/20 bg-black/60 checked:bg-cyan-500 checked:border-cyan-500 focus:ring-1 focus:ring-cyan-500 cursor-pointer transition-colors"
                         />
                         <span className="text-xs text-slate-400 group-hover:text-slate-200 transition-colors leading-relaxed">
-                          I agree to share these project specifications with Someshwar Holkar for scheduling a private technical consultation.
+                          I agree to share these project specifications with {ownerName} for scheduling a private technical consultation.
                         </span>
                       </label>
                       {errors.agreement && (

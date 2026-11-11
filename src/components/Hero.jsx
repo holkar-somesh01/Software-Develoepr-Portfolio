@@ -56,15 +56,17 @@ const Hero = () => {
           </button>
         </div>
         <div className="social-links">
-          <a href="https://github.com/holkar-somesh01" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href={import.meta.env.VITE_GITHUB_URL || 'https://github.com'} target="_blank" rel="noopener noreferrer" className="social-link" aria-label="GitHub">
             <Github size={22} />
           </a>
-          <a href="https://www.linkedin.com/in/someshwar-holkar-819503314/" target="_blank" rel="noopener noreferrer" className="social-link">
+          <a href={import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com'} target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn">
             <Linkedin size={22} />
           </a>
-          <a href="mailto:someshwarsholkar22@gmail.com" className="social-link">
-            <Mail size={22} />
-          </a>
+          {import.meta.env.VITE_CONTACT_EMAIL && (
+            <a href={`mailto:${import.meta.env.VITE_CONTACT_EMAIL}`} className="social-link" aria-label="Email">
+              <Mail size={22} />
+            </a>
+          )}
         </div>
       </motion.div>
       <ConsultationModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} />
