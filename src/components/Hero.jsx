@@ -10,7 +10,7 @@ import ConsultationModal from './ConsultationModal'
 const Hero = () => {
   const [text, setText] = useState('')
   const [isModalOpen, setModalOpen] = useState(false)
-  const fullText = 'Full Stack Developer | Mobile App Developer | Freelancer'
+  const fullText = 'Website Developer | Mobile App Developer | Freelancer'
 
   useEffect(() => {
     let index = 0
