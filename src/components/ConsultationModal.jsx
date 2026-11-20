@@ -67,7 +67,7 @@ export default function ConsultationModal({ isOpen, onClose }) {
       setErrorMessage('');
 
       // 1. Submit consultation to Laravel Backend Database
-      const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000/api').replace(/\/+$/, '') + '/consultation';
+      const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'https://somesh.admin.ayurdnyanam.com/api').replace(/\/+$/, '') + '/consultation';
       const backendPromise = fetch(apiUrl, {
         method: 'POST',
         headers: {

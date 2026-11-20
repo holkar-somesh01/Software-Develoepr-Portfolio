@@ -145,7 +145,7 @@ const Contact = () => {
 
         setFormState('sending')
 
-        const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'http://localhost:8000/api').replace(/\/+$/, '') + '/contact'
+        const apiUrl = (import.meta.env.VITE_BACKEND_API_URL || 'https://somesh.admin.ayurdnyanam.com/api').replace(/\/+$/, '') + '/contact'
 
         // 1. Submit to Laravel Backend Database
         const backendPromise = fetch(apiUrl, {
