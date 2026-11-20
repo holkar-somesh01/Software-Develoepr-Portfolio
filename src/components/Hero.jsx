@@ -43,9 +43,7 @@ const Hero = () => {
           <span className="typing-text">{text}</span>
         </p>
         <p className="hero-description">
-          I build modern websites, mobile applications, and custom software
-          that help startups, businesses, and organizations transform ideas
-          into fast, secure, and scalable digital solutions.
+          I’m a Software Developer passionate about transforming ideas into modern websites, scalable mobile applications, and custom software solutions. I focus on developing high-performance, secure, and user-centric digital products that solve real-world problems and help businesses move forward.
         </p>
         <div className="hero-buttons">
           <a href="#my-work" className="btn btn-primary">

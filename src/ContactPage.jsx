@@ -128,17 +128,17 @@ const ContactPage = () => {
     const validateForm = () => {
         let newErrors = {}
         if (!formData.name.trim()) newErrors.name = 'FullName is required'
-        
+
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
         if (!formData.email) {
             newErrors.email = 'Email required'
         } else if (!emailRegex.test(formData.email)) {
             newErrors.email = 'Invalid email'
         }
-        
+
         if (!formData.subject.trim()) newErrors.subject = 'Subject required'
         if (!formData.message.trim()) newErrors.message = 'Message required'
-        
+
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
@@ -179,8 +179,8 @@ const ContactPage = () => {
         };
 
         const emailJsPromise = emailjs.send(
-            import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id', 
-            import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id', 
+            import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_id',
+            import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_id',
             templateParams,
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'public_key'
         ).catch(err => {
@@ -254,8 +254,8 @@ const ContactPage = () => {
 
     return (
         <div className="contact-page-wrapper" style={{ background: 'var(--bg-primary)', color: '#fff', overflowX: 'hidden' }}>
-            <SEO 
-                title="Contact | Hire Me" 
+            <SEO
+                title="Contact | Hire Me"
                 description="Get in touch with Someshwar Holkar for freelance projects, collaborations, or job opportunities. Based in Aurangabad, India."
                 keywords="Hire Freelancer, Hire Software Developer, Contact Someshwar Holkar, Freelance Web Developer Contact"
                 url="/contact"
@@ -271,14 +271,14 @@ const ContactPage = () => {
                 <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--primary)', boxShadow: '0 0 10px var(--primary)' }}></div>
                 SYSTEM ONLINE
             </div>
-            
+
             <section style={{ minHeight: '80vh', paddingTop: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 0 }}>
                     <Suspense fallback={null}>
                         <ContactCanvas />
                     </Suspense>
                 </div>
-                
+
                 <motion.div
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -301,9 +301,9 @@ const ContactPage = () => {
                     </motion.div>
                     <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-1px', marginBottom: '1.5rem' }}>
                         Let's build something <br />
-                        <span style={{ 
-                            background: 'linear-gradient(to right, #00d4ff, #7c3aed)', 
-                            WebkitBackgroundClip: 'text', 
+                        <span style={{
+                            background: 'linear-gradient(to right, #00d4ff, #7c3aed)',
+                            WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
                             backgroundClip: 'text'
                         }}>great</span> together.
@@ -311,8 +311,8 @@ const ContactPage = () => {
                     <p style={{ fontSize: '1.1rem', color: 'var(--text-secondary)', maxWidth: '500px', margin: '0 auto', lineHeight: 1.6 }}>
                         Have a project in mind? Reach out and let's discuss how I can help bring it to life.
                     </p>
-                    
-                    <motion.div 
+
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1 }}
@@ -334,12 +334,13 @@ const ContactPage = () => {
                 zIndex: 1
             }}>
                 <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '5rem', alignItems: 'start' }}>
-                    <style dangerouslySetInnerHTML={{ __html: `
+                    <style dangerouslySetInnerHTML={{
+                        __html: `
                         @media (max-width: 900px) {
                             .contact-grid { gap: 3rem !important; }
                         }
                     `}} />
-                    
+
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -457,7 +458,7 @@ const ContactPage = () => {
                                         value={formData.name}
                                         onChange={(e) => {
                                             setFormData({ ...formData, name: e.target.value });
-                                            if (errors.name) setErrors({...errors, name: null});
+                                            if (errors.name) setErrors({ ...errors, name: null });
                                         }}
                                         className={`modern-input-v3 ${errors.name ? 'has-error' : ''}`}
                                     />
@@ -469,7 +470,7 @@ const ContactPage = () => {
                                         value={formData.email}
                                         onChange={(e) => {
                                             setFormData({ ...formData, email: e.target.value });
-                                            if (errors.email) setErrors({...errors, email: null});
+                                            if (errors.email) setErrors({ ...errors, email: null });
                                         }}
                                         className={`modern-input-v3 ${errors.email ? 'has-error' : ''}`}
                                     />
@@ -482,7 +483,7 @@ const ContactPage = () => {
                                     value={formData.subject}
                                     onChange={(e) => {
                                         setFormData({ ...formData, subject: e.target.value });
-                                        if (errors.subject) setErrors({...errors, subject: null});
+                                        if (errors.subject) setErrors({ ...errors, subject: null });
                                     }}
                                     className={`modern-input-v3 ${errors.subject ? 'has-error' : ''}`}
                                 />
@@ -494,7 +495,7 @@ const ContactPage = () => {
                                     value={formData.message}
                                     onChange={(e) => {
                                         setFormData({ ...formData, message: e.target.value });
-                                        if (errors.message) setErrors({...errors, message: null});
+                                        if (errors.message) setErrors({ ...errors, message: null });
                                     }}
                                     className={`modern-input-v3 ${errors.message ? 'has-error' : ''}`}
                                     style={{ resize: 'none' }}
@@ -511,7 +512,8 @@ const ContactPage = () => {
                 </div>
             </div>
 
-            <style dangerouslySetInnerHTML={{ __html: `
+            <style dangerouslySetInnerHTML={{
+                __html: `
                 .modern-input-v3 {
                     width: 100%;
                     padding: 1.1rem;
