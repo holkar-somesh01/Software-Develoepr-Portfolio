@@ -36,15 +36,21 @@ class LeadApiController extends Controller
         }
 
         try {
+            $name = $this->sanitizeInput($request->name);
+            $email = filter_var(trim($request->email), FILTER_SANITIZE_EMAIL);
+            $subject = $this->sanitizeInput($request->subject) ?: 'General Portfolio Inquiry';
+            $message = $this->sanitizeInput($request->message);
+            $phone = $this->sanitizeInput($request->phone);
+
             $lead = ContactLead::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'subject' => $request->subject ?: 'General Portfolio Inquiry',
-                'message' => $request->message,
-                'phone' => $request->phone,
+                'name' => $name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+                'phone' => $phone,
                 'status' => 'new',
                 'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
+                'user_agent' => substr((string)$request->userAgent(), 0, 255),
             ]);
 
             // Dispatch automatic acknowledgment email to client & alert to admin
@@ -98,17 +104,25 @@ class LeadApiController extends Controller
         }
 
         try {
+            $name = $this->sanitizeInput($request->name);
+            $email = filter_var(trim($request->email), FILTER_SANITIZE_EMAIL);
+            $phone = $this->sanitizeInput($request->phone);
+            $projectType = $this->sanitizeInput($request->project_type) ?: 'General Consultation';
+            $budget = $this->sanitizeInput($request->budget) ?: "Let's Discuss";
+            $timeline = $this->sanitizeInput($request->timeline) ?: 'Flexible';
+            $details = $this->sanitizeInput($request->details);
+
             $lead = ConsultationLead::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'project_type' => $request->project_type ?: 'General Consultation',
-                'budget' => $request->budget ?: "Let's Discuss",
-                'timeline' => $request->timeline ?: 'Flexible',
-                'details' => $request->details,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+                'project_type' => $projectType,
+                'budget' => $budget,
+                'timeline' => $timeline,
+                'details' => $details,
                 'status' => 'new',
                 'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
+                'user_agent' => substr((string)$request->userAgent(), 0, 255),
             ]);
 
             // Dispatch automatic acknowledgment email to client & alert to admin
@@ -148,6 +162,19 @@ class LeadApiController extends Controller
             'service' => 'Someshwar Portfolio Backend API',
             'timestamp' => now()->toIso8601String(),
         ]);
+    }
+
+    /**
+     * Sanitize input strings to prevent XSS, HTML injection, and control characters.
+     */
+    private function sanitizeInput(?string $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+        $cleaned = strip_tags($value);
+        $cleaned = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $cleaned);
+        return trim($cleaned);
     }
 }
 

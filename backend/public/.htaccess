@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # Security: Block sensitive files, dotfiles, database files, and backups
+    RewriteRule (^|/)\.(?!well-known/) - [F]
+    RewriteRule \.(sqlite|sqlite3|env|log|yml|yaml|ini|git|sh|bak|sql)$ - [F,L]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]

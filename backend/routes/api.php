@@ -11,8 +11,8 @@ use App\Http\Controllers\Api\LeadApiController;
 
 Route::get('/health', [LeadApiController::class, 'health']);
 
-// Public Lead capture endpoints with rate limiting
-Route::middleware(['throttle:30,1'])->group(function () {
+// Public Lead capture endpoints with strict rate limiting (max 6 requests per minute per IP to block spam bots)
+Route::middleware(['throttle:6,1'])->group(function () {
     Route::post('/contact', [LeadApiController::class, 'submitContact']);
     Route::post('/consultation', [LeadApiController::class, 'submitConsultation']);
 });
